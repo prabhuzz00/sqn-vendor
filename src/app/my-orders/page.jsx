@@ -29,13 +29,16 @@ const Orders = () => {
   }, []);
 
   useEffect(() => {
-    fetchDataFromApi(`/api/order/vendor-order-list?page=${page}&limit=5`).then(
-      (res) => {
-        if (res?.error === false) {
-          setOrders(res);
-        }
+    const vendorId = localStorage.getItem("vendorId");
+    if (!vendorId) return; // Optional safety check
+
+    fetchDataFromApi(
+      `/api/order/vendor-order-list?vendorId=${vendorId}&page=${page}&limit=5`
+    ).then((res) => {
+      if (res?.error === false) {
+        setOrders(res);
       }
-    );
+    });
   }, [page]);
 
   return (
