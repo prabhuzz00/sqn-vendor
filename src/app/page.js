@@ -57,8 +57,8 @@ export default function Home() {
           <p className="text-center text-[15px]">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. <br />
-            Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s
+            Lorem Ipsum has been the industry standard dummy text ever since the
+            1500s
           </p>
 
           <br />
