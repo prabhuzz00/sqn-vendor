@@ -20,7 +20,7 @@ export default function Home() {
             <p className="text-primary text-[18px] mb-0 mt-0">
               Welcome To{" "}
               <span className="uppercase text-gray-800 font-semibold">
-                Sooqna
+                Soouqna
               </span>
             </p>
             <h1 className="text-[60px] font-[800] leading-[70px]">
@@ -30,7 +30,7 @@ export default function Home() {
             </h1>
 
             <p className="text-[18px]">
-              Become a Sooqna seller and grow your business{" "}
+              Become a Soouqna seller and grow your business{" "}
             </p>
 
             <div>
@@ -52,7 +52,7 @@ export default function Home() {
         <div className="container">
           <h2 className="text-center text-[30px]">
             Sell Online with
-            <span className="text-primary uppercase pl-3">Sooqna</span>
+            <span className="text-primary uppercase pl-3">Soouqna</span>
           </h2>
           <p className="text-center text-[15px]">
             Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -77,7 +77,7 @@ export default function Home() {
               </div>
               <h3 className="text-[22px]  text-gray-800">11 Lakh+</h3>
               <p className=" font-[400] text-[16px] mt-0 mb-0">
-                Trust Sooqna to sell online
+                Trust Soouqna to sell online
               </p>
             </div>
 
@@ -141,10 +141,10 @@ export default function Home() {
             <div className="w-[50%]">
               <h2 className="text-[30px]">
                 Why Suppliers Love{" "}
-                <span className="text-primary uppercase">Sooqna</span>
+                <span className="text-primary uppercase">Soouqna</span>
               </h2>
               <p className="text-[16px]">
-                All the benefits that come with selling on Sooqna are designed
+                All the benefits that come with selling on Soouqna are designed
                 to help you sell more, and make it easier to grow your business.
               </p>
 
@@ -164,8 +164,8 @@ export default function Home() {
                     0% Commission Fee
                   </h3>
                   <p className=" font-[400] text-[14px] mt-0 mb-0">
-                    Suppliers selling on Sooqna keep 100% of their profit by not
-                    paying any commission
+                    Suppliers selling on Soouqna keep 100% of their profit by
+                    not paying any commission
                   </p>
                 </div>
 
@@ -222,8 +222,8 @@ export default function Home() {
                     Ease of Doing Business
                   </h3>
                   <p className=" font-[400] text-[14px] mt-0 mb-0">
-                    Suppliers selling on Sooqna keep 100% of their profit by not
-                    paying any commission
+                    Suppliers selling on Soouqna keep 100% of their profit by
+                    not paying any commission
                   </p>
                 </div>
               </div>

@@ -1,6 +1,17 @@
 "use client";
 import React, { useState, useContext } from "react";
-import { TextField, Button, Checkbox, FormControlLabel, MenuItem, Select, InputLabel, FormControl, CircularProgress, FormLabel } from "@mui/material"; // Consolidated imports
+import {
+  TextField,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  CircularProgress,
+  FormLabel,
+} from "@mui/material"; // Consolidated imports
 import { MyContext } from "@/context/ThemeProvider";
 import { vendorPostData, deleteImages } from "@/utils/api";
 import { useRouter } from "next/navigation";
@@ -145,14 +156,20 @@ const BecomeVendor = () => {
     setIsLoading(true);
 
     if (!validateForm()) {
-      toast.error("Please fill all required fields, agree to terms, ensure password is at least 6 characters, and upload at least one store logo.");
+      toast.error(
+        "Please fill all required fields, agree to terms, ensure password is at least 6 characters, and upload at least one store logo."
+      );
       setIsLoading(false);
       return;
     }
 
     const formData = new FormData();
     Object.keys(formFields).forEach((key) => {
-      if (key === "productCategories" || key === "images" || key === "bannerImages") {
+      if (
+        key === "productCategories" ||
+        key === "images" ||
+        key === "bannerImages"
+      ) {
         formData.append(key, JSON.stringify(formFields[key] || []));
       } else {
         formData.append(key, formFields[key]);
@@ -164,7 +181,10 @@ const BecomeVendor = () => {
       if (res?.error) {
         context.alertBox("error", res?.message || "There was an error");
       } else {
-        context.alertBox("success", "Vendor application submitted successfully.");
+        context.alertBox(
+          "success",
+          "Vendor application submitted successfully."
+        );
         setFormFields({
           storeName: "",
           storeDescription: "",
@@ -188,7 +208,7 @@ const BecomeVendor = () => {
         // router.push("/vendor-confirmation");
       }
     } catch (error) {
-      context.alertBox("error", 'An error occurred during submission.');
+      context.alertBox("error", "An error occurred during submission.");
       console.error("Submission error:", error);
     } finally {
       setIsLoading(false);
@@ -202,15 +222,18 @@ const BecomeVendor = () => {
           <img src="/logo.jpg" alt="logo" />
           <div className="flex items-center gap-4">
             <span className="text-[16px] text-gray-700">Already a user?</span>
-            <Link href="/login"><Button className="btn-org">Login</Button></Link>
+            <Link href="/login">
+              <Button className="btn-org">Login</Button>
+            </Link>
           </div>
         </div>
 
         <div className="flex">
           <div className="card w-[40%]">
-            <h3 className="text-[20px] text-black mt-4">Welcome to Sooqna
-            </h3>
-            <p className="text-gray-700 text-[16px] mt-1">Create your account to start selling</p>
+            <h3 className="text-[20px] text-black mt-4">Welcome to Soouqna</h3>
+            <p className="text-gray-700 text-[16px] mt-1">
+              Create your account to start selling
+            </p>
 
             <form className="w-full mt-5" onSubmit={handleSubmit}>
               <div className="form-group w-full mb-5">
@@ -330,7 +353,10 @@ const BecomeVendor = () => {
                         <IoMdClose className="text-white text-[17px]" />
                       </span>
                       <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
-                        <img src={image} className="w-full h-full object-cover" />
+                        <img
+                          src={image}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
                   ))}
@@ -356,7 +382,10 @@ const BecomeVendor = () => {
                         <IoMdClose className="text-white text-[17px]" />
                       </span>
                       <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
-                        <img src={image} className="w-full h-full object-cover" />
+                        <img
+                          src={image}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
                   ))}
@@ -370,9 +399,11 @@ const BecomeVendor = () => {
                 </div>
               </div>
 
-              <div className="form-group w-full mb-5"  >
+              <div className="form-group w-full mb-5">
                 <FormControl fullWidth variant="standard">
-                  <InputLabel id="product-categories-label">Product Categories</InputLabel>
+                  <InputLabel id="product-categories-label">
+                    Product Categories
+                  </InputLabel>
                   <Select
                     labelId="product-categories-label"
                     id="productCategories"
@@ -440,66 +471,76 @@ const BecomeVendor = () => {
                   disabled={isLoading || !validateForm()}
                   className="btn-org btn-lg w-full flex gap-3"
                 >
-                  {isLoading ? <CircularProgress color="inherit" /> : "Submit Application"}
+                  {isLoading ? (
+                    <CircularProgress color="inherit" />
+                  ) : (
+                    "Submit Application"
+                  )}
                 </Button>
               </div>
             </form>
           </div>
 
-
           <div className="pl-44 w-[60%] pt-3">
             <div className="box p-5 bg-gray-200 rounded-md w-full sticky top-10">
-              <h2>Grow your business faster by selling on Sooqna</h2>
+              <h2>Grow your business faster by selling on Soouqna</h2>
               <div className="grid grid-cols-1 mt-5 gap-5">
                 <div className="box flex items-center gap-3">
-                  <img src="https://images.meeshosupplyassets.com/supplier_community.svg" alt="img" />
+                  <img
+                    src="https://images.meeshosupplyassets.com/supplier_community.svg"
+                    alt="img"
+                  />
 
                   <div className="info flex flex-col gap-0">
                     <h4>11 lakh+</h4>
-                    <p className="mt-0 mb-0 text-[13px]">Suppliers are selling commission-free </p>
+                    <p className="mt-0 mb-0 text-[13px]">
+                      Suppliers are selling commission-free{" "}
+                    </p>
                   </div>
-
                 </div>
 
-
                 <div className="box flex items-center gap-3">
-                  <img src="https://images.meeshosupplyassets.com/pincode.svg" alt="img" />
+                  <img
+                    src="https://images.meeshosupplyassets.com/pincode.svg"
+                    alt="img"
+                  />
 
                   <div className="info flex flex-col gap-0">
                     <h4>19000+</h4>
-                    <p className="mt-0 mb-0 text-[13px]">Pincodes supported for delivery</p>
+                    <p className="mt-0 mb-0 text-[13px]">
+                      Pincodes supported for delivery
+                    </p>
                   </div>
-
                 </div>
 
-
                 <div className="box flex items-center gap-3">
-                  <img src="https://images.meeshosupplyassets.com/reach_india.svg" alt="img" />
+                  <img
+                    src="https://images.meeshosupplyassets.com/reach_india.svg"
+                    alt="img"
+                  />
 
                   <div className="info flex flex-col gap-0">
                     <h4>Crore of</h4>
-                    <p className="mt-0 mb-0 text-[13px]">Customers buy across India</p>
+                    <p className="mt-0 mb-0 text-[13px]">
+                      Customers buy across India
+                    </p>
                   </div>
-
                 </div>
 
-
                 <div className="box flex items-center gap-3">
-                  <img src="https://images.meeshosupplyassets.com/categories.svg" alt="img" />
+                  <img
+                    src="https://images.meeshosupplyassets.com/categories.svg"
+                    alt="img"
+                  />
 
                   <div className="info flex flex-col gap-0">
                     <h4>700 +</h4>
                     <p className="mt-0 mb-0 text-[13px]">Categories to sell</p>
                   </div>
-
                 </div>
-
-
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </section>
