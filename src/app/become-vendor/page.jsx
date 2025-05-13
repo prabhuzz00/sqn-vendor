@@ -20,12 +20,14 @@ import { toast } from "react-toastify";
 import UploadBox from "../../components/UploadBox";
 import { IoMdClose } from "react-icons/io";
 import Link from "next/link";
+import { useTranslation } from "@/utils/useTranslation";
+import { useLanguage } from "@/context/LanguageContext";
 
 const BecomeVendor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [previews, setPreviews] = useState([]);
   const [bannerPreviews, setBannerPreviews] = useState([]);
-
+  const [productCat, setProductCat] = useState("");
   const [formFields, setFormFields] = useState({
     storeName: "",
     storeDescription: "",
@@ -36,6 +38,7 @@ const BecomeVendor = () => {
     storeAddress: "",
     images: [],
     bannerImages: [],
+    // productCategoriesId: [],
     productCategories: [],
     commissionRate: "",
     paymentDetails: "",
@@ -46,6 +49,8 @@ const BecomeVendor = () => {
   });
 
   const context = useContext(MyContext);
+  const { locale } = useLanguage();
+  const { t } = useTranslation();
   const router = useRouter();
 
   const onChangeInput = (e) => {
@@ -60,6 +65,18 @@ const BecomeVendor = () => {
     setFormFields((prev) => ({
       ...prev,
       productCategories: e.target.value,
+    }));
+  };
+
+  const handleChangeProductCat = (e) => {
+    const selectedCat = context?.catData?.find(
+      (cat) => cat._id === e.target.value
+    );
+    setProductCat(e.target.value);
+    setFormFields((prev) => ({
+      ...prev,
+      // productCategoriesId: e.target.value,
+      productCategories: selectedCat?.name || "",
     }));
   };
 
@@ -221,18 +238,22 @@ const BecomeVendor = () => {
         <div className="flex items-center justify-between">
           <img src="/logo.jpg" alt="logo" />
           <div className="flex items-center gap-4">
-            <span className="text-[16px] text-gray-700">Already a user?</span>
+            <span className="text-[16px] text-gray-700">
+              {t("bvendor.alreadyUser")}
+            </span>
             <Link href="/login">
-              <Button className="btn-org">Login</Button>
+              <Button className="btn-org">{t("bvendor.login")}</Button>
             </Link>
           </div>
         </div>
 
         <div className="flex">
           <div className="card w-[40%]">
-            <h3 className="text-[20px] text-black mt-4">Welcome to Soouqna</h3>
+            <h3 className="text-[20px] text-black mt-4">
+              {t("bvendor.welcome")}
+            </h3>
             <p className="text-gray-700 text-[16px] mt-1">
-              Create your account to start selling
+              {t("bvendor.createAccount")}
             </p>
 
             <form className="w-full mt-5" onSubmit={handleSubmit}>
@@ -243,7 +264,7 @@ const BecomeVendor = () => {
                   name="storeName"
                   value={formFields.storeName}
                   disabled={isLoading}
-                  label="Store Name"
+                  label={t("bvendor.storeName")}
                   variant="standard"
                   className="w-full"
                   onChange={onChangeInput}
@@ -258,7 +279,7 @@ const BecomeVendor = () => {
                   name="storeDescription"
                   value={formFields.storeDescription}
                   disabled={isLoading}
-                  label="Store Description"
+                  label={t("bvendor.storeDescription")}
                   variant="standard"
                   multiline
                   rows={4}
@@ -275,7 +296,7 @@ const BecomeVendor = () => {
                   name="ownerName"
                   value={formFields.ownerName}
                   disabled={isLoading}
-                  label="Owner's Name"
+                  label={t("bvendor.ownerName")}
                   variant="standard"
                   className="w-full"
                   onChange={onChangeInput}
@@ -290,7 +311,7 @@ const BecomeVendor = () => {
                   name="emailAddress"
                   value={formFields.emailAddress}
                   disabled={isLoading}
-                  label="Email Address"
+                  label={t("bvendor.emailAddress")}
                   variant="standard"
                   className="w-full"
                   onChange={onChangeInput}
@@ -306,7 +327,7 @@ const BecomeVendor = () => {
                   onChange={onChangeInput}
                   disabled={isLoading}
                   variant="standard"
-                  label="Password"
+                  label={t("bvendor.password")}
                   required
                 />
               </div>
@@ -318,7 +339,7 @@ const BecomeVendor = () => {
                   name="phoneNumber"
                   value={formFields.phoneNumber}
                   disabled={isLoading}
-                  label="Phone Number"
+                  label={t("bvendor.phoneNumber")}
                   variant="standard"
                   className="w-full"
                   onChange={onChangeInput}
@@ -333,7 +354,7 @@ const BecomeVendor = () => {
                   name="storeAddress"
                   value={formFields.storeAddress}
                   disabled={isLoading}
-                  label="Store Address"
+                  label={t("bvendor.storeAddress")}
                   variant="standard"
                   className="w-full"
                   onChange={onChangeInput}
@@ -342,7 +363,7 @@ const BecomeVendor = () => {
               </div>
 
               <div className="form-group w-full mb-5">
-                <p className="text-[17px]">Store Logo</p>
+                <p className="text-[17px]">{t("bvendor.storeLogo")}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {previews?.map((image, index) => (
                     <div className="uploadBoxWrapper relative" key={index}>
@@ -371,7 +392,7 @@ const BecomeVendor = () => {
               </div>
 
               <div className="form-group w-full mb-5">
-                <p className="text-[17px]">Store Banner Images</p>
+                <p className="text-[17px]">{t("bvendor.storeBannerImages")}</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                   {bannerPreviews?.map((image, index) => (
                     <div className="uploadBoxWrapper relative" key={index}>
@@ -402,23 +423,23 @@ const BecomeVendor = () => {
               <div className="form-group w-full mb-5">
                 <FormControl fullWidth variant="standard">
                   <InputLabel id="product-categories-label">
-                    Product Categories
+                    {t("bvendor.productCategories")}
                   </InputLabel>
-                  <Select
-                    labelId="product-categories-label"
-                    id="productCategories"
-                    name="productCategories"
-                    multiple
-                    value={formFields.productCategories}
-                    onChange={onChangeCategories}
-                    label="Product Categories"
-                    disabled={isLoading}
-                  >
-                    <MenuItem value="electronics">Electronics</MenuItem>
-                    <MenuItem value="clothing">Clothing</MenuItem>
-                    <MenuItem value="home">Home & Garden</MenuItem>
-                    <MenuItem value="books">Books</MenuItem>
-                  </Select>
+                  {context?.catData?.length > 0 && (
+                    <Select
+                      size="small"
+                      className="w-full"
+                      value={productCat}
+                      onChange={handleChangeProductCat}
+                      disabled={isLoading}
+                    >
+                      {context?.catData?.map((cat) => (
+                        <MenuItem key={cat?._id} value={cat?._id}>
+                          {cat?.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
                 </FormControl>
               </div>
 
@@ -429,7 +450,7 @@ const BecomeVendor = () => {
                   name="paymentDetails"
                   value={formFields.paymentDetails}
                   disabled={isLoading}
-                  label="Payment Details"
+                  label={t("bvendor.paymentDetails")}
                   variant="standard"
                   className="w-full"
                   onChange={onChangeInput}
@@ -444,7 +465,7 @@ const BecomeVendor = () => {
                   name="taxIdentificationNumber"
                   value={formFields.taxIdentificationNumber}
                   disabled={isLoading}
-                  label="Tax Identification Number"
+                  label={t("bvendor.taxId")}
                   variant="standard"
                   className="w-full"
                   onChange={onChangeInput}
@@ -461,7 +482,7 @@ const BecomeVendor = () => {
                       disabled={isLoading}
                     />
                   }
-                  label="I agree to the marketplace terms and conditions"
+                  label={t("bvendor.agreeTerms")}
                 />
               </div>
 
@@ -474,7 +495,7 @@ const BecomeVendor = () => {
                   {isLoading ? (
                     <CircularProgress color="inherit" />
                   ) : (
-                    "Submit Application"
+                    t("bvendor.submit")
                   )}
                 </Button>
               </div>
@@ -483,7 +504,7 @@ const BecomeVendor = () => {
 
           <div className="pl-44 w-[60%] pt-3">
             <div className="box p-5 bg-gray-200 rounded-md w-full sticky top-10">
-              <h2>Grow your business faster by selling on Soouqna</h2>
+              <h2>{t("bvendor.growFaster")}</h2>
               <div className="grid grid-cols-1 mt-5 gap-5">
                 <div className="box flex items-center gap-3">
                   <img
@@ -492,9 +513,9 @@ const BecomeVendor = () => {
                   />
 
                   <div className="info flex flex-col gap-0">
-                    <h4>11 lakh+</h4>
+                    <h4>{t("bvendor.sellersCount")}</h4>
                     <p className="mt-0 mb-0 text-[13px]">
-                      Suppliers are selling commission-free{" "}
+                      {t("bvendor.sellersNote")}{" "}
                     </p>
                   </div>
                 </div>
@@ -506,9 +527,9 @@ const BecomeVendor = () => {
                   />
 
                   <div className="info flex flex-col gap-0">
-                    <h4>19000+</h4>
+                    <h4>{t("bvendor.pincodes")}</h4>
                     <p className="mt-0 mb-0 text-[13px]">
-                      Pincodes supported for delivery
+                      {t("bvendor.pincodesNote")}
                     </p>
                   </div>
                 </div>
@@ -520,9 +541,9 @@ const BecomeVendor = () => {
                   />
 
                   <div className="info flex flex-col gap-0">
-                    <h4>Crore of</h4>
+                    <h4>{t("bvendor.buyersCount")}</h4>
                     <p className="mt-0 mb-0 text-[13px]">
-                      Customers buy across India
+                      {t("bvendor.buyersNote")}
                     </p>
                   </div>
                 </div>
@@ -534,8 +555,10 @@ const BecomeVendor = () => {
                   />
 
                   <div className="info flex flex-col gap-0">
-                    <h4>700 +</h4>
-                    <p className="mt-0 mb-0 text-[13px]">Categories to sell</p>
+                    <h4>{t("bvendor.categoriesCount")}</h4>
+                    <p className="mt-0 mb-0 text-[13px]">
+                      {t("bvendor.categoriesNote")}
+                    </p>
                   </div>
                 </div>
               </div>

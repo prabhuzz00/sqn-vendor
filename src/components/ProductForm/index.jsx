@@ -133,12 +133,46 @@ const ProductForm = () => {
     }
   }, [id, isEditMode, context]);
 
+  // const onChangeInput = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormFields((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  // };
+
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    setFormFields((prev) => {
+      const updatedFields = {
+        ...prev,
+        [name]: value,
+      };
+
+      // Automatically calculate discount if price or oldPrice changes
+      const price = name === "price" ? value : prev.price;
+      const oldPrice = name === "oldPrice" ? value : prev.oldPrice;
+
+      if (price && oldPrice) {
+        const discount = calculateDiscount(price, oldPrice);
+        updatedFields.discount = discount;
+      }
+
+      return updatedFields;
+    });
+  };
+
+  const calculateDiscount = (price, oldPrice) => {
+    const newPrice = parseFloat(price);
+    const originalPrice = parseFloat(oldPrice);
+
+    if (!isNaN(newPrice) && !isNaN(originalPrice) && originalPrice > 0) {
+      const discount = ((originalPrice - newPrice) / originalPrice) * 100;
+      return Math.round(discount); // Round off to whole number
+    }
+
+    return 0;
   };
 
   const handleChangeProductCat = (e) => {
@@ -569,24 +603,6 @@ const ProductForm = () => {
                   />
                 </div>
 
-                {/* <div className="col">
-                  <FormLabel>Product RAMs</FormLabel>
-                  <Select
-                    size="small"
-                    className="w-full"
-                    multiple
-                    value={productRams}
-                    onChange={handleChangeProductRams}
-                    disabled={isLoading}
-                  >
-                    {context?.productRamsData?.map((item) => (
-                      <MenuItem key={item?.name} value={item?.name}>
-                        {item?.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </div> */}
-
                 <div className="col">
                   <FormLabel>Product Size</FormLabel>
                   <Select
@@ -636,16 +652,6 @@ const ProductForm = () => {
                     <MenuItem value={false}>False</MenuItem>
                   </Select>
                 </div>
-
-                {/* <div className="col">
-                  <FormLabel>Product Rating</FormLabel>
-                  <Rating
-                    name="rating"
-                    value={rating}
-                    onChange={onChangeRating}
-                    disabled={isLoading}
-                  />
-                </div> */}
               </div>
 
               <div className="mt-5">
@@ -676,45 +682,6 @@ const ProductForm = () => {
                   />
                 </div>
               </div>
-
-              {/* <div className="mt-5">
-                <div className="flex items-center gap-8 mb-3">
-                  <FormLabel>Banner Images</FormLabel>
-                  
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {bannerPreviews?.map((image, index) => (
-                    <div className="uploadBoxWrapper relative" key={index}>
-                      <span
-                        className="absolute w-[20px] h-[20px] rounded-full bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer"
-                        onClick={() => removeBannerImg(image, index)}
-                      >
-                        <IoMdClose className="text-white text-[17px]" />
-                      </span>
-                      <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
-                        <img src={image} className="w-full h-full object-cover" />
-                      </div>
-                    </div>
-                  ))}
-                  <UploadBox
-                    multiple={true}
-                    name="bannerimages"
-                    url="/api/product/vendorProductBannerImagesUpload"
-                    setPreviewsFun={setBannerImagesFun}
-                    disabled={isLoading}
-                  />
-                </div>
-                <FormLabel>Banner Title</FormLabel>
-                <TextField
-                  variant="outlined"
-                  size="small"
-                  className="w-full mt-3"
-                  name="bannerTitleName"
-                  value={formFields.bannerTitleName}
-                  onChange={onChangeInput}
-                  disabled={isLoading}
-                />
-              </div> */}
 
               <div className="flex items-center gap-4 mt-5">
                 <Button

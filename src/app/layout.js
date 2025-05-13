@@ -6,10 +6,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { ToastContainer } from "react-toastify";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata = {
-  title: "Ecommerce App Next Js",
-  description: "Ecommerce App",
+  title: "Soouqna Seller",
+  description: "Soouqna Seller Platform",
 };
 
 export default function RootLayout({ children }) {
@@ -19,10 +20,12 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <ThemeProvider>
             <ClientLayout>
-              <Header />
-              {children}
-              <ToastContainer />
-              <Footer />
+              <LanguageProvider>
+                <Header />
+                {children}
+                <ToastContainer />
+                <Footer />
+              </LanguageProvider>
             </ClientLayout>
           </ThemeProvider>
         </AuthProvider>

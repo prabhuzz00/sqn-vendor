@@ -10,33 +10,36 @@ import { FaWpforms } from "react-icons/fa";
 import { GiGrowth } from "react-icons/gi";
 import { FaRegHandshake } from "react-icons/fa";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
+import { useTranslation } from "@/utils/useTranslation";
 
 export default function Home() {
+  const { locale } = useLanguage();
+  const { t } = useTranslation();
+
   return (
     <>
       <section className="topBannerSection w-full bg-[#f5f2f2]">
         <div className="container flex items-center  h-auto">
           <div className="w-[65%] flex flex-col gap-4">
             <p className="text-primary text-[18px] mb-0 mt-0">
-              Welcome To{" "}
+              {t("home.welcome")}{" "}
               <span className="uppercase text-gray-800 font-semibold">
                 Soouqna
               </span>
             </p>
             <h1 className="text-[60px] font-[800] leading-[70px]">
-              Sell online to 1 Cr+ customers at
+              {t("home.headline")}
               <br />
-              <span className="text-primary">0% Commission</span>
+              <span className="text-primary">{t("home.commission")}</span>
             </h1>
 
-            <p className="text-[18px]">
-              Become a Soouqna seller and grow your business{" "}
-            </p>
+            <p className="text-[18px]">{t("home.description")} </p>
 
             <div>
               <Link href="/become-vendor">
                 <Button className="btn-org btn-lg h-[36px]" size="large">
-                  Start Selling
+                  {t("home.startSelling")}
                 </Button>
               </Link>
             </div>
@@ -51,16 +54,14 @@ export default function Home() {
       <section className="w-full py-16 vendorSection2">
         <div className="container">
           <h2 className="text-center text-[30px]">
-            Sell Online with
+            {t("home.sellWith")}
             <span className="text-primary uppercase pl-3">Soouqna</span>
           </h2>
           <p className="text-center text-[15px]">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. <br />
-            Lorem Ipsum has been the industry standard dummy text ever since the
-            1500s
+            {t("home.lorem")}
+            <br />
+            {t("home.lorem2")}
           </p>
-
           <br />
 
           <div className="flex items-center justify-center gap-8">
@@ -77,7 +78,7 @@ export default function Home() {
               </div>
               <h3 className="text-[22px]  text-gray-800">11 Lakh+</h3>
               <p className=" font-[400] text-[16px] mt-0 mb-0">
-                Trust Soouqna to sell online
+                {t("home.trustSellers")}
               </p>
             </div>
 
@@ -94,7 +95,7 @@ export default function Home() {
               </div>
               <h3 className="text-[22px]  text-gray-800">4 Crore+</h3>
               <p className=" font-[400] text-[16px] mt-0 mb-0">
-                Customers buying across Syria
+                {t("home.customers")}
               </p>
             </div>
 
@@ -111,7 +112,7 @@ export default function Home() {
               </div>
               <h3 className="text-[22px]  text-gray-800">19000+</h3>
               <p className=" font-[400] text-[16px] mt-0 mb-0">
-                Pincode Supported for delivery
+                {t("home.pincodeSupport")}
               </p>
             </div>
 
@@ -128,7 +129,7 @@ export default function Home() {
               </div>
               <h3 className="text-[22px] text-gray-800">700+</h3>
               <p className=" font-[400] text-[16px] mt-0 mb-0">
-                Categories to sell online
+                {t("home.categories")}
               </p>
             </div>
           </div>
@@ -140,13 +141,10 @@ export default function Home() {
           <div className="flex items-center ">
             <div className="w-[50%]">
               <h2 className="text-[30px]">
-                Why Suppliers Love{" "}
+                {t("home.whyLove")}{" "}
                 <span className="text-primary uppercase">Soouqna</span>
               </h2>
-              <p className="text-[16px]">
-                All the benefits that come with selling on Soouqna are designed
-                to help you sell more, and make it easier to grow your business.
-              </p>
+              <p className="text-[16px]">{t("home.benefits")}</p>
 
               <div className="flex  gap-4 flex-wrap mt-3">
                 <div className="card  w-[45%] bg-white py-2  flex justify-start flex-col transition-all !rounded-md">
@@ -161,11 +159,10 @@ export default function Home() {
                     <GiReceiveMoney size={30} className="text-white" />
                   </div>
                   <h3 className="text-[18px]  text-gray-800">
-                    0% Commission Fee
+                    {t("home.commissionFee")}
                   </h3>
                   <p className=" font-[400] text-[14px] mt-0 mb-0">
-                    Suppliers selling on Soouqna keep 100% of their profit by
-                    not paying any commission
+                    {t("home.commissionInfo")}
                   </p>
                 </div>
 
@@ -181,11 +178,10 @@ export default function Home() {
                     <FaWpforms size={30} className="text-white" />
                   </div>
                   <h3 className="text-[18px]  text-gray-800">
-                    0 Penalty Charges
+                    {t("home.penaltyCharges")}
                   </h3>
                   <p className=" font-[400] text-[14px] mt-0 mb-0">
-                    Sell online without the fear of order cancellation charges
-                    with 0 Penalty for late dispatch or order cancellations.
+                    {t("home.penaltyInfo")}
                   </p>
                 </div>
 
@@ -200,10 +196,10 @@ export default function Home() {
                     <GiGrowth size={30} className="text-white" />
                   </div>
                   <h3 className="text-[18px]  text-gray-800">
-                    Growth for Every Supplier
+                    {t("home.growth")}
                   </h3>
                   <p className=" font-[400] text-[14px] mt-0 mb-0">
-                    From small to large and unbranded to branded.
+                    {t("home.growthInfo")}
                   </p>
                 </div>
 
@@ -219,11 +215,10 @@ export default function Home() {
                     <FaRegHandshake size={30} className="text-white" />
                   </div>
                   <h3 className="text-[18px]  text-gray-800">
-                    Ease of Doing Business
+                    {t("home.ease")}
                   </h3>
                   <p className=" font-[400] text-[14px] mt-0 mb-0">
-                    Suppliers selling on Soouqna keep 100% of their profit by
-                    not paying any commission
+                    {t("home.easeInfo")}
                   </p>
                 </div>
               </div>
