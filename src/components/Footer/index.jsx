@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useContext } from "react";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { PiKeyReturnLight } from "react-icons/pi";
@@ -19,23 +19,20 @@ import Drawer from "@mui/material/Drawer";
 import CartPanel from "../CartPanel";
 import { MyContext } from "@/context/ThemeProvider";
 
-
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import { ProductZoom } from "../ProductZoom";
 import { IoCloseSharp } from "react-icons/io5";
 import { ProductDetailsComponent } from "../ProductDetails";
-import AddAddress from "@/app/my-account/addAddress";
-
+import AddBank from "@/app/my-account/addBank";
 
 const Footer = () => {
   const context = useContext(MyContext);
 
   return (
     <>
-      {
-        context?.isHeaderFooterShow === true &&
+      {context?.isHeaderFooterShow === true && (
         <>
           <footer className="py-6">
             <div className="container">
@@ -253,10 +250,7 @@ const Footer = () => {
                 </li>
               </ul>
 
-              <p className="text-[13px] text-center mb-0">
-                © 2025 - SOQQNA
-              </p>
-
+              <p className="text-[13px] text-center mb-0">© 2025 - SOQQNA</p>
 
               <div className="flex items-center gap-1">
                 <img src="/carte_bleue.png" alt="image" />
@@ -265,18 +259,10 @@ const Footer = () => {
                 <img src="/american_express.png" alt="image" />
                 <img src="/paypal.png" alt="image" />
               </div>
-
-
             </div>
           </div>
         </>
-      }
-
-
-
-
-
-
+      )}
 
       {/* Cart Panel */}
       <Drawer
@@ -287,60 +273,49 @@ const Footer = () => {
       >
         <div className="flex items-center justify-between py-3 px-4 gap-3 border-b border-[rgba(0,0,0,0.1)] overflow-hidden">
           <h4>Shopping Cart ({context?.cartData?.length})</h4>
-          <IoCloseSharp className="text-[20px] cursor-pointer" onClick={context.toggleCartPanel(false)} />
+          <IoCloseSharp
+            className="text-[20px] cursor-pointer"
+            onClick={context.toggleCartPanel(false)}
+          />
         </div>
 
-
-        {
-
-          context?.cartData?.length !== 0 ? <CartPanel data={context?.cartData} /> :
-            <>
-              <div className="flex items-center justify-center flex-col pt-[100px] gap-5">
-                <img src="/empty-cart.png" className="w-[150px]" />
-                <h4>Your Cart is currently empty</h4>
-                <Button className="btn-org btn-sm" onClick={context.toggleCartPanel(false)}>Continue Shopping</Button>
-              </div>
-            </>
-
-        }
-
-
-
+        {context?.cartData?.length !== 0 ? (
+          <CartPanel data={context?.cartData} />
+        ) : (
+          <>
+            <div className="flex items-center justify-center flex-col pt-[100px] gap-5">
+              <img src="/empty-cart.png" className="w-[150px]" />
+              <h4>Your Cart is currently empty</h4>
+              <Button
+                className="btn-org btn-sm"
+                onClick={context.toggleCartPanel(false)}
+              >
+                Continue Shopping
+              </Button>
+            </div>
+          </>
+        )}
       </Drawer>
 
-
-
-
-
-
-
-
-
-      {/* Address Panel */}
+      {/* Bank Panel */}
       <Drawer
-        open={context.openAddressPanel}
-        onClose={context.toggleAddressPanel(false)}
+        open={context.openBankPanel}
+        onClose={context.toggleBankPanel(false)}
         anchor={"right"}
         className="addressPanel"
       >
         <div className="flex items-center justify-between py-3 px-4 gap-3 border-b border-[rgba(0,0,0,0.1)] overflow-hidden">
-          <h4>{context?.addressMode === "add" ? 'Add' : 'Edit'} Delivery Address </h4>
-          <IoCloseSharp className="text-[20px] cursor-pointer" onClick={context.toggleAddressPanel(false)} />
+          <h4>{context?.bankMode === "add" ? "Add" : "Edit"} Bank Details </h4>
+          <IoCloseSharp
+            className="text-[20px] cursor-pointer"
+            onClick={context.toggleBankPanel(false)}
+          />
         </div>
-
-
 
         <div className="w-full max-h-[100vh] overflow-auto">
-          <AddAddress />
+          <AddBank />
         </div>
-
-
-
       </Drawer>
-
-
-
-
 
       <Dialog
         open={context?.openProductDetailsModal.open}
@@ -359,25 +334,24 @@ const Footer = () => {
             >
               <IoCloseSharp className="text-[20px]" />
             </Button>
-            {
-              context?.openProductDetailsModal?.item?.length !== 0 &&
+            {context?.openProductDetailsModal?.item?.length !== 0 && (
               <>
                 <div className="col1 w-[40%] px-3 py-8">
-                  <ProductZoom images={context?.openProductDetailsModal?.item?.images} />
+                  <ProductZoom
+                    images={context?.openProductDetailsModal?.item?.images}
+                  />
                 </div>
 
                 <div className="col2 w-[60%] py-8 px-8 pr-16 productContent ">
-                  <ProductDetailsComponent item={context?.openProductDetailsModal?.item} />
+                  <ProductDetailsComponent
+                    item={context?.openProductDetailsModal?.item}
+                  />
                 </div>
               </>
-            }
-
+            )}
           </div>
         </DialogContent>
       </Dialog>
-
-
-
     </>
   );
 };

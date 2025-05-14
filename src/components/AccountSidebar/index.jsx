@@ -3,14 +3,20 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
-import { IoBagCheckOutline } from "react-icons/io5";
+import {
+  IoBagCheckOutline,
+  IoBagHandle,
+  IoBarChart,
+  IoCashOutline,
+  IoFileTrayFull,
+} from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MyContext } from "@/context/ThemeProvider";
 import CircularProgress from "@mui/material/CircularProgress";
-import { LuMapPin } from "react-icons/lu";
+import { LuBanknote, LuMapPin } from "react-icons/lu";
 import { fetchDataFromApi, uploadImage } from "@/utils/api";
 import Cookies from "js-cookie";
 import Image from "next/image";
@@ -165,13 +171,13 @@ const AccountSidebar = () => {
           </NavLink>
         </li>
 
-        {/* <li className="w-full">
-          <NavLink href="/my-account/address" activeClassName="active">
+        <li className="w-full">
+          <NavLink href="/my-account/bank-details" activeClassName="active">
             <Button className="w-full !text-left !py-2 !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <LuMapPin className="text-[18px]" /> Address
+              <LuBanknote className="text-[18px]" /> Bank Details
             </Button>
           </NavLink>
-        </li> */}
+        </li>
 
         {/* <li className="w-full">
           <NavLink href="/my-list" activeClassName="active">
@@ -184,7 +190,7 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/my-orders" activeClassName="active">
             <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <IoBagCheckOutline className="text-[17px]" /> My Orders
+              <IoBagHandle className="text-[17px]" /> My Orders
             </Button>
           </NavLink>
         </li>
@@ -192,7 +198,7 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/my-reports" activeClassName="active">
             <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <IoBagCheckOutline className="text-[17px]" />
+              <IoBarChart className="text-[17px]" />
               My Reports
             </Button>
           </NavLink>
@@ -201,7 +207,7 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/product-inventory" activeClassName="active">
             <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <IoBagCheckOutline className="text-[17px]" /> Product Inventory
+              <IoFileTrayFull className="text-[17px]" /> Product Inventory
             </Button>
           </NavLink>
         </li>
@@ -209,7 +215,7 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/withdrawal" activeClassName="active">
             <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <IoBagCheckOutline className="text-[17px]" /> Withdrawal
+              <IoCashOutline className="text-[17px]" /> Withdrawal
             </Button>
           </NavLink>
         </li>
