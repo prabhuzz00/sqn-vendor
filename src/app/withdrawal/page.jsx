@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AccountSidebar from "@/components/AccountSidebar";
 import { Button } from "@mui/material";
 import { FaAngleDown } from "react-icons/fa6";
@@ -9,57 +9,32 @@ import { deleteData, fetchDataFromApi } from "@/utils/api";
 import Pagination from "@mui/material/Pagination";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { MyContext } from "@/context/ThemeProvider";
 
 const Withdrawal = () => {
-  const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [productData, setProductData] = useState([]);
   const [page, setPage] = useState(0);
+  const [balance, setBalance] = useState(0);
+  const [withdrawals, setWithdrawals] = useState([]);
+
   const router = useRouter();
-  const isShowOrderdProduct = (index) => {
-    if (isOpenOrderdProduct === index) {
-      setIsOpenOrderdProduct(null);
-    } else {
-      setIsOpenOrderdProduct(index);
+
+  const context = useContext(MyContext);
+
+  useEffect(() => {
+    if (context?.userData?._id !== "" && context?.userData?._id !== undefined) {
+      setBalance(context?.userData?.availableBalance);
     }
-  };
+  }, [context?.userData]);
 
-  const deleteProduct = (id) => {
-    deleteData(`/api/product/${id}`)
-      .then((res) => {
-        getProducts();
-        toast.success("Product deleted successfully!");
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const handleEdit = (productId) => {
-    router.push(`/product-inventory/edit-product/${productId}`);
-  };
-
-  const getProducts = () => {
-    const vendorId = localStorage.getItem("vendorId");
-    fetchDataFromApi(
-      `/api/product/getAllProductsForVendorId?vendorId=${vendorId}&page=${
-        page + 1
-      }&limit=${20}`
-    ).then((res) => {
-      console.log("res my products : ", res);
-      if (!res?.error) {
-        setProducts(res?.products);
+  useEffect(() => {
+    fetchDataFromApi("/api/withdrawal/vendor-withdrawals").then((res) => {
+      if (res?.success) {
+        setWithdrawals(res.data);
+      } else {
+        toast.error("Failed to fetch withdrawals");
       }
     });
-  };
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo(0, 0);
-    }
   }, []);
-
-  useEffect(() => {
-    getProducts();
-  }, [page]);
 
   return (
     <section className="py-5 lg:py-10 w-full">
@@ -69,6 +44,15 @@ const Withdrawal = () => {
         </div>
 
         <div className="col2 w-full lg:w-[80%]">
+          <div className="bg-white p-6 rounded-2xl shadow-md mb-6 w-full max-w-sm">
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+              Available Balance
+            </h3>
+            <p className="text-3xl font-bold text-green-600">
+              ${Number(balance).toLocaleString("en-IN")}
+            </p>
+          </div>
+
           <div className="shadow-md rounded-md bg-white">
             <div className="py-5 px-5 border-b border-[rgba(0,0,0,0.1)]">
               <div className="flex items-center pb-3">
@@ -83,13 +67,13 @@ const Withdrawal = () => {
               <p className="mt-0 mb-0">
                 There are{" "}
                 <span className="font-bold text-primary">
-                  {products?.length}
+                  {/* {products?.length} */}
                 </span>{" "}
                 withdrawal requests
               </p>
 
               <div className="relative overflow-x-auto mt-5">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
@@ -102,6 +86,15 @@ const Withdrawal = () => {
                         Amount
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Account Number
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Bank Name
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        IFSC CODE
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Date of withdrawal
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
@@ -110,37 +103,56 @@ const Withdrawal = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {products?.length !== 0 &&
-                      products?.map((product, index) => (
+                    {withdrawals?.length > 0 ? (
+                      withdrawals.map((withdrawal, index) => (
                         <tr
-                          key={index}
+                          key={withdrawal._id}
                           className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                         >
                           <td className="px-6 py-4 font-[500]">{index + 1}</td>
                           <td className="px-6 py-4 font-[500] whitespace-nowrap">
-                            {product?.transactionId}
+                            {withdrawal._id}
                           </td>
                           <td className="px-6 py-4 font-[500]">
-                            {product?.amount?.toLocaleString("en-US", {
+                            {withdrawal.withdrawal_amt.toLocaleString("en-IN", {
                               style: "currency",
-                              currency: "INR",
+                              currency: "USD",
                             })}
                           </td>
                           <td className="px-6 py-4 font-[500] whitespace-nowrap">
-                            {new Date(
-                              product?.withdrawalDate
-                            ).toLocaleDateString()}
+                            {withdrawal.bank_details.accountNo}
+                          </td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {withdrawal.bank_details.bankname}
+                          </td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {withdrawal.bank_details.IFSC}
+                          </td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {new Date(withdrawal.createdAt).toLocaleDateString(
+                              "en-IN"
+                            )}
                           </td>
                           <td className="px-6 py-4 font-[500]">
-                            {product?.status}
+                            <Badge status={withdrawal.withdrawal_status} />
                           </td>
                         </tr>
-                      ))}
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="5"
+                          className="text-center py-4 font-semibold text-gray-600"
+                        >
+                          No withdrawal requests found.
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
 
-              {products?.totalPages > 1 && (
+              {/* {products?.totalPages > 1 && (
                 <div className="flex items-center justify-center mt-10">
                   <Pagination
                     showFirstButton
@@ -150,7 +162,7 @@ const Withdrawal = () => {
                     onChange={(e, value) => setPage(value)}
                   />
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>

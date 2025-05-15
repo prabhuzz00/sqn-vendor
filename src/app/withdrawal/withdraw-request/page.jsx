@@ -1,32 +1,31 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, TextField, Select, MenuItem, FormLabel } from "@mui/material";
-import CircularProgress from '@mui/material/CircularProgress';
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  FormLabel,
+  Radio,
+} from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import { MyContext } from "@/context/ThemeProvider";
 import { useRouter } from "next/navigation";
 import { postData } from "@/utils/api";
 import AccountSidebar from "../../../components/AccountSidebar";
 import { toast } from "react-toastify";
+import { FaPlus } from "react-icons/fa";
 
 const WithdrawalRequest = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(0);
   const [selectedBank, setSelectedBank] = useState("");
+  const [userData, setUserData] = useState(null);
   const [amount, setAmount] = useState("");
+  const [balance, setBalance] = useState(0);
 
   const context = useContext(MyContext);
   const router = useRouter();
-
-  // Example bank data (replace with actual data from your context or API)
-  const banks = context?.bankData || [
-    { _id: "1", name: "State Bank of India" },
-    { _id: "2", name: "HDFC Bank" },
-    { _id: "3", name: "ICICI Bank" },
-    { _id: "4", name: "Axis Bank" },
-  ];
-
-  const handleChangeBank = (e) => {
-    setSelectedBank(e.target.value);
-  };
 
   const onChangeAmount = (e) => {
     setAmount(e.target.value);
@@ -36,38 +35,63 @@ const WithdrawalRequest = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Validation
+    // Basic validation
     if (!selectedBank) {
       context.alertBox("error", "Please select a bank");
       setIsLoading(false);
       return;
     }
-    if (!amount || amount <= 0) {
+
+    if (!amount || parseFloat(amount) <= 0) {
       context.alertBox("error", "Please enter a valid amount");
       setIsLoading(false);
       return;
     }
 
     const withdrawalData = {
-      bankId: selectedBank,
-      amount: parseFloat(amount),
-      vendorId: localStorage.getItem('vendorId'),
+      vendorId: userData?._id,
+      withdrawal_amt: parseFloat(amount),
+      bank_details: selectedBank,
     };
 
     try {
-      const res = await postData("/api/withdrawal/request", withdrawalData, { withCredentials: true });
+      const res = await postData("/api/withdrawal/create", withdrawalData); // ⬅ adjust endpoint if needed
+
       if (!res?.error) {
         toast.success("Withdrawal request submitted successfully!");
-        router.push('/withdrawal');
+        await context.getUserDetails();
+        router.push("/withdrawal");
       } else {
-        toast.error(res?.message || "There was an error");
+        toast.error(res?.message || "Something went wrong");
       }
     } catch (error) {
       toast.error("Failed to submit withdrawal request");
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  const editBank = (id) => {
+    context?.setOpenBankPanel(true);
+    context?.setBankMode("edit");
+    context?.setBankId(id);
+  };
+
+  const handleChangebank = (e, index) => {
+    if (e.target.checked) {
+      setIsChecked(index);
+      setSelectedBank(e.target.value);
+    }
+  };
+
+  useEffect(() => {
+    if (context?.userData?._id) {
+      setBalance(context?.userData?.availableBalance);
+      setUserData(context?.userData);
+      setSelectedBank(context?.userData?.bank_details[0]?._id);
+    }
+  }, [context?.userData]);
 
   return (
     <section className="py-3 lg:py-10 w-full">
@@ -82,27 +106,102 @@ const WithdrawalRequest = () => {
               <h2 className="pb-0">Request Withdrawal</h2>
             </div>
             <hr />
+            {/* 🔽 Balance Card Start */}
+            <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-6">
+              <h3 className="text-gray-700 text-sm font-medium mb-1">
+                Available Balance
+              </h3>
+              <p className="text-2xl font-bold text-green-600">
+                ${Number(balance).toLocaleString("en-IN")}
+              </p>
+            </div>
+            {/* 🔼 Balance Card End */}
 
             <form className="mt-8" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div className="col">
-                  <FormLabel>Select Bank</FormLabel>
-                  <Select
-                    size="small"
-                    className="w-full"
-                    value={selectedBank}
-                    onChange={handleChangeBank}
-                    disabled={isLoading}
-                  >
-                    <MenuItem value="" disabled>
-                      Select a bank
-                    </MenuItem>
-                    {banks.map((bank) => (
-                      <MenuItem key={bank._id} value={bank._id}>
-                        {bank.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                <div className="flex items-center justify-between">
+                  <h2>Select Bank Account</h2>
+                  {userData?.bank_details?.length !== 0 && (
+                    <Button
+                      variant="outlined"
+                      className="btn !font-bold"
+                      onClick={() => {
+                        context?.setOpenBankPanel(true);
+                        context?.setBankMode("add");
+                      }}
+                    >
+                      <FaPlus />
+                      ADD {context?.windowWidth < 767 ? "" : "NEW BANK"}
+                    </Button>
+                  )}
+                </div>
+                <br />
+
+                <div className="flex flex-col gap-4">
+                  {userData?.bank_details?.length !== 0 ? (
+                    userData?.bank_details?.map((bank, index) => {
+                      return (
+                        <label
+                          className={`flex gap-3 p-4 border border-[rgba(0,0,0,0.1)] rounded-md relative ${
+                            isChecked === index && "bg-[#fff2f2]"
+                          }`}
+                          key={index}
+                        >
+                          <div>
+                            <Radio
+                              size="small"
+                              onChange={(e) => handleChangebank(e, index)}
+                              checked={isChecked === index}
+                              value={bank?._id}
+                            />
+                          </div>
+                          <div className="info">
+                            <span className="inline-block text-[13px] font-[500] p-1 bg-[#f1f1f1] rounded-md">
+                              {bank?.bankname}
+                            </span>
+                            <h3>{userData?.name}</h3>
+                            <p className="mt-0 mb-0">
+                              {bank?.fullName +
+                                " " +
+                                bank?.accountNo +
+                                " " +
+                                bank?.IFSC +
+                                " " +
+                                bank?.Branch}
+                            </p>
+                          </div>
+
+                          <Button
+                            variant="text"
+                            className="!absolute top-[15px] right-[15px]  !font-bold"
+                            size="small"
+                            onClick={() => editBank(bank?._id)}
+                          >
+                            EDIT
+                          </Button>
+                        </label>
+                      );
+                    })
+                  ) : (
+                    <>
+                      <div className="flex items-center mt-5 justify-between flex-col p-5">
+                        <img src="/map.png" width="100" />
+                        <h2 className="text-center">
+                          No Bank Detail found in your account!
+                        </h2>
+                        <p className="mt-0">Add Your Bank Details.</p>
+                        <Button
+                          className="btn-org"
+                          onClick={() => {
+                            context?.setOpenBankPanel(true);
+                            context?.setBankMode("add");
+                          }}
+                        >
+                          ADD BANK
+                        </Button>
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 <div className="col">
