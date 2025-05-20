@@ -164,10 +164,11 @@ const LoginPageContent = () => {
       <div className="container relative z-[100] h-full flex items-center justify-center">
         <div className="card shadow-lg w-full sm:w-[400px] m-auto rounded-md bg-white p-5 px-10">
           <div className="text-center w-full flex items-center justify-center mb-3">
-            <img src="/logo.jpg" alt="logo"/>
+            <img className="w-[150px]" src="/logo.jpg" alt="logo" />
           </div>
           <h3 className="text-center text-[22px] font-semibold text-black">
-            Welcome Back!<br />
+            Welcome Back!
+            <br />
             Sign in with your credentials.
           </h3>
 

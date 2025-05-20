@@ -237,7 +237,7 @@ const BecomeVendor = () => {
       <section className="section py-5 sm:py-10 bg-white">
         <div className="container max-w-[80%]">
           <div className="flex items-center justify-between">
-            <img src="/logo.jpg" alt="logo" />
+            <img className="w-[150px]" src="/logo.jpg" alt="logo" />
             <div className="flex items-center gap-4">
               <span className="text-[16px] text-gray-700">
                 {t("bvendor.alreadyUser")}

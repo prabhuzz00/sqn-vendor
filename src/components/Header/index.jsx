@@ -87,12 +87,6 @@ const Header = ({ logo = "/sooqna.svg" }) => {
                 >
                   {t("header.growBusiness")}
                 </Link>
-                <Link
-                  href={"/"}
-                  className="font-[600] text-[14px] hover:text-primary"
-                >
-                  {t("header.noGST")}
-                </Link>
               </nav>
 
               <div className="list-none relative" style={{ zoom: "80%" }}>

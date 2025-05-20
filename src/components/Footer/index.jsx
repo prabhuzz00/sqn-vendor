@@ -78,7 +78,7 @@ const Footer = () => {
                 </li>
               </ul>
 
-              <p className="text-[13px] text-center mb-0">© 2025 - SOQQNA</p>
+              <p className="text-[13px] text-center mb-0">© 2025 - SOOUQNA</p>
 
               {/* <div className="flex items-center gap-1">
                 <img src="/carte_bleue.png" alt="image" />
