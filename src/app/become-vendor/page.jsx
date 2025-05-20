@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, Suspense } from "react";
 import {
   TextField,
   Button,
@@ -233,340 +233,344 @@ const BecomeVendor = () => {
   };
 
   return (
-    <section className="section py-5 sm:py-10 bg-white">
-      <div className="container max-w-[80%]">
-        <div className="flex items-center justify-between">
-          <img src="/logo.jpg" alt="logo" />
-          <div className="flex items-center gap-4">
-            <span className="text-[16px] text-gray-700">
-              {t("bvendor.alreadyUser")}
-            </span>
-            <Link href="/login">
-              <Button className="btn-org">{t("bvendor.login")}</Button>
-            </Link>
+    <Suspense fallback={<div>Loading...</div>}>
+      <section className="section py-5 sm:py-10 bg-white">
+        <div className="container max-w-[80%]">
+          <div className="flex items-center justify-between">
+            <img src="/logo.jpg" alt="logo" />
+            <div className="flex items-center gap-4">
+              <span className="text-[16px] text-gray-700">
+                {t("bvendor.alreadyUser")}
+              </span>
+              <Link href="/login">
+                <Button className="btn-org">{t("bvendor.login")}</Button>
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <div className="flex">
-          <div className="card w-[40%]">
-            <h3 className="text-[20px] text-black mt-4">
-              {t("bvendor.welcome")}
-            </h3>
-            <p className="text-gray-700 text-[16px] mt-1">
-              {t("bvendor.createAccount")}
-            </p>
+          <div className="flex">
+            <div className="card w-[40%]">
+              <h3 className="text-[20px] text-black mt-4">
+                {t("bvendor.welcome")}
+              </h3>
+              <p className="text-gray-700 text-[16px] mt-1">
+                {t("bvendor.createAccount")}
+              </p>
 
-            <form className="w-full mt-5" onSubmit={handleSubmit}>
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="text"
-                  id="storeName"
-                  name="storeName"
-                  value={formFields.storeName}
-                  disabled={isLoading}
-                  label={t("bvendor.storeName")}
-                  variant="standard"
-                  className="w-full"
-                  onChange={onChangeInput}
-                  required
-                />
-              </div>
-
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="text"
-                  id="storeDescription"
-                  name="storeDescription"
-                  value={formFields.storeDescription}
-                  disabled={isLoading}
-                  label={t("bvendor.storeDescription")}
-                  variant="standard"
-                  multiline
-                  rows={4}
-                  className="w-full"
-                  onChange={onChangeInput}
-                  required
-                />
-              </div>
-
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="text"
-                  id="ownerName"
-                  name="ownerName"
-                  value={formFields.ownerName}
-                  disabled={isLoading}
-                  label={t("bvendor.ownerName")}
-                  variant="standard"
-                  className="w-full"
-                  onChange={onChangeInput}
-                  required
-                />
-              </div>
-
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="email"
-                  id="emailAddress"
-                  name="emailAddress"
-                  value={formFields.emailAddress}
-                  disabled={isLoading}
-                  label={t("bvendor.emailAddress")}
-                  variant="standard"
-                  className="w-full"
-                  onChange={onChangeInput}
-                  required
-                />
-              </div>
-
-              <div className="form-group w-full mb-5">
-                <PasswordField
-                  id="password"
-                  name="password"
-                  value={formFields.password}
-                  onChange={onChangeInput}
-                  disabled={isLoading}
-                  variant="standard"
-                  label={t("bvendor.password")}
-                  required
-                />
-              </div>
-
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="tel"
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  value={formFields.phoneNumber}
-                  disabled={isLoading}
-                  label={t("bvendor.phoneNumber")}
-                  variant="standard"
-                  className="w-full"
-                  onChange={onChangeInput}
-                  required
-                />
-              </div>
-
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="text"
-                  id="storeAddress"
-                  name="storeAddress"
-                  value={formFields.storeAddress}
-                  disabled={isLoading}
-                  label={t("bvendor.storeAddress")}
-                  variant="standard"
-                  className="w-full"
-                  onChange={onChangeInput}
-                  required
-                />
-              </div>
-
-              <div className="form-group w-full mb-5">
-                <p className="text-[17px]">{t("bvendor.storeLogo")}</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {previews?.map((image, index) => (
-                    <div className="uploadBoxWrapper relative" key={index}>
-                      <span
-                        className="absolute w-[20px] h-[20px] rounded-full bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer"
-                        onClick={() => removeImg(image, index)}
-                      >
-                        <IoMdClose className="text-white text-[17px]" />
-                      </span>
-                      <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
-                        <img
-                          src={image}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  <UploadBox
-                    multiple={true}
-                    name="images"
-                    url="/api/vendor/uploadImages"
-                    setPreviewsFun={setPreviewsFun}
+              <form className="w-full mt-5" onSubmit={handleSubmit}>
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="text"
+                    id="storeName"
+                    name="storeName"
+                    value={formFields.storeName}
                     disabled={isLoading}
+                    label={t("bvendor.storeName")}
+                    variant="standard"
+                    className="w-full"
+                    onChange={onChangeInput}
+                    required
                   />
                 </div>
-              </div>
 
-              <div className="form-group w-full mb-5">
-                <p className="text-[17px]">{t("bvendor.storeBannerImages")}</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  {bannerPreviews?.map((image, index) => (
-                    <div className="uploadBoxWrapper relative" key={index}>
-                      <span
-                        className="absolute w-[20px] h-[20px] rounded-full bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer"
-                        onClick={() => removeBannerImg(image, index)}
-                      >
-                        <IoMdClose className="text-white text-[17px]" />
-                      </span>
-                      <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
-                        <img
-                          src={image}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  <UploadBox
-                    multiple={true}
-                    name="bannerImages"
-                    url="/api/vendor/uploadBannerImages"
-                    setPreviewsFun={setBannerImagesFun}
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="text"
+                    id="storeDescription"
+                    name="storeDescription"
+                    value={formFields.storeDescription}
                     disabled={isLoading}
+                    label={t("bvendor.storeDescription")}
+                    variant="standard"
+                    multiline
+                    rows={4}
+                    className="w-full"
+                    onChange={onChangeInput}
+                    required
                   />
                 </div>
-              </div>
 
-              <div className="form-group w-full mb-5">
-                <FormControl fullWidth variant="standard">
-                  <InputLabel id="product-categories-label">
-                    {t("bvendor.productCategories")}
-                  </InputLabel>
-                  {context?.catData?.length > 0 && (
-                    <Select
-                      size="small"
-                      className="w-full"
-                      value={productCat}
-                      onChange={handleChangeProductCat}
-                      disabled={isLoading}
-                    >
-                      {context?.catData?.map((cat) => (
-                        <MenuItem key={cat?._id} value={cat?._id}>
-                          {cat?.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  )}
-                </FormControl>
-              </div>
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="text"
+                    id="ownerName"
+                    name="ownerName"
+                    value={formFields.ownerName}
+                    disabled={isLoading}
+                    label={t("bvendor.ownerName")}
+                    variant="standard"
+                    className="w-full"
+                    onChange={onChangeInput}
+                    required
+                  />
+                </div>
 
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="text"
-                  id="paymentDetails"
-                  name="paymentDetails"
-                  value={formFields.paymentDetails}
-                  disabled={isLoading}
-                  label={t("bvendor.paymentDetails")}
-                  variant="standard"
-                  className="w-full"
-                  onChange={onChangeInput}
-                  required
-                />
-              </div>
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="email"
+                    id="emailAddress"
+                    name="emailAddress"
+                    value={formFields.emailAddress}
+                    disabled={isLoading}
+                    label={t("bvendor.emailAddress")}
+                    variant="standard"
+                    className="w-full"
+                    onChange={onChangeInput}
+                    required
+                  />
+                </div>
 
-              <div className="form-group w-full mb-5">
-                <TextField
-                  type="text"
-                  id="taxIdentificationNumber"
-                  name="taxIdentificationNumber"
-                  value={formFields.taxIdentificationNumber}
-                  disabled={isLoading}
-                  label={t("bvendor.taxId")}
-                  variant="standard"
-                  className="w-full"
-                  onChange={onChangeInput}
-                />
-              </div>
+                <div className="form-group w-full mb-5">
+                  <PasswordField
+                    id="password"
+                    name="password"
+                    value={formFields.password}
+                    onChange={onChangeInput}
+                    disabled={isLoading}
+                    variant="standard"
+                    label={t("bvendor.password")}
+                    required
+                  />
+                </div>
 
-              <div className="form-group w-full mb-5">
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={formFields.termsAgreement}
-                      onChange={onChangeTerms}
-                      name="termsAgreement"
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="tel"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={formFields.phoneNumber}
+                    disabled={isLoading}
+                    label={t("bvendor.phoneNumber")}
+                    variant="standard"
+                    className="w-full"
+                    onChange={onChangeInput}
+                    required
+                  />
+                </div>
+
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="text"
+                    id="storeAddress"
+                    name="storeAddress"
+                    value={formFields.storeAddress}
+                    disabled={isLoading}
+                    label={t("bvendor.storeAddress")}
+                    variant="standard"
+                    className="w-full"
+                    onChange={onChangeInput}
+                    required
+                  />
+                </div>
+
+                <div className="form-group w-full mb-5">
+                  <p className="text-[17px]">{t("bvendor.storeLogo")}</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {previews?.map((image, index) => (
+                      <div className="uploadBoxWrapper relative" key={index}>
+                        <span
+                          className="absolute w-[20px] h-[20px] rounded-full bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer"
+                          onClick={() => removeImg(image, index)}
+                        >
+                          <IoMdClose className="text-white text-[17px]" />
+                        </span>
+                        <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
+                          <img
+                            src={image}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    <UploadBox
+                      multiple={true}
+                      name="images"
+                      url="/api/vendor/uploadImages"
+                      setPreviewsFun={setPreviewsFun}
                       disabled={isLoading}
                     />
-                  }
-                  label={t("bvendor.agreeTerms")}
-                />
-              </div>
-
-              <div className="flex items-center w-full mt-3 mb-3">
-                <Button
-                  type="submit"
-                  disabled={isLoading || !validateForm()}
-                  className="btn-org btn-lg w-full flex gap-3"
-                >
-                  {isLoading ? (
-                    <CircularProgress color="inherit" />
-                  ) : (
-                    t("bvendor.submit")
-                  )}
-                </Button>
-              </div>
-            </form>
-          </div>
-
-          <div className="pl-44 w-[60%] pt-3">
-            <div className="box p-5 bg-gray-200 rounded-md w-full sticky top-10">
-              <h2>{t("bvendor.growFaster")}</h2>
-              <div className="grid grid-cols-1 mt-5 gap-5">
-                <div className="box flex items-center gap-3">
-                  <img
-                    src="https://images.meeshosupplyassets.com/supplier_community.svg"
-                    alt="img"
-                  />
-
-                  <div className="info flex flex-col gap-0">
-                    <h4>{t("bvendor.sellersCount")}</h4>
-                    <p className="mt-0 mb-0 text-[13px]">
-                      {t("bvendor.sellersNote")}{" "}
-                    </p>
                   </div>
                 </div>
 
-                <div className="box flex items-center gap-3">
-                  <img
-                    src="https://images.meeshosupplyassets.com/pincode.svg"
-                    alt="img"
-                  />
-
-                  <div className="info flex flex-col gap-0">
-                    <h4>{t("bvendor.pincodes")}</h4>
-                    <p className="mt-0 mb-0 text-[13px]">
-                      {t("bvendor.pincodesNote")}
-                    </p>
+                <div className="form-group w-full mb-5">
+                  <p className="text-[17px]">
+                    {t("bvendor.storeBannerImages")}
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {bannerPreviews?.map((image, index) => (
+                      <div className="uploadBoxWrapper relative" key={index}>
+                        <span
+                          className="absolute w-[20px] h-[20px] rounded-full bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer"
+                          onClick={() => removeBannerImg(image, index)}
+                        >
+                          <IoMdClose className="text-white text-[17px]" />
+                        </span>
+                        <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
+                          <img
+                            src={image}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    <UploadBox
+                      multiple={true}
+                      name="bannerImages"
+                      url="/api/vendor/uploadBannerImages"
+                      setPreviewsFun={setBannerImagesFun}
+                      disabled={isLoading}
+                    />
                   </div>
                 </div>
 
-                <div className="box flex items-center gap-3">
-                  <img
-                    src="https://images.meeshosupplyassets.com/reach_india.svg"
-                    alt="img"
-                  />
-
-                  <div className="info flex flex-col gap-0">
-                    <h4>{t("bvendor.buyersCount")}</h4>
-                    <p className="mt-0 mb-0 text-[13px]">
-                      {t("bvendor.buyersNote")}
-                    </p>
-                  </div>
+                <div className="form-group w-full mb-5">
+                  <FormControl fullWidth variant="standard">
+                    <InputLabel id="product-categories-label">
+                      {t("bvendor.productCategories")}
+                    </InputLabel>
+                    {context?.catData?.length > 0 && (
+                      <Select
+                        size="small"
+                        className="w-full"
+                        value={productCat}
+                        onChange={handleChangeProductCat}
+                        disabled={isLoading}
+                      >
+                        {context?.catData?.map((cat) => (
+                          <MenuItem key={cat?._id} value={cat?._id}>
+                            {cat?.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  </FormControl>
                 </div>
 
-                <div className="box flex items-center gap-3">
-                  <img
-                    src="https://images.meeshosupplyassets.com/categories.svg"
-                    alt="img"
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="text"
+                    id="paymentDetails"
+                    name="paymentDetails"
+                    value={formFields.paymentDetails}
+                    disabled={isLoading}
+                    label={t("bvendor.paymentDetails")}
+                    variant="standard"
+                    className="w-full"
+                    onChange={onChangeInput}
+                    required
                   />
+                </div>
 
-                  <div className="info flex flex-col gap-0">
-                    <h4>{t("bvendor.categoriesCount")}</h4>
-                    <p className="mt-0 mb-0 text-[13px]">
-                      {t("bvendor.categoriesNote")}
-                    </p>
+                <div className="form-group w-full mb-5">
+                  <TextField
+                    type="text"
+                    id="taxIdentificationNumber"
+                    name="taxIdentificationNumber"
+                    value={formFields.taxIdentificationNumber}
+                    disabled={isLoading}
+                    label={t("bvendor.taxId")}
+                    variant="standard"
+                    className="w-full"
+                    onChange={onChangeInput}
+                  />
+                </div>
+
+                <div className="form-group w-full mb-5">
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={formFields.termsAgreement}
+                        onChange={onChangeTerms}
+                        name="termsAgreement"
+                        disabled={isLoading}
+                      />
+                    }
+                    label={t("bvendor.agreeTerms")}
+                  />
+                </div>
+
+                <div className="flex items-center w-full mt-3 mb-3">
+                  <Button
+                    type="submit"
+                    disabled={isLoading || !validateForm()}
+                    className="btn-org btn-lg w-full flex gap-3"
+                  >
+                    {isLoading ? (
+                      <CircularProgress color="inherit" />
+                    ) : (
+                      t("bvendor.submit")
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </div>
+
+            <div className="pl-44 w-[60%] pt-3">
+              <div className="box p-5 bg-gray-200 rounded-md w-full sticky top-10">
+                <h2>{t("bvendor.growFaster")}</h2>
+                <div className="grid grid-cols-1 mt-5 gap-5">
+                  <div className="box flex items-center gap-3">
+                    <img
+                      src="https://images.meeshosupplyassets.com/supplier_community.svg"
+                      alt="img"
+                    />
+
+                    <div className="info flex flex-col gap-0">
+                      <h4>{t("bvendor.sellersCount")}</h4>
+                      <p className="mt-0 mb-0 text-[13px]">
+                        {t("bvendor.sellersNote")}{" "}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="box flex items-center gap-3">
+                    <img
+                      src="https://images.meeshosupplyassets.com/pincode.svg"
+                      alt="img"
+                    />
+
+                    <div className="info flex flex-col gap-0">
+                      <h4>{t("bvendor.pincodes")}</h4>
+                      <p className="mt-0 mb-0 text-[13px]">
+                        {t("bvendor.pincodesNote")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="box flex items-center gap-3">
+                    <img
+                      src="https://images.meeshosupplyassets.com/reach_india.svg"
+                      alt="img"
+                    />
+
+                    <div className="info flex flex-col gap-0">
+                      <h4>{t("bvendor.buyersCount")}</h4>
+                      <p className="mt-0 mb-0 text-[13px]">
+                        {t("bvendor.buyersNote")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="box flex items-center gap-3">
+                    <img
+                      src="https://images.meeshosupplyassets.com/categories.svg"
+                      alt="img"
+                    />
+
+                    <div className="info flex flex-col gap-0">
+                      <h4>{t("bvendor.categoriesCount")}</h4>
+                      <p className="mt-0 mb-0 text-[13px]">
+                        {t("bvendor.categoriesNote")}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </Suspense>
   );
 };
 
