@@ -37,128 +37,122 @@ const Withdrawal = () => {
   }, []);
 
   return (
-    <Suspense>
-      <section className="py-5 lg:py-10 w-full">
-        <div className="container flex flex-col lg:flex-row gap-5">
-          <div className="col1 w-[20%] hidden lg:block">
-            <AccountSidebar />
+    <section className="py-5 lg:py-10 w-full">
+      <div className="container flex flex-col lg:flex-row gap-5">
+        <div className="col1 w-[20%] hidden lg:block">
+          <AccountSidebar />
+        </div>
+
+        <div className="col2 w-full lg:w-[80%]">
+          <div className="bg-white p-6 rounded-2xl shadow-md mb-6 w-full max-w-sm">
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">
+              Available Balance
+            </h3>
+            <p className="text-3xl font-bold text-green-600">
+              ${Number(balance).toLocaleString("en-IN")}
+            </p>
           </div>
 
-          <div className="col2 w-full lg:w-[80%]">
-            <div className="bg-white p-6 rounded-2xl shadow-md mb-6 w-full max-w-sm">
-              <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                Available Balance
-              </h3>
-              <p className="text-3xl font-bold text-green-600">
-                ${Number(balance).toLocaleString("en-IN")}
+          <div className="shadow-md rounded-md bg-white">
+            <div className="py-5 px-5 border-b border-[rgba(0,0,0,0.1)]">
+              <div className="flex items-center pb-3">
+                <h2 className="pb-0">Withdrawals</h2>
+                <Button
+                  className="!ml-auto !font-bold"
+                  onClick={() => router.push("/withdrawal/withdraw-request")}
+                >
+                  Withdraw Request
+                </Button>
+              </div>
+              <p className="mt-0 mb-0">
+                There are{" "}
+                <span className="font-bold text-primary">
+                  {/* {products?.length} */}
+                </span>{" "}
+                withdrawal requests
               </p>
-            </div>
 
-            <div className="shadow-md rounded-md bg-white">
-              <div className="py-5 px-5 border-b border-[rgba(0,0,0,0.1)]">
-                <div className="flex items-center pb-3">
-                  <h2 className="pb-0">Withdrawals</h2>
-                  <Button
-                    className="!ml-auto !font-bold"
-                    onClick={() => router.push("/withdrawal/withdraw-request")}
-                  >
-                    Withdraw Request
-                  </Button>
-                </div>
-                <p className="mt-0 mb-0">
-                  There are{" "}
-                  <span className="font-bold text-primary">
-                    {/* {products?.length} */}
-                  </span>{" "}
-                  withdrawal requests
-                </p>
-
-                <div className="relative overflow-x-auto mt-5">
-                  <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                      <tr>
-                        <th scope="col" className="px-6 py-3">
-                          Slno.
-                        </th>
-                        <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Transaction id
-                        </th>
-                        <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Amount
-                        </th>
-                        <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Account Number
-                        </th>
-                        <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Bank Name
-                        </th>
-                        <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          IFSC CODE
-                        </th>
-                        <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Date of withdrawal
-                        </th>
-                        <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Status
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {withdrawals?.length > 0 ? (
-                        withdrawals.map((withdrawal, index) => (
-                          <tr
-                            key={withdrawal._id}
-                            className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                          >
-                            <td className="px-6 py-4 font-[500]">
-                              {index + 1}
-                            </td>
-                            <td className="px-6 py-4 font-[500] whitespace-nowrap">
-                              {withdrawal._id}
-                            </td>
-                            <td className="px-6 py-4 font-[500]">
-                              {withdrawal.withdrawal_amt.toLocaleString(
-                                "en-IN",
-                                {
-                                  style: "currency",
-                                  currency: "USD",
-                                }
-                              )}
-                            </td>
-                            <td className="px-6 py-4 font-[500] whitespace-nowrap">
-                              {withdrawal.bank_details.accountNo}
-                            </td>
-                            <td className="px-6 py-4 font-[500] whitespace-nowrap">
-                              {withdrawal.bank_details.bankname}
-                            </td>
-                            <td className="px-6 py-4 font-[500] whitespace-nowrap">
-                              {withdrawal.bank_details.IFSC}
-                            </td>
-                            <td className="px-6 py-4 font-[500] whitespace-nowrap">
-                              {new Date(
-                                withdrawal.createdAt
-                              ).toLocaleDateString("en-IN")}
-                            </td>
-                            <td className="px-6 py-4 font-[500]">
-                              <Badge status={withdrawal.withdrawal_status} />
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td
-                            colSpan="5"
-                            className="text-center py-4 font-semibold text-gray-600"
-                          >
-                            No withdrawal requests found.
+              <div className="relative overflow-x-auto mt-5">
+                <table className="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Slno.
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Transaction id
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Amount
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Account Number
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Bank Name
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        IFSC CODE
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Date of withdrawal
+                      </th>
+                      <th scope="col" className="px-6 py-3 whitespace-nowrap">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {withdrawals?.length > 0 ? (
+                      withdrawals.map((withdrawal, index) => (
+                        <tr
+                          key={withdrawal._id}
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                        >
+                          <td className="px-6 py-4 font-[500]">{index + 1}</td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {withdrawal._id}
+                          </td>
+                          <td className="px-6 py-4 font-[500]">
+                            {withdrawal.withdrawal_amt.toLocaleString("en-IN", {
+                              style: "currency",
+                              currency: "USD",
+                            })}
+                          </td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {withdrawal.bank_details.accountNo}
+                          </td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {withdrawal.bank_details.bankname}
+                          </td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {withdrawal.bank_details.IFSC}
+                          </td>
+                          <td className="px-6 py-4 font-[500] whitespace-nowrap">
+                            {new Date(withdrawal.createdAt).toLocaleDateString(
+                              "en-IN"
+                            )}
+                          </td>
+                          <td className="px-6 py-4 font-[500]">
+                            <Badge status={withdrawal.withdrawal_status} />
                           </td>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                      ))
+                    ) : (
+                      <tr>
+                        <td
+                          colSpan="5"
+                          className="text-center py-4 font-semibold text-gray-600"
+                        >
+                          No withdrawal requests found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-                {/* {products?.totalPages > 1 && (
+              {/* {products?.totalPages > 1 && (
                 <div className="flex items-center justify-center mt-10">
                   <Pagination
                     showFirstButton
@@ -169,12 +163,11 @@ const Withdrawal = () => {
                   />
                 </div>
               )} */}
-              </div>
             </div>
           </div>
         </div>
-      </section>
-    </Suspense>
+      </div>
+    </section>
   );
 };
 

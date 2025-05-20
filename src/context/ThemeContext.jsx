@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { fetchDataFromApi, postData } from "@/utils/api";
 import toast, { Toaster } from "react-hot-toast";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const ThemeProvider = ({ children }) => {
   const [openProductDetailsModal, setOpenProductDetailsModal] = useState({
@@ -16,7 +16,6 @@ const ThemeProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [userData, setUserData] = useState(null);
   const [catData, setCatData] = useState([]);
-  const [cartData, setCartData] = useState([]);
   const [myListData, setMyListData] = useState([]);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
@@ -40,19 +39,19 @@ const ThemeProvider = ({ children }) => {
   const [url, setUrl] = useState("");
 
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const fullURL = window.location.href;
-    setUrl(fullURL);
-    const loginpageExist = fullURL.includes("login");
-    const becomeVendorExist = fullURL.includes("become-vendor");
-    if (loginpageExist || becomeVendorExist) {
-      setIsHeaderFooterShow(false);
-    } else {
-      setIsHeaderFooterShow(true);
-    }
-  }, [pathname, searchParams]);
+  // useEffect(() => {
+  //   const fullURL = window.location.href;
+  //   setUrl(fullURL);
+  //   const loginpageExist = fullURL.includes("login");
+  //   const becomeVendorExist = fullURL.includes("become-vendor");
+  //   if (loginpageExist || becomeVendorExist) {
+  //     setIsHeaderFooterShow(false);
+  //   } else {
+  //     setIsHeaderFooterShow(true);
+  //   }
+  // }, [pathname, searchParams]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -108,7 +107,6 @@ const ThemeProvider = ({ children }) => {
     if (token !== undefined && token !== null && token !== "") {
       setIsLogin(true);
 
-      getCartItems();
       getMyListData();
       getUserDetails();
     } else {
@@ -200,14 +198,6 @@ const ThemeProvider = ({ children }) => {
     });
   };
 
-  const getCartItems = () => {
-    fetchDataFromApi(`/api/cart/get`).then((res) => {
-      if (res?.error === false) {
-        setCartData(res?.data);
-      }
-    });
-  };
-
   const getMyListData = () => {
     fetchDataFromApi("/api/myList").then((res) => {
       if (res?.error === false) {
@@ -235,6 +225,7 @@ const ThemeProvider = ({ children }) => {
     alertBox,
     setUserData,
     userData,
+    catData,
 
     getUserDetails,
     setAddressMode,
