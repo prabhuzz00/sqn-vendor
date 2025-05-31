@@ -103,8 +103,15 @@ const LoginPageContent = () => {
       return;
     }
 
+    const isEmail = formFields.phoneNumber.includes("@");
+    const payload = {
+      password: formFields.password,
+      ...(isEmail
+        ? { email: formFields.phoneNumber }
+        : { phoneNumber: formFields.phoneNumber }),
+    };
     try {
-      const res = await postData("/api/vendor/login", formFields, {
+      const res = await postData("/api/vendor/login", payload, {
         withCredentials: true,
       });
       console.log("Login API response:", res);
@@ -180,7 +187,7 @@ const LoginPageContent = () => {
                 name="phoneNumber"
                 value={formFields.phoneNumber}
                 disabled={isLoading}
-                label="Phone Number"
+                label="Phone/Email"
                 variant="standard"
                 className="w-full"
                 onChange={onChangeInput}

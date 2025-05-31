@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import { LanguageProvider } from "@/context/LanguageContext";
+import WhatsAppChat from "@/components/WhatsAppChat/page";
 
 export const metadata = {
   title: "Soouqna Seller",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
                 <Header />
                 {children}
                 <ToastContainer />
+                <WhatsAppChat/>
                 <Footer />
               </LanguageProvider>
             </ClientLayout>

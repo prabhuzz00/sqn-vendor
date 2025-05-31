@@ -11,7 +11,7 @@ import {
   FormControl,
   CircularProgress,
   FormLabel,
-} from "@mui/material"; // Consolidated imports
+} from "@mui/material"; 
 import { MyContext } from "@/context/ThemeProvider";
 import { vendorPostData, deleteImages } from "@/utils/api";
 import { useRouter } from "next/navigation";
@@ -41,7 +41,7 @@ const BecomeVendor = () => {
     // productCategoriesId: [],
     productCategories: [],
     commissionRate: "",
-    paymentDetails: "",
+    // paymentDetails: "",
     taxIdentificationNumber: "",
     termsAgreement: false,
     isVerified: false,
@@ -156,7 +156,7 @@ const BecomeVendor = () => {
       "password",
       "phoneNumber",
       "storeAddress",
-      "paymentDetails",
+      // "paymentDetails",
       "termsAgreement",
       "images",
     ];
@@ -173,9 +173,7 @@ const BecomeVendor = () => {
     setIsLoading(true);
 
     if (!validateForm()) {
-      toast.error(
-        "Please fill all required fields, agree to terms, ensure password is at least 6 characters, and upload at least one store logo."
-      );
+      context.alertBox("error", "Please fill all required fields correctly.");
       setIsLoading(false);
       return;
     }
@@ -214,7 +212,7 @@ const BecomeVendor = () => {
           bannerImages: [],
           productCategories: [],
           commissionRate: "",
-          paymentDetails: "",
+          // paymentDetails: "",
           taxIdentificationNumber: "",
           termsAgreement: false,
           isVerified: false,
@@ -236,7 +234,7 @@ const BecomeVendor = () => {
     <Suspense fallback={<div>Loading...</div>}>
       <section className="section py-5 sm:py-10 bg-white">
         <div className="container max-w-[80%]">
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <img className="w-[150px]" src="/logo.jpg" alt="logo" />
             <div className="flex items-center gap-4">
               <span className="text-[16px] text-gray-700">
@@ -246,7 +244,7 @@ const BecomeVendor = () => {
                 <Button className="btn-org">{t("bvendor.login")}</Button>
               </Link>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex">
             <div className="card w-[40%]">
@@ -449,21 +447,6 @@ const BecomeVendor = () => {
                 <div className="form-group w-full mb-5">
                   <TextField
                     type="text"
-                    id="paymentDetails"
-                    name="paymentDetails"
-                    value={formFields.paymentDetails}
-                    disabled={isLoading}
-                    label={t("bvendor.paymentDetails")}
-                    variant="standard"
-                    className="w-full"
-                    onChange={onChangeInput}
-                    required
-                  />
-                </div>
-
-                <div className="form-group w-full mb-5">
-                  <TextField
-                    type="text"
                     id="taxIdentificationNumber"
                     name="taxIdentificationNumber"
                     value={formFields.taxIdentificationNumber}
@@ -492,7 +475,7 @@ const BecomeVendor = () => {
                 <div className="flex items-center w-full mt-3 mb-3">
                   <Button
                     type="submit"
-                    disabled={isLoading || !validateForm()}
+                    disabled={isLoading}
                     className="btn-org btn-lg w-full flex gap-3"
                   >
                     {isLoading ? (
