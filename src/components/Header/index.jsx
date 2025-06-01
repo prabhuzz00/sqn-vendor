@@ -64,25 +64,25 @@ const Header = ({ logo = "/sooqna.svg" }) => {
                   {t("header.sellOnline")}
                 </Link>
                 <Link
-                  href={"/"}
+                  href={"/how-works"}
                   className="font-[600] text-[14px] hover:text-primary"
                 >
                   {t("header.howItWorks")}
                 </Link>
                 <Link
-                  href={"/"}
+                  href={"/pricing"}
                   className="font-[600] text-[14px] hover:text-primary"
                 >
                   {t("header.pricing")}
                 </Link>
                 <Link
-                  href={"/"}
+                  href={"/shipping"}
                   className="font-[600] text-[14px] hover:text-primary"
                 >
                   {t("header.shipping")}
                 </Link>
                 <Link
-                  href={"/"}
+                  href={"/grow-business"}
                   className="font-[600] text-[14px] hover:text-primary"
                 >
                   {t("header.growBusiness")}
