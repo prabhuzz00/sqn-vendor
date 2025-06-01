@@ -12,6 +12,7 @@ import {
   Avatar,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useTranslation } from "@/utils/useTranslation";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: "12px",
@@ -25,6 +26,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 const MyAccount = () => {
   const context = useContext(MyContext);
+  const { t } = useTranslation();
 
   useEffect(() => {
     console.log(
@@ -83,7 +85,7 @@ const MyAccount = () => {
                   variant="h4"
                   className="font-bold text-gray-900 pb-4"
                 >
-                  My Profile
+                  {t("profile.myProfile")}
                 </Typography>
                 <hr className="border-t border-gray-200" />
 
@@ -96,7 +98,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Email Address
+                        {t("profile.emailAddress")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.emailAddress}
@@ -110,7 +112,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Owner Name
+                        {t("profile.ownerName")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.ownerName}
@@ -124,7 +126,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Phone Number
+                        {t("profile.phoneNumber")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.phoneNumber}
