@@ -113,8 +113,6 @@ const AccountSidebar = () => {
         Cookies.remove("accessToken");
         Cookies.remove("refreshToken");
         context.setUserData(null);
-        context?.setCartData([]);
-        context?.setMyListData([]);
         router.push("/");
       }
     });
