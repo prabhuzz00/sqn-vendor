@@ -140,7 +140,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Store Name
+                        {t("profile.storeName")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.storeName}
@@ -154,7 +154,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Store Address
+                        {t("profile.storeAddress")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.storeAddress}
@@ -168,7 +168,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Payment Details
+                        {t("profile.paymentDetails")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.paymentDetails}
@@ -182,7 +182,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Tax Identification Number
+                        {t("profile.taxIdentificationNumber")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.taxIdentificationNumber}
@@ -196,7 +196,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Product Categories
+                        {t("profile.productCategories")}
                       </Typography>
                       <Box>
                         {displayData.productCategories.length > 0 ? (
@@ -212,7 +212,7 @@ const MyAccount = () => {
                           )
                         ) : (
                           <Typography variant="body1" className="text-gray-800">
-                            None
+                              {t("profile.none")}
                           </Typography>
                         )}
                       </Box>
@@ -225,7 +225,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Store Description
+                        {t("profile.storeDescription")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.storeDescription}
@@ -239,7 +239,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Store Logo
+                        {t("profile.storeLogo")}
                       </Typography>
                       <Typography variant="body1">
                         {displayData.storeLogo !== "None" ? (
@@ -251,7 +251,7 @@ const MyAccount = () => {
                           />
                         ) : (
                           <Typography variant="body1" className="text-gray-800">
-                            None
+                              {t("profile.none")}
                           </Typography>
                         )}
                       </Typography>
@@ -264,7 +264,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Store Banner
+                        {t("profile.storeBanner")}
                       </Typography>
                       <Typography variant="body1">
                         {displayData.storeBanner !== "None" ? (
@@ -276,7 +276,7 @@ const MyAccount = () => {
                           />
                         ) : (
                           <Typography variant="body1" className="text-gray-800">
-                            None
+                              {t("profile.none")}
                           </Typography>
                         )}
                       </Typography>
@@ -289,7 +289,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Verified
+                        {t("profile.verified")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.isVerified}
@@ -303,7 +303,7 @@ const MyAccount = () => {
                         color="textSecondary"
                         className="font-medium"
                       >
-                        Status
+                        {t("profile.status")}
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.status}

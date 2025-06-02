@@ -7,8 +7,10 @@ import Badge from "@/components/Badge";
 import { FaAngleUp } from "react-icons/fa6";
 import { fetchDataFromApi } from "@/utils/api";
 import Pagination from "@mui/material/Pagination";
+import { useTranslation } from "@/utils/useTranslation";
 
 const Orders = () => {
+  const { t } = useTranslation();
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
   const [orders, setOrders] = useState([]);
 
@@ -51,13 +53,13 @@ const Orders = () => {
         <div className="col2 w-full lg:w-[80%]">
           <div className="shadow-md rounded-md bg-white">
             <div className="py-5 px-5 border-b border-[rgba(0,0,0,0.1)]">
-              <h2>My Orders</h2>
+              <h2>{t("ordersPage.myOrders")}</h2>
               <p className="mt-0 mb-0">
-                There are{" "}
+                {t("ordersPage.thereAreOrders")}{" "}
                 <span className="font-bold text-primary">
                   {orders?.data?.length}
                 </span>{" "}
-                orders
+                {t("ordersPage.orders")}
               </p>
 
               <div className="relative overflow-x-auto mt-5">
@@ -68,37 +70,37 @@ const Orders = () => {
                         &nbsp;
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Order Id
+                        {t("ordersPage.tableHeaders.orderId")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Paymant Id
+                        {t("ordersPage.tableHeaders.paymentId")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Name
+                        {t("ordersPage.tableHeaders.name")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Phone Number
+                        {t("ordersPage.tableHeaders.phoneNumber")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Address
+                        {t("ordersPage.tableHeaders.address")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Pincode
+                        {t("ordersPage.tableHeaders.pincode")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Total Amount
+                        {t("ordersPage.tableHeaders.totalAmount")}
                       </th>
                       {/* <th scope="col" className="px-6 py-3 whitespace-nowrap">
                         Email
                       </th> */}
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        User Id
+                        {t("ordersPage.tableHeaders.userId")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Order Status
+                        {t("ordersPage.tableHeaders.phoneNumber")}
                       </th>
                       <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                        Date
+                      {t("ordersPage.tableHeaders.date")}
                       </th>
                     </tr>
                   </thead>
@@ -133,7 +135,7 @@ const Orders = () => {
                                 <span className="text-primary whitespace-nowrap text-[13px]">
                                   {order?.paymentId
                                     ? order?.paymentId
-                                    : "CASH ON DELIVERY"}
+                                    : t("ordersPage.cashOnDelivery")}
                                 </span>
                               </td>
 
@@ -199,37 +201,37 @@ const Orders = () => {
                                             scope="col"
                                             className="px-6 py-3 whitespace-nowrap"
                                           >
-                                            Product Id
+                                            {t("ordersPage.tableHeaders.productId")}
                                           </th>
                                           <th
                                             scope="col"
                                             className="px-6 py-3 whitespace-nowrap"
                                           >
-                                            Product Title
+                                            {t("ordersPage.tableHeaders.productTitle")}
                                           </th>
                                           <th
                                             scope="col"
                                             className="px-6 py-3 whitespace-nowrap"
                                           >
-                                            Image
+                                            {t("ordersPage.tableHeaders.image")}
                                           </th>
                                           <th
                                             scope="col"
                                             className="px-6 py-3 whitespace-nowrap"
                                           >
-                                            Quantity
+                                            {t("ordersPage.tableHeaders.quantity")}
                                           </th>
                                           <th
                                             scope="col"
                                             className="px-6 py-3 whitespace-nowrap"
                                           >
-                                            Price
+                                            {t("ordersPage.tableHeaders.price")}
                                           </th>
                                           <th
                                             scope="col"
                                             className="px-6 py-3 whitespace-nowrap"
                                           >
-                                            Sub Total
+                                            {t("ordersPage.tableHeaders.subTotal")}
                                           </th>
                                         </tr>
                                       </thead>

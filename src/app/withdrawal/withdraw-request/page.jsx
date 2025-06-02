@@ -15,8 +15,10 @@ import { postData } from "@/utils/api";
 import AccountSidebar from "../../../components/AccountSidebar";
 import { toast } from "react-toastify";
 import { FaPlus } from "react-icons/fa";
+import { useTranslation } from "@/utils/useTranslation";
 
 const WithdrawalRequest = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(0);
   const [selectedBank, setSelectedBank] = useState("");
@@ -37,13 +39,13 @@ const WithdrawalRequest = () => {
 
     // Basic validation
     if (!selectedBank) {
-      context.alertBox("error", "Please select a bank");
+      context.alertBox("error", t("withdrawalRequestPage.validation.selectBank") );
       setIsLoading(false);
       return;
     }
 
     if (!amount || parseFloat(amount) <= 0) {
-      context.alertBox("error", "Please enter a valid amount");
+      context.alertBox("error", t("withdrawalRequestPage.validation.validAmount"));
       setIsLoading(false);
       return;
     }
@@ -58,14 +60,14 @@ const WithdrawalRequest = () => {
       const res = await postData("/api/withdrawal/create", withdrawalData); // ⬅ adjust endpoint if needed
 
       if (!res?.error) {
-        toast.success("Withdrawal request submitted successfully!");
+        toast.success(t("withdrawalRequestPage.successMessage"));
         await context.getUserDetails();
         router.push("/withdrawal");
       } else {
         toast.error(res?.message || "Something went wrong");
       }
     } catch (error) {
-      toast.error("Failed to submit withdrawal request");
+      toast.error(t("withdrawalRequestPage.errorMessage"));
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -103,13 +105,13 @@ const WithdrawalRequest = () => {
         <div className="w-full lg:w-[80%]">
           <div className="card bg-white p-5 shadow-md rounded-md">
             <div className="flex items-center pb-3">
-              <h2 className="pb-0">Request Withdrawal</h2>
+              <h2 className="pb-0">{t("withdrawalRequestPage.requestWithdrawal")}</h2>
             </div>
             <hr />
             {/* 🔽 Balance Card Start */}
             <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-6">
               <h3 className="text-gray-700 text-sm font-medium mb-1">
-                Available Balance
+                {t("withdrawalRequestPage.availableBalance")}
               </h3>
               <p className="text-2xl font-bold text-green-600">
                 ${Number(balance).toLocaleString("en-IN")}
@@ -120,7 +122,7 @@ const WithdrawalRequest = () => {
             <form className="mt-8" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="flex items-center justify-between">
-                  <h2>Select Bank Account</h2>
+                  <h2>{t("withdrawalRequestPage.selectBankAccount")}</h2>
                   {userData?.bank_details?.length !== 0 && (
                     <Button
                       variant="outlined"
@@ -177,7 +179,7 @@ const WithdrawalRequest = () => {
                             size="small"
                             onClick={() => editBank(bank?._id)}
                           >
-                            EDIT
+                            {t("withdrawalRequestPage.edit")}
                           </Button>
                         </label>
                       );
@@ -187,9 +189,9 @@ const WithdrawalRequest = () => {
                       <div className="flex items-center mt-5 justify-between flex-col p-5">
                         <img src="/map.png" width="100" />
                         <h2 className="text-center">
-                          No Bank Detail found in your account!
+                            {t("withdrawalRequestPage.noBankDetailsFound")}
                         </h2>
-                        <p className="mt-0">Add Your Bank Details.</p>
+                          <p className="mt-0">{t("withdrawalRequestPage.addYourBankDetails")}</p>
                         <Button
                           className="btn-org"
                           onClick={() => {
@@ -197,7 +199,7 @@ const WithdrawalRequest = () => {
                             context?.setBankMode("add");
                           }}
                         >
-                          ADD BANK
+                            {t("withdrawalRequestPage.addBank")}
                         </Button>
                       </div>
                     </>
@@ -205,7 +207,7 @@ const WithdrawalRequest = () => {
                 </div>
 
                 <div className="col">
-                  <FormLabel>Amount</FormLabel>
+                  <FormLabel>{t("withdrawalRequestPage.amount")}</FormLabel>
                   <TextField
                     variant="outlined"
                     size="small"
@@ -215,7 +217,7 @@ const WithdrawalRequest = () => {
                     value={amount}
                     onChange={onChangeAmount}
                     disabled={isLoading}
-                    placeholder="Enter amount"
+                    placeholder={t("withdrawalRequestPage.enterAmount")}
                   />
                 </div>
               </div>
@@ -229,7 +231,7 @@ const WithdrawalRequest = () => {
                   {isLoading ? (
                     <CircularProgress color="inherit" />
                   ) : (
-                    "Submit Request"
+                      t("withdrawalRequestPage.submitRequest") 
                   )}
                 </Button>
               </div>

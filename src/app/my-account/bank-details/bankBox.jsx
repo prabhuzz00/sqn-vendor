@@ -4,10 +4,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MyContext } from "@/context/ThemeProvider";
+import { useTranslation } from "@/utils/useTranslation";
 
 const ITEM_HEIGHT = 48;
 
 const BankBox = (props) => {
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -82,9 +84,9 @@ const BankBox = (props) => {
             },
           }}
         >
-          <MenuItem onClick={() => editBank(props?.bank?._id)}>Edit</MenuItem>
+          <MenuItem onClick={() => editBank(props?.bank?._id)}>{t("bankBox.edit")}</MenuItem>
           <MenuItem onClick={() => removeBank(props?.bank?._id)}>
-            Delete
+            {t("bankBox.delete")}
           </MenuItem>
         </Menu>
       </div>

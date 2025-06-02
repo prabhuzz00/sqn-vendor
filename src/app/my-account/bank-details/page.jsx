@@ -9,10 +9,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 import BankBox from "./bankBox";
 import { deleteData, fetchDataFromApi } from "@/utils/api";
+import { useTranslation } from "@/utils/useTranslation";
 
 const label = { inputProps: { "aria-label": "Radio demo" } };
 
 const Bank = () => {
+  const { t } = useTranslation();
   const [bank, setBank] = useState([]);
 
   const context = useContext(MyContext);
@@ -51,7 +53,7 @@ const Bank = () => {
           <div className="col2 w-full md:w-[70%] lg:w-[50%]">
             <div className="card bg-white p-5 shadow-md rounded-md mb-5">
               <div className="flex items-center pb-3">
-                <h2 className="pb-0">Bank Details</h2>
+                <h2 className="pb-0">{t("bankPage.bankDetails")}</h2>
               </div>
               <hr />
 
@@ -62,7 +64,7 @@ const Bank = () => {
                   context?.setBankMode("add");
                 }}
               >
-                <span className="text-[14px] font-[500]">Add Bank Details</span>
+                <span className="text-[14px] font-[500]">{t("bankPage.addBankDetails")}</span>
               </div>
 
               <div className="flex gap-2 flex-col mt-4">

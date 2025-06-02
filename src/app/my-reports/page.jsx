@@ -14,8 +14,10 @@ import {
   CartesianGrid,
 } from "recharts";
 import { fetchDataFromApi } from "@/utils/api";
+import { useTranslation } from "@/utils/useTranslation";
 
 const MyReports = () => {
+  const { t } = useTranslation();
   const context = useContext(MyContext);
   const router = useRouter();
 
@@ -53,8 +55,8 @@ const MyReports = () => {
       return (
         <div className="bg-white p-2 shadow-md rounded border text-sm">
           <p className="font-semibold">{label}</p>
-          <p>TotalSales: ${data.TotalSales}</p>
-          <p>TotalOrders: {data.TotalOrders}</p>
+          <p>{t("reportsPage.tooltip.totalSales")}: ${data.TotalSales}</p>
+          <p>{t("reportsPage.tooltip.totalOrders")}: {data.TotalOrders}</p>
         </div>
       );
     }
@@ -72,9 +74,9 @@ const MyReports = () => {
         <div className="col2 w-full lg:w-[80%]">
           <div className="card bg-white p-5 shadow-md rounded-md mb-5">
             <div className="flex items-center pb-3 justify-between">
-              <h2 className="text-lg font-semibold">My Reports</h2>
+              <h2 className="text-lg font-semibold">{t("reportsPage.myReports")}</h2>
               <div className="text-sm text-gray-500">
-                Total Orders: {totalOrders}
+                {t("reportsPage.totalOrders")}: {totalOrders}
               </div>
             </div>
             <hr className="mb-5" />

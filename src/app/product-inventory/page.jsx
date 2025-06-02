@@ -9,8 +9,10 @@ import { deleteData, fetchDataFromApi } from "@/utils/api";
 import Pagination from "@mui/material/Pagination";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useTranslation } from "@/utils/useTranslation";
 
 const Products = () => {
+  const { t } = useTranslation();
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [productData, setProductData] = useState([]);
@@ -73,22 +75,22 @@ const Products = () => {
             <div className="shadow-md rounded-md bg-white">
               <div className="py-5 px-5 border-b border-[rgba(0,0,0,0.1)]">
                 <div className="flex items-center pb-3">
-                  <h2 className="pb-0">Product Inventory</h2>
+                  <h2 className="pb-0">{t("productInventoryPage.productInventory")}</h2>
                   <Button
                     className="!ml-auto !font-bold"
                     onClick={() =>
                       router.push("/product-inventory/add-product")
                     }
                   >
-                    Add Product
+                    {t("productInventoryPage.addProduct")}
                   </Button>
                 </div>
                 <p className="mt-0 mb-0">
-                  There are{" "}
+                  {t("productInventoryPage.thereAre")}{" "}
                   <span className="font-bold text-primary">
                     {products?.length}
                   </span>{" "}
-                  products
+                  {t("productInventoryPage.products")}
                 </p>
 
                 <div className="relative overflow-x-auto mt-5">
@@ -96,31 +98,31 @@ const Products = () => {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                         <th scope="col" className="px-6 py-3">
-                          Product
+                          {t("productInventoryPage.tableHeaders.product")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Category
+                          {t("productInventoryPage.tableHeaders.category")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Sub Category
+                          {t("productInventoryPage.tableHeaders.subCategory")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Price
+                          {t("productInventoryPage.tableHeaders.price")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Sales
+                          {t("productInventoryPage.tableHeaders.sales")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Stock
+                          {t("productInventoryPage.tableHeaders.stock")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Rating
+                          {t("productInventoryPage.tableHeaders.rating")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Verified?
+                          {t("productInventoryPage.tableHeaders.verified")}
                         </th>
                         <th scope="col" className="px-6 py-3 whitespace-nowrap">
-                          Action
+                          {t("productInventoryPage.tableHeaders.action")}
                         </th>
                       </tr>
                     </thead>
@@ -163,13 +165,13 @@ const Products = () => {
                                 className="!bg-[#f1f1f1] !text-black"
                                 onClick={() => handleEdit(product?._id)} // Replace with your action handler
                               >
-                                Edit
+                                {t("productInventoryPage.edit")}
                               </Button>
                               <Button
                                 className="!bg-red-600 !text-white !ml-2"
                                 onClick={() => deleteProduct(product?._id)} // Replace with your delete handler
                               >
-                                Delete
+                                {t("productInventoryPage.delete")}
                               </Button>
                             </td>
                           </tr>

@@ -14,11 +14,12 @@ import "react-international-phone/style.css";
 import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { editData, fetchDataFromApi, postData } from "@/utils/api";
+import { useTranslation } from "@/utils/useTranslation";
 
 const AddBank = () => {
   // const [phone, setPhone] = useState("");
   // const [addressType, setAddressType] = useState("");
-
+  const { t } = useTranslation();
   const [formFields, setFormsFields] = useState({
     fullName: "",
     accountNo: "",
@@ -68,27 +69,27 @@ const AddBank = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formFields.fullName === "") {
-      context.alertBox("error", "Please enter Full Name as per bank");
+      context.alertBox("error", t("bankForm.errors.fullName") );
       return false;
     }
 
     if (formFields.accountNo === "") {
-      context.alertBox("error", "Please enter Your Account Number");
+      context.alertBox("error", t("bankForm.errors.accountNumber"));
       return false;
     }
 
     if (formFields.IFSC === "") {
-      context.alertBox("error", "Please enter your IFSC");
+      context.alertBox("error", t("bankForm.errors.ifsc"));
       return false;
     }
 
     if (formFields.Branch === "") {
-      context.alertBox("error", "Please enter your Branch Name");
+      context.alertBox("error", t("bankForm.errors.branchName"));
       return false;
     }
 
     if (formFields.bankname === "") {
-      context.alertBox("error", "Please enter your bankname");
+      context.alertBox("error", t("bankForm.errors.bankName"));
       return false;
     }
 
@@ -185,7 +186,7 @@ const AddBank = () => {
       <div className="col w-[100%] mb-4">
         <TextField
           className="w-full"
-          label="Full name"
+          label={t("bankForm.fullName")}
           variant="outlined"
           size="small"
           name="fullName"
@@ -197,7 +198,7 @@ const AddBank = () => {
       <div className="col w-[100%] mb-4">
         <TextField
           className="w-full"
-          label="Account Number"
+          label={t("bankForm.accountNumber")}
           variant="outlined"
           size="small"
           name="accountNo"
@@ -209,7 +210,7 @@ const AddBank = () => {
       <div className="col w-[100%] mb-4">
         <TextField
           className="w-full"
-          label="IFSC"
+          label={t("bankForm.ifsc")}
           variant="outlined"
           size="small"
           name="IFSC"
@@ -221,7 +222,7 @@ const AddBank = () => {
       <div className="col w-[100%] mb-4">
         <TextField
           className="w-full"
-          label="Branch Name"
+          label={t("bankForm.branchName")}
           variant="outlined"
           size="small"
           name="Branch"
@@ -233,7 +234,7 @@ const AddBank = () => {
       <div className="col w-[100%] mb-4">
         <TextField
           className="w-full"
-          label="Bank Name"
+          label={t("bankForm.bankName")}
           variant="outlined"
           size="small"
           name="bankname"
@@ -296,7 +297,7 @@ const AddBank = () => {
           type="submit"
           className="btn-org btn-lg w-full flex gap-2 items-center"
         >
-          {isLoading === true ? <CircularProgress color="inherit" /> : "Save"}
+          {isLoading === true ? <CircularProgress color="inherit" /> : t("bankForm.save") }
         </Button>
       </div>
     </form>

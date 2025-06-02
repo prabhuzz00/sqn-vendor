@@ -33,8 +33,10 @@ import UploadBox from "../UploadBox";
 import { FaBox, FaCloudUploadAlt, FaImage, FaStar, FaTag } from "react-icons/fa";
 import { MdBrandingWatermark, MdCategory, MdInventory } from "react-icons/md";
 import { BsCardImage } from "react-icons/bs";
+import { useTranslation } from "@/utils/useTranslation";
 
 const ProductForm = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [productCat, setProductCat] = useState("");
   const [productSubCat, setProductSubCat] = useState("");
@@ -522,7 +524,7 @@ const ProductForm = () => {
           <Card sx={{ position: 'sticky', top: 20 }}>
             <CardContent>
               <Typography variant="h6" gutterBottom color="primary">
-                Account Dashboard
+                {t("productForm.dashboardTitle")}
               </Typography>
               {/* AccountSidebar component would be here */}
               <AccountSidebar />
@@ -537,7 +539,7 @@ const ProductForm = () => {
               <Box display="flex" alignItems="center" gap={2} mb={2}>
                 <MdInventory size={24} color="#1976d2" />
                 <Typography variant="h5" fontWeight="600">
-                  {isEditMode ? "Edit Product" : "Add New Product"}
+                  {isEditMode ? t("productForm.titleEdit") : t("productForm.titleAdd") }
                 </Typography>
               </Box>
               <Divider />
@@ -548,18 +550,18 @@ const ProductForm = () => {
                   <CardContent>
                     <Box display="flex" alignItems="center" gap={1} mb={2}>
                       <FaBox color="#1976d2" />
-                      <Typography variant="h6" color="primary">Basic Information</Typography>
+                      <Typography variant="h6" color="primary">{t("productForm.basicInfo")}</Typography>
                     </Box>
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Product Name *
+                          {t("productForm.productName")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
                           size="small"
                           fullWidth
-                          placeholder="Enter product name"
+                          placeholder={t("productForm.placeholderProductName")}
                           name="name"
                           value={formFields.name}
                           onChange={onChangeInput}
@@ -569,13 +571,13 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Arabic Name *
+                          {t("productForm.arabicName")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
                           size="small"
                           fullWidth
-                          placeholder="Enter Arabic name"
+                          placeholder={t("productForm.placeholderArabicName")}
                           name="arbName"
                           value={formFields.arbName}
                           onChange={onChangeInput}
@@ -584,7 +586,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Description *
+                          {t("productForm.description")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
@@ -592,7 +594,7 @@ const ProductForm = () => {
                           fullWidth
                           multiline
                           rows={3}
-                          placeholder="Enter product description"
+                          placeholder={t("productForm.placeholderDescription")}
                           name="description"
                           value={formFields.description}
                           onChange={onChangeInput}
@@ -603,7 +605,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Arabic Description *
+                          {t("productForm.arabicDescription")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
@@ -611,7 +613,7 @@ const ProductForm = () => {
                           fullWidth
                           multiline
                           rows={3}
-                          placeholder="Enter Arabic description"
+                          placeholder={t("productForm.placeholderArabicDescription")}
                           name="arbDescription"
                           value={formFields.arbDescription}
                           onChange={onChangeInput}
@@ -622,13 +624,13 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Brand *
+                          {t("productForm.brand")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
                           size="small"
                           fullWidth
-                          placeholder="Enter brand name"
+                          placeholder={t("productForm.placeholderBrand")}
                           InputProps={{
                             startAdornment: <MdBrandingWatermark style={{ marginRight: 8, color: '#666' }} />
                           }}
@@ -640,13 +642,13 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Tags
+                          {t("productForm.tags")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
                           size="small"
                           fullWidth
-                          placeholder="Enter tags separated by commas"
+                          placeholder={t("productForm.placeholderTags")}
                           InputProps={{
                             startAdornment: <FaTag style={{ marginRight: 8, color: '#666' }} />
                           }}
@@ -667,19 +669,19 @@ const ProductForm = () => {
                   <CardContent>
                     <Box display="flex" alignItems="center" gap={1} mb={2}>
                       <MdInventory color="#1976d2" />
-                      <Typography variant="h6" color="primary">Pricing & Inventory</Typography>
+                      <Typography variant="h6" color="primary">{t("productForm.pricingInventory")}</Typography>
                     </Box>
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={4}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Price *
+                          {t("productForm.price")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
                           size="small"
                           type="number"
                           fullWidth
-                          placeholder="0.00"
+                          placeholder={t("productForm.placeholderPrice")}
                           InputProps={{ startAdornment: <span style={{ marginRight: 4 }}>$</span> }}
                           name="price"
                           value={formFields.price}
@@ -689,14 +691,14 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Old Price *
+                          {t("productForm.oldPrice")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
                           size="small"
                           type="number"
                           fullWidth
-                          placeholder="0.00"
+                          placeholder={t("productForm.placeholderOldPrice")}
                           InputProps={{ startAdornment: <span style={{ marginRight: 4 }}>$</span> }}
                           name="oldPrice"
                           value={formFields.oldPrice}
@@ -706,7 +708,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Discount %
+                          {t("productForm.discount")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
@@ -726,7 +728,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Stock Quantity *
+                          {t("productForm.stockQuantity")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
@@ -742,7 +744,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Rating
+                          {t("productForm.rating")}
                         </FormLabel>
                         <Box display="flex" alignItems="center" gap={1}>
 
@@ -764,12 +766,12 @@ const ProductForm = () => {
                   <CardContent>
                     <Box display="flex" alignItems="center" gap={1} mb={2}>
                       <MdCategory color="#1976d2" />
-                      <Typography variant="h6" color="primary">Categories</Typography>
+                      <Typography variant="h6" color="primary">{t("productForm.categories")}</Typography>
                     </Box>
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={4}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Main Category *
+                          {t("productForm.mainCategory")}
                         </FormLabel>
                         <Select
                           size="small"
@@ -788,7 +790,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Sub Category
+                          {t("productForm.subCategory")}
                         </FormLabel>
                         <Select
                           size="small"
@@ -809,7 +811,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Third Level Category
+                          {t("productForm.thirdLevelCategory")}
                         </FormLabel>
                         <Select
                           size="small"
@@ -834,7 +836,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Featured Product
+                          {t("productForm.featuredProduct")}
                         </FormLabel>
                         <Select
                           size="small"
@@ -857,7 +859,7 @@ const ProductForm = () => {
                     <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
                       <Box display="flex" alignItems="center" gap={1}>
                         <BsCardImage color="#1976d2" />
-                        <Typography variant="h6" color="primary">Product Variations</Typography>
+                        <Typography variant="h6" color="primary">{t("productForm.productVariations")}</Typography>
                       </Box>
                       <Button
                         variant="outlined"
@@ -866,7 +868,7 @@ const ProductForm = () => {
                         onClick={handleAddVariation}
                         disabled={isLoading}
                       >
-                        Add Variation
+                        {t("productForm.addVariation")}
                       </Button>
                     </Box>
 
@@ -874,7 +876,7 @@ const ProductForm = () => {
                     {variations.map((variation, index) => (
                       <Paper key={index} sx={{ p: 2, mb: 2, bgcolor: '#fafafa', border: '1px solid #e0e0e0' }}>
                         <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
-                          <Typography variant="subtitle1" fontWeight="500">Variation #{index + 1}</Typography>
+                          <Typography variant="subtitle1" fontWeight="500">{t("productForm.variation")} #{index + 1}</Typography>
                           <IconButton
                             size="small"
                             color="error"
@@ -888,7 +890,7 @@ const ProductForm = () => {
                         <Grid container spacing={2}>
                           <Grid item xs={12} md={6}>
                             <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                              Color
+                              {t("productForm.color")}
                             </FormLabel>
                             <Select
                               size="small"
@@ -900,7 +902,7 @@ const ProductForm = () => {
                               }
                               disabled={isLoading}
                             >
-                              <MenuItem value="">Select Color</MenuItem>
+                              <MenuItem value="">{t("productForm.selectColor")}</MenuItem>
                               {productRamsData.map((colorOption) => (
                                 <MenuItem
                                   key={colorOption._id}
@@ -913,7 +915,7 @@ const ProductForm = () => {
                           </Grid>
                           <Grid item xs={12}>
                             <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                              Color Images
+                              {t("productForm.Images")}
                             </FormLabel>
                             <Box display="flex" gap={1} flexWrap="wrap">
                               <Grid item xs={6} sm={3}>
@@ -980,7 +982,7 @@ const ProductForm = () => {
 
                         <Box mt={2}>
                           <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
-                            <FormLabel sx={{ fontWeight: 500 }}>Sizes</FormLabel>
+                            <FormLabel sx={{ fontWeight: 500 }}>{t("productForm.sizes")}</FormLabel>
                             <Button
                               variant="text"
                               size="small"
@@ -988,7 +990,7 @@ const ProductForm = () => {
                               onClick={() => handleAddSize(index)}
                               disabled={isLoading}
                             >
-                              Add Size
+                              {t("productForm.addSize")}
                             </Button>
                           </Box>
 
@@ -1006,7 +1008,7 @@ const ProductForm = () => {
                                   }
                                   disabled={isLoading}
                                 >
-                                  <MenuItem value="">Size</MenuItem>
+                                  <MenuItem value="">{t("productForm.size")}</MenuItem>
                                   {productSizeData.map((sizeOption) => (
                                     <MenuItem
                                       key={sizeOption._id}
@@ -1021,7 +1023,7 @@ const ProductForm = () => {
                                 <TextField
                                   size="small"
                                   type="number"
-                                  placeholder="Price"
+                                  placeholder={t("productForm.price")}
                                   fullWidth
                                   value={size.price}
                                   onChange={(e) =>
@@ -1034,7 +1036,7 @@ const ProductForm = () => {
                                 <TextField
                                   size="small"
                                   type="number"
-                                  placeholder="Stock"
+                                  placeholder={t("productForm.stock")}
                                   fullWidth
                                   value={size.countInStock}
                                   onChange={(e) =>
@@ -1066,7 +1068,7 @@ const ProductForm = () => {
                   <CardContent>
                     <Box display="flex" alignItems="center" gap={1} mb={2}>
                       <FaImage color="#1976d2" />
-                      <Typography variant="h6" color="primary">Product Images</Typography>
+                      <Typography variant="h6" color="primary">{t("productForm.productImages")}</Typography>
                     </Box>
                     <Grid container spacing={2}>
                       {/* Existing images mapped here */}
@@ -1124,10 +1126,10 @@ const ProductForm = () => {
                     <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
                       <Box display="flex" alignItems="center" gap={1}>
                         <BsCardImage color="#1976d2" />
-                        <Typography variant="h6" color="primary">Banner Settings</Typography>
+                        <Typography variant="h6" color="primary">{t("productForm.bannerSettings")}</Typography>
                       </Box>
                       <Box display="flex" alignItems="center" gap={1}>
-                        <Typography variant="body2">Display on Banner</Typography>
+                        <Typography variant="body2">{t("productForm.displayOnBanner")}</Typography>
                         <Switch
                           checked={checkedSwitch}
                           onChange={handleChangeSwitch}
@@ -1139,13 +1141,13 @@ const ProductForm = () => {
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Banner Title
+                          {t("productForm.bannerTitle")}
                         </FormLabel>
                         <TextField
                           variant="outlined"
                           size="small"
                           fullWidth
-                          placeholder="Enter banner title"
+                          placeholder={t("productForm.enterBannerTitle")}
                           name="bannerTitleName"
                           value={formFields.bannerTitleName}
                           onChange={onChangeInput}
@@ -1154,7 +1156,7 @@ const ProductForm = () => {
                       </Grid>
                       <Grid item xs={12}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
-                          Banner Images
+                          {t("productForm.bannerImages")}
                         </FormLabel>
                         <Grid container spacing={2}>
                           {/* Banner images mapped here */}
@@ -1218,7 +1220,7 @@ const ProductForm = () => {
                         sx={{ minWidth: 120 }}
                         disabled={isLoading}
                       >
-                        Cancel
+                        {t("productForm.cancel")}
                       </Button>
                       <Button
                         type="submit"
@@ -1234,7 +1236,7 @@ const ProductForm = () => {
                         sx={{ minWidth: 200 }}
                         disabled={isLoading}
                       >
-                        {isEditMode ? "Update Product" : "Publish Product"}
+                        {isEditMode ? t("productForm.updateProduct") : t("productForm.publishProduct")}
                       </Button>
                     </Box>
                   </CardContent>

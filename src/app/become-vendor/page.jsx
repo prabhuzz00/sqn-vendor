@@ -11,7 +11,7 @@ import {
   FormControl,
   CircularProgress,
   FormLabel,
-} from "@mui/material"; 
+} from "@mui/material";
 import { MyContext } from "@/context/ThemeProvider";
 import { vendorPostData, deleteImages } from "@/utils/api";
 import { useRouter } from "next/navigation";
@@ -112,7 +112,7 @@ const BecomeVendor = () => {
       setBannerPreviews(imgArr);
       setFormFields((prev) => ({
         ...prev,
-        bannerimages: imgArr,
+        bannerImages: imgArr, // Fixed: was "bannerimages"
       }));
     }, 10);
   };
@@ -159,6 +159,7 @@ const BecomeVendor = () => {
       // "paymentDetails",
       "termsAgreement",
       "images",
+      // Note: "bannerImages" is intentionally excluded to make it optional
     ];
     return requiredFields.every((field) => {
       if (field === "termsAgreement") return formFields[field] === true;
@@ -185,6 +186,7 @@ const BecomeVendor = () => {
         key === "images" ||
         key === "bannerImages"
       ) {
+        // Always append bannerImages, even if empty array
         formData.append(key, JSON.stringify(formFields[key] || []));
       } else {
         formData.append(key, formFields[key]);
@@ -392,7 +394,7 @@ const BecomeVendor = () => {
 
                 <div className="form-group w-full mb-5">
                   <p className="text-[17px]">
-                    {t("bvendor.storeBannerImages")}
+                    {t("bvendor.storeBannerImages")} <span className="text-gray-500 text-[14px]">(Optional)</span>
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {bannerPreviews?.map((image, index) => (
