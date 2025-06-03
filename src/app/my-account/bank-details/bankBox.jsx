@@ -41,6 +41,7 @@ const BankBox = (props) => {
       <h4 className="pt-2 flex items-center gap-4 text-[14px]">
         <span>{context?.userData?.name} </span>
         {/* <span>+{props?.bank?.mobile}</span> */}
+        {console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",context?.userData?.name)}
       </h4>
 
       <span className="pt-0 text-[13px] block w-100">

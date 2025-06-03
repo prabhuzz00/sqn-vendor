@@ -11,9 +11,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import CircularProgress from "@mui/material/CircularProgress";
 import { fetchDataFromApi, postData } from "@/utils/api";
 import { toast } from "react-toastify";
+import { useTranslation } from "@/utils/useTranslation";
 // import { useSession, signIn } from "next-auth/react";
 
 const LoginPageContent = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [formFields, setFormFields] = useState({
@@ -49,7 +51,7 @@ const LoginPageContent = () => {
 
   const forgotPassword = () => {
     if (formFields.phoneNumber === "") {
-      context.alertBox("error", "Please enter phoneNumber id");
+      context.alertBox("error", t("login.enterPhoneNumber") );
       return;
     }
 
@@ -92,13 +94,13 @@ const LoginPageContent = () => {
     setIsLoading(true);
 
     if (formFields.phoneNumber === "") {
-      context.alertBox("error", "Please enter phoneNumber id");
+      context.alertBox("error", t("login.enterPhoneNumber"));
       setIsLoading(false);
       return;
     }
 
     if (formFields.password === "") {
-      context.alertBox("error", "Please enter password");
+      context.alertBox("error", t("login.enterPassword"));
       setIsLoading(false);
       return;
     }
@@ -118,7 +120,7 @@ const LoginPageContent = () => {
 
       if (res?.error !== true && res?.data?.accesstoken) {
         setIsLoading(false);
-        context.alertBox("success", res?.message || "Login successful");
+        context.alertBox("success", res?.message || t("login.loginSuccessful"));
         setFormFields({
           phoneNumber: "",
           password: "",
@@ -139,7 +141,7 @@ const LoginPageContent = () => {
         console.log("handleSubmit: Redirecting to:", redirectUrl);
         router.push(redirectUrl);
       } else {
-        toast.error("Login failed");
+        toast.error(t("login.loginFailed"));
         setIsLoading(false);
       }
     } catch (error) {
@@ -174,9 +176,9 @@ const LoginPageContent = () => {
             <img className="w-[150px]" src="/logo.jpg" alt="logo" />
           </div>
           <h3 className="text-center text-[22px] font-semibold text-black">
-            Welcome Back!
+            {t("login.welcomeBack")}
             <br />
-            Sign in with your credentials.
+            {t("login.signInWithCredentials")}
           </h3>
 
           <form className="w-full mt-5" onSubmit={handleSubmit}>
@@ -187,7 +189,7 @@ const LoginPageContent = () => {
                 name="phoneNumber"
                 value={formFields.phoneNumber}
                 disabled={isLoading}
-                label="Phone/Email"
+                label={t("login.phoneOrEmail")}
                 variant="standard"
                 className="w-full"
                 onChange={onChangeInput}
@@ -198,7 +200,7 @@ const LoginPageContent = () => {
               <TextField
                 type={isPasswordShow ? "text" : "password"}
                 id="password"
-                label="Password"
+                label={t("login.password")}
                 variant="standard"
                 className="w-full"
                 name="password"
@@ -222,7 +224,7 @@ const LoginPageContent = () => {
               className="link cursor-pointer text-[14px] font-[600]"
               onClick={forgotPassword}
             >
-              Forgot Password?
+              {t("login.forgotPassword")}
             </a>
 
             <div className="flex items-center w-full mt-3 mb-3">
@@ -231,17 +233,17 @@ const LoginPageContent = () => {
                 disabled={!valideValue || isLoading}
                 className="btn-org btn-lg w-full flex gap-3"
               >
-                {isLoading ? <CircularProgress color="inherit" /> : "Login"}
+                {isLoading ? <CircularProgress color="inherit" /> : t("login.login") }
               </Button>
             </div>
 
             <p className="text-center">
-              Not Registered?{" "}
+              {t("login.notRegistered")}{" "}
               <Link
                 className="link text-[14px] font-[600] text-primary"
                 href="/become-vendor"
               >
-                Become Vendor
+                {t("login.becomeVendor")}
               </Link>
             </p>
           </form>

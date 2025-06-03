@@ -26,8 +26,10 @@ import { ProductZoom } from "../ProductZoom";
 import { IoCloseSharp } from "react-icons/io5";
 import { ProductDetailsComponent } from "../ProductDetails";
 import AddBank from "@/app/my-account/addBank";
+import { useTranslation } from "@/utils/useTranslation";
 
 const Footer = () => {
+  const {t} = useTranslation();
   const context = useContext(MyContext);
 
   return (
@@ -100,10 +102,10 @@ const Footer = () => {
         className="addressPanel"
       >
         <div className="flex items-center justify-between py-3 px-4 gap-3 border-b border-[rgba(0,0,0,0.1)] overflow-hidden">
-          <h4>{context?.bankMode === "add" ? "Add" : "Edit"} Bank Details </h4>
+          <h4>{context?.bankMode === "add" ? t("bankPage.addBankDetails") : `${t("bankBox.edit")} ${t("bankPage.bankDetails")}`}  </h4>
           <IoCloseSharp
             className="text-[20px] cursor-pointer"
-            onClick={context.toggleBankPanel(false)}
+            onClick={context.toggleBankPanel(false)}  
           />
         </div>
 

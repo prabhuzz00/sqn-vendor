@@ -1,19 +1,21 @@
 'use client';
 import React, { useState } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
+import { useTranslation } from '@/utils/useTranslation';
 
 const WhatsAppChat = () => {
+    const {t} = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState('');
 
     const whatsappNumber = '918799720115'; 
 
     const quickMessages = [
-        'Hi! I need help with my order',
-        'I want to know about product availability',
-        'I have a question about shipping',
-        'I need help with returns/exchanges',
-        'I want to track my order'
+        t("whatsappChat.quickMessages.helpWithOrder"),
+        t("whatsappChat.quickMessages.productAvailability"),
+        t("whatsappChat.quickMessages.shippingQuestion"),
+        t("whatsappChat.quickMessages.returnsHelp"),
+        t("whatsappChat.quickMessages.trackOrder")
     ];
 
     const sendToWhatsApp = (messageText = message) => {
@@ -49,8 +51,8 @@ const WhatsAppChat = () => {
                                     <MessageCircle size={16} className="text-green-500" />
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold">Customer Support</h3>
-                                    <p className="text-xs opacity-90">We reply within minutes</p>
+                                        <h3 className="font-semibold">{t("whatsappChat.customerSupport")}</h3>
+                                        <p className="text-xs opacity-90">{t("whatsappChat.replyTime")}</p>
                                 </div>
                             </div>
                             <button
@@ -66,14 +68,14 @@ const WhatsAppChat = () => {
                             {/* Welcome Message */}
                             <div className="bg-gray-100 rounded-lg p-3 mb-4">
                                 <p className="text-sm text-gray-700">
-                                    👋 Hi there! How can we help you today?
+                                        👋 {t("whatsappChat.welcomeMessage")}
                                 </p>
                             </div>
 
                             {/* Quick Message Buttons */}
                             <div className="space-y-2 mb-4">
                                 <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">
-                                    Quick Questions:
+                                        {t("whatsappChat.quickQuestions")}
                                 </p>
                                 {quickMessages.map((quickMsg, index) => (
                                     <button
@@ -88,13 +90,13 @@ const WhatsAppChat = () => {
 
                             {/* Custom Message Input */}
                             <div className="border-t pt-4">
-                                <p className="text-xs text-gray-500 mb-2">Or send a custom message:</p>
+                                    <p className="text-xs text-gray-500 mb-2">{t("whatsappChat.customMessageLabel")}</p>
                                 <div className="flex space-x-2">
                                     <input
                                         type="text"
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
-                                        placeholder="Type your message..."
+                                            placeholder={t("whatsappChat.inputPlaceholder")}
                                         className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                                         onKeyPress={(e) => e.key === 'Enter' && message.trim() && sendToWhatsApp()}
                                     />
@@ -112,7 +114,7 @@ const WhatsAppChat = () => {
                         {/* Footer */}
                         <div className="bg-gray-50 px-4 py-2 text-center">
                             <p className="text-xs text-gray-500">
-                                Youll be redirected to WhatsApp
+                                    {t("whatsappChat.redirectNote")}
                             </p>
                         </div>
                     </div>
