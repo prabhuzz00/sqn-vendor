@@ -5,7 +5,7 @@ import {
   TextField,
   Select,
   MenuItem,
-  Rating,
+  // Rating,
   Switch,
   FormLabel,
   Box,
@@ -66,7 +66,7 @@ const ProductForm = () => {
     thirdsubCatId: "",
     thirdsubCat: "",
     isFeatured: false,
-    rating: 1,
+    // rating: 1,
     isDisplayOnHomeBanner: false,
     images: [],
     bannerimages: [],
@@ -133,7 +133,7 @@ const ProductForm = () => {
               thirdsubCatId: product.thirdsubCatId || "",
               thirdsubCat: product.thirdsubCat || "",
               isFeatured: product.isFeatured || false,
-              rating: product.rating || 1,
+              // rating: product.rating || 1,
               isDisplayOnHomeBanner: product.isDisplayOnHomeBanner || false,
               images: product.images || [],
               bannerimages: product.bannerimages || [],
@@ -337,12 +337,12 @@ const ProductForm = () => {
     }));
   };
 
-  const onChangeRating = (e, newValue) => {
-    setFormFields((prev) => ({
-      ...prev,
-      rating: newValue,
-    }));
-  };
+  // const onChangeRating = (e, newValue) => {
+  //   setFormFields((prev) => ({
+  //     ...prev,
+  //     rating: newValue,
+  //   }));
+  // };
 
   const handleChangeSwitch = (e) => {
     setCheckedSwitch(e.target.checked);
@@ -470,11 +470,11 @@ const ProductForm = () => {
       return;
     }
 
-    if (formFields.rating === "") {
-      context.alertBox("error", "Please enter product rating");
-      setIsLoading(false);
-      return;
-    }
+    // if (formFields.rating === "") {
+    //   context.alertBox("error", "Please enter product rating");
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     if (previews.length === 0) {
       context.alertBox("error", "Please select product images");
@@ -742,7 +742,7 @@ const ProductForm = () => {
                           disabled={isLoading}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
+                      {/* <Grid item xs={12} md={6}>
                         <FormLabel sx={{ display: 'block', mb: 1, fontWeight: 500 }}>
                           {t("productForm.rating")}
                         </FormLabel>
@@ -756,7 +756,7 @@ const ProductForm = () => {
                             disabled={isLoading}
                           />
                         </Box>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </CardContent>
                 </Card>
@@ -1224,6 +1224,7 @@ const ProductForm = () => {
                       </Button>
                       <Button
                         type="submit"
+                        onClick={handleSubmit}
                         variant="contained"
                         size="large"
                         startIcon={

@@ -48,7 +48,7 @@ const MyAccount = () => {
       context.userData.emailAddress || context.userData.email || "N/A",
     isVerified: context.userData.isVerified ? "Yes" : "No",
     ownerName: context.userData.ownerName || "N/A",
-    paymentDetails: context.userData.paymentDetails || "N/A",
+    // paymentDetails: context.userData.paymentDetails || "N/A",
     phoneNumber:
       context.userData.phoneNumber || context.userData.mobile || "N/A",
     productCategories: context.userData.productCategories || [],
@@ -162,7 +162,7 @@ const MyAccount = () => {
                     </Grid>
 
                     {/* Payment Details */}
-                    <Grid item xs={12} sm={6}>
+                    {/* <Grid item xs={12} sm={6}>
                       <Typography
                         variant="subtitle1"
                         color="textSecondary"
@@ -173,7 +173,7 @@ const MyAccount = () => {
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.paymentDetails}
                       </Typography>
-                    </Grid>
+                    </Grid> */}
 
                     {/* Tax Identification Number */}
                     <Grid item xs={12} sm={6}>
