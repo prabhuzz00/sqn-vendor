@@ -1,18 +1,16 @@
 "use client";
-import { MyContext } from "@/context/ThemeProvider";
+
 import React, { Suspense, useContext, useEffect, useState } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { TextField, Button, CircularProgress } from "@mui/material";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
-// import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter, useSearchParams } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
+import Image from "next/image"; // ← NEW
+import { MyContext } from "@/context/ThemeProvider";
 import { fetchDataFromApi, postData } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useTranslation } from "@/utils/useTranslation";
-// import { useSession, signIn } from "next-auth/react";
 
 const LoginPageContent = () => {
   const { t } = useTranslation();
@@ -27,83 +25,58 @@ const LoginPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Redirect authenticated users
+  /* Redirect if already logged in ----------------------------------- */
   useEffect(() => {
-    console.log(
-      "useEffect: context.isLogin:",
-      context.isLogin,
-      "Cookies:",
-      Cookies.get("accessToken")
-    );
     if (context.isLogin) {
-      const redirectUrl = searchParams.get("redirect") || "/my-account";
-      console.log("Attempting redirect to:", redirectUrl);
-      router.push(redirectUrl);
+      router.push(searchParams.get("redirect") || "/my-account");
     }
   }, [context.isLogin, router, searchParams]);
 
-  // Scroll to top on mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo(0, 0);
-    }
-  }, []);
+  /* Scroll to top on mount ------------------------------------------ */
+  useEffect(() => window?.scrollTo(0, 0), []);
+
+  /* ---------------------------------------------------------------- */
+  /* Helpers                                                          */
+  /* ---------------------------------------------------------------- */
+  const onChangeInput = ({ target: { name, value } }) =>
+    setFormFields((prev) => ({ ...prev, [name]: value }));
 
   const forgotPassword = () => {
-    if (formFields.phoneNumber === "") {
-      context.alertBox("error", t("login.enterPhoneNumber") );
+    if (!formFields.phoneNumber) {
+      context.alertBox("error", t("login.enterPhoneNumber"));
       return;
     }
 
-    context.alertBox("success", `OTP sent to ${formFields.email}`);
     Cookies.set("userEmail", formFields.phoneNumber);
     Cookies.set("actionType", "forgot-password");
 
     postData("/api/user/forgot-password", {
       phoneNumber: formFields.phoneNumber,
     }).then((res) => {
-      if (res?.error === false) {
-        context.alertBox("success", res?.message);
+      if (!res?.error) {
+        context.alertBox("success", res.message);
         router.push("/verifyAccount");
       } else {
-        context.alertBox("error", res?.message);
+        context.alertBox("error", res.message);
       }
     });
   };
 
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setFormFields((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const valid = formFields.phoneNumber && formFields.password;
 
-  const valideValue = Object.values(formFields).every((el) => el);
+  const getVendorDetails = () =>
+    fetchDataFromApi("/api/vendor/vendor-details")
+      .then((res) => context.setUserData(res.data))
+      .catch(console.error);
 
-  const getVendorDetails = () => {
-    fetchDataFromApi(`/api/vendor/vendor-details`)
-      .then((res) => {
-        context?.setUserData(res.data);
-      })
-      .catch((err) => console.log("error : ", err));
-  };
-
+  /* ---------------------------------------------------------------- */
+  /* Submit                                                            */
+  /* ---------------------------------------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!valid) return;
+
     setIsLoading(true);
-
-    if (formFields.phoneNumber === "") {
-      context.alertBox("error", t("login.enterPhoneNumber"));
-      setIsLoading(false);
-      return;
-    }
-
-    if (formFields.password === "") {
-      context.alertBox("error", t("login.enterPassword"));
-      setIsLoading(false);
-      return;
-    }
 
     const isEmail = formFields.phoneNumber.includes("@");
     const payload = {
@@ -112,69 +85,67 @@ const LoginPageContent = () => {
         ? { email: formFields.phoneNumber }
         : { phoneNumber: formFields.phoneNumber }),
     };
+
     try {
       const res = await postData("/api/vendor/login", payload, {
         withCredentials: true,
       });
-      console.log("Login API response:", res);
 
-      if (res?.error !== true && res?.data?.accesstoken) {
-        setIsLoading(false);
-        context.alertBox("success", res?.message || t("login.loginSuccessful"));
-        setFormFields({
-          phoneNumber: "",
-          password: "",
-        });
+      if (!res?.error && res?.data?.accesstoken) {
+        context.alertBox("success", res.message || t("login.loginSuccessful"));
+        setFormFields({ phoneNumber: "", password: "" });
 
         Cookies.set("accessToken", res.data.accesstoken, { path: "/" });
         Cookies.set("refreshToken", res.data.refreshToken, { path: "/" });
         localStorage.setItem("accessToken", res.data.accesstoken);
         localStorage.setItem("vendorId", res.data.vendorId);
         context.setIsLogin(true);
-        // context.setUserData({
-        //   name: res.data.name || formFields.phoneNumber.split("@")[0],
-        //   phoneNumber: formFields.phoneNumber,
-        // });
         getVendorDetails();
 
-        const redirectUrl = searchParams.get("redirect") || "/";
-        console.log("handleSubmit: Redirecting to:", redirectUrl);
-        router.push(redirectUrl);
+        router.push(searchParams.get("redirect") || "/");
       } else {
         toast.error(t("login.loginFailed"));
-        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      toast.error("An error occurred during login");
+    } catch (err) {
+      console.error(err);
+      toast.error(t("login.error"));
+    } finally {
       setIsLoading(false);
     }
   };
 
+  /* ---------------------------------------------------------------- */
+  /* Render                                                            */
+  /* ---------------------------------------------------------------- */
   return (
     <section className="section py-5 sm:py-10 relative signInPage">
+      {/* decorative wave ------------------------------------------------ */}
       <div className="shape-bottom">
-        {" "}
         <svg
           fill="#fff"
-          id="Layer_1"
-          x="0px"
-          y="0px"
           viewBox="0 0 1921 819.8"
           style={{ enableBackground: "new 0 0 1921 819.8" }}
         >
-          {" "}
           <path
-            class="st0"
-            d="M1921,413.1v406.7H0V0.5h0.4l228.1,598.3c30,74.4,80.8,130.6,152.5,168.6c107.6,57,212.1,40.7,245.7,34.4 c22.4-4.2,54.9-13.1,97.5-26.6L1921,400.5V413.1z"
-          ></path>{" "}
+            className="st0"
+            d="M1921,413.1v406.7H0V0.5h0.4l228.1,598.3c30,74.4,80.8,130.6,152.5,168.6
+               c107.6,57,212.1,40.7,245.7,34.4c22.4-4.2,54.9-13.1,97.5-26.6L1921,400.5V413.1z"
+          />
         </svg>
       </div>
-      <div className="container relative z-[100] h-full flex items-center justify-center">
-        <div className="card shadow-lg w-full sm:w-[400px] m-auto rounded-md bg-white p-5 px-10">
-          <div className="text-center w-full flex items-center justify-center mb-3">
-            <img className="w-[150px]" src="/logo.jpg" alt="logo" />
+
+      {/* card ----------------------------------------------------------- */}
+      <div className="container z-[100] relative flex items-center justify-center">
+        <div className="card shadow-lg w-full sm:w-[400px] bg-white rounded-md p-5 px-10">
+          <div className="flex justify-center mb-3">
+            <Image /* ← optimised image */
+              src="/logo.jpg"
+              alt="Surprise King logo"
+              width={150}
+              height={50}
+            />
           </div>
+
           <h3 className="text-center text-[22px] font-semibold text-black">
             {t("login.welcomeBack")}
             <br />
@@ -182,9 +153,9 @@ const LoginPageContent = () => {
           </h3>
 
           <form className="w-full mt-5" onSubmit={handleSubmit}>
+            {/* phone / email -------------------------------------------- */}
             <div className="form-group w-full mb-5">
               <TextField
-                type="phone"
                 id="phoneNumber"
                 name="phoneNumber"
                 value={formFields.phoneNumber}
@@ -196,21 +167,22 @@ const LoginPageContent = () => {
               />
             </div>
 
+            {/* password -------------------------------------------------- */}
             <div className="form-group w-full mb-5 relative">
               <TextField
-                type={isPasswordShow ? "text" : "password"}
                 id="password"
+                name="password"
+                type={isPasswordShow ? "text" : "password"}
+                value={formFields.password}
+                disabled={isLoading}
                 label={t("login.password")}
                 variant="standard"
                 className="w-full"
-                name="password"
-                value={formFields.password}
-                disabled={isLoading}
                 onChange={onChangeInput}
               />
               <Button
-                className="!absolute top-[10px] right-[10px] z-50 !w-[35px] !h-[35px] !min-w-[35px] !rounded-full !text-black"
-                onClick={() => setIsPasswordShow(!isPasswordShow)}
+                className="!absolute top-[10px] right-[10px] !w-[35px] !h-[35px] !min-w-[35px] !rounded-full"
+                onClick={() => setIsPasswordShow((s) => !s)}
               >
                 {isPasswordShow ? (
                   <IoMdEyeOff className="text-[20px] opacity-75" />
@@ -220,6 +192,7 @@ const LoginPageContent = () => {
               </Button>
             </div>
 
+            {/* forgot ---------------------------------------------------- */}
             <a
               className="link cursor-pointer text-[14px] font-[600]"
               onClick={forgotPassword}
@@ -227,21 +200,27 @@ const LoginPageContent = () => {
               {t("login.forgotPassword")}
             </a>
 
+            {/* submit ---------------------------------------------------- */}
             <div className="flex items-center w-full mt-3 mb-3">
               <Button
                 type="submit"
-                disabled={!valideValue || isLoading}
+                disabled={!valid || isLoading}
                 className="btn-org btn-lg w-full flex gap-3"
               >
-                {isLoading ? <CircularProgress color="inherit" /> : t("login.login") }
+                {isLoading ? (
+                  <CircularProgress size={22} color="inherit" />
+                ) : (
+                  t("login.login")
+                )}
               </Button>
             </div>
 
+            {/* footer ---------------------------------------------------- */}
             <p className="text-center">
               {t("login.notRegistered")}{" "}
               <Link
-                className="link text-[14px] font-[600] text-primary"
                 href="/become-vendor"
+                className="link text-[14px] font-[600] text-primary"
               >
                 {t("login.becomeVendor")}
               </Link>
@@ -253,14 +232,17 @@ const LoginPageContent = () => {
   );
 };
 
+/* -------------------------------------------------------------------- */
+/* Suspense wrapper                                                     */
+/* -------------------------------------------------------------------- */
 export default function LoginPage() {
   return (
     <Suspense
       fallback={
         <section className="section py-5 sm:py-10">
           <div className="container">
-            <div className="card shadow-md w-full sm:w-[400px] m-auto rounded-md bg-white p-5 px-10">
-              <h3 className="text-center text-[18px] text-black">Loading...</h3>
+            <div className="card shadow-md w-full sm:w-[400px] m-auto bg-white rounded-md p-5 px-10">
+              <h3 className="text-center text-[18px] text-black">Loading…</h3>
               <div className="flex justify-center my-5">
                 <CircularProgress />
               </div>

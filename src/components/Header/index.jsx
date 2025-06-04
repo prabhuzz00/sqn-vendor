@@ -1,152 +1,152 @@
 "use client";
-import React, { useContext, useState, useEffect } from "react";
-
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+
 import { MyContext } from "@/context/ThemeProvider";
 import { useLanguage } from "@/context/LanguageContext";
 import { fetchDataFromApi } from "@/utils/api";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { useTranslation } from "@/utils/useTranslation";
 
+/* -------------------------------------------------------------- */
+/* Component                                                      */
+/* -------------------------------------------------------------- */
 const Header = ({ logo = "/sooqna.svg" }) => {
-  const [isClient, setIsClient] = useState(false);
-  const [clientWindowWidth, setClientWindowWidth] = useState(undefined);
-
   const context = useContext(MyContext);
-  const router = useRouter();
   const { locale, changeLanguage } = useLanguage();
   const { t } = useTranslation();
+  const router = useRouter();
 
-  useEffect(() => {
-    setIsClient(true);
-    setClientWindowWidth(context?.windowWidth);
-  }, [context?.windowWidth]);
+  /* track “hasMounted” to avoid SSR mismatches                     */
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    if (isClient && context?.isLogin) {
-      // allowLocation();
-    }
-  }, [isClient, context?.isLogin]);
+  /* memo helpers                                                   */
+  const windowWidth = context.windowWidth ?? 0;
+  const isDesktop = windowWidth > 992;
+  const showAuthLinks = mounted && !context.isLogin && isDesktop;
+  const showAccount = mounted && context.isLogin && isDesktop;
 
-  const logout = () => {
-    fetchDataFromApi(
+  /* logout ------------------------------------------------------- */
+  const logout = async () => {
+    const res = await fetchDataFromApi(
       `/api/vendor/logout?token=${localStorage.getItem("accessToken")}`,
       { withCredentials: true }
-    ).then((res) => {
-      if (res?.error === false) {
-        context.setIsLogin(false);
-        Cookies.remove("accessToken");
-        Cookies.remove("refreshToken");
-        router.push("/");
-      }
-    });
+    );
+    if (!res?.error) {
+      context.setIsLogin(false);
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      router.push("/");
+    }
   };
 
+  /* don’t render on pages that hide header ---------------------- */
+  if (!context.isHeaderFooterShow) return null;
+
   return (
-    <>
-      {context?.isHeaderFooterShow === true && (
-        <header className="fixed bg-white lg:sticky left-0 w-full top-0 z-[101] py-3">
-          <div className="container">
-            <div className="flex items-center justify-between">
-              <div className="logo w-[140px]">
-                <Link href="/">
-                  <img src={logo} className="logo" alt="logo" />
-                </Link>
-              </div>
+    <header className="fixed bg-white lg:sticky left-0 w-full top-0 z-[101] py-3">
+      <div className="container">
+        <div className="flex items-center justify-between">
+          {/* logo -------------------------------------------------- */}
+          <Link href="/" className="w-[140px] block">
+            <Image
+              src={logo}
+              alt="Soouqna Seller"
+              width={140}
+              height={40}
+              priority
+              style={{ objectFit: "contain" }}
+            />
+          </Link>
 
-              <nav className="flex items-center justify-center m-auto w-[60%] gap-4">
-                <Link
-                  href={"/"}
-                  className="font-[600] text-[14px] hover:text-primary"
-                >
-                  {t("header.sellOnline")}
-                </Link>
-                <Link
-                  href={"/how-works"}
-                  className="font-[600] text-[14px] hover:text-primary"
-                >
-                  {t("header.howItWorks")}
-                </Link>
-                <Link
-                  href={"/pricing"}
-                  className="font-[600] text-[14px] hover:text-primary"
-                >
-                  {t("header.pricing")}
-                </Link>
-                <Link
-                  href={"/shipping"}
-                  className="font-[600] text-[14px] hover:text-primary"
-                >
-                  {t("header.shipping")}
-                </Link>
-                <Link
-                  href={"/grow-business"}
-                  className="font-[600] text-[14px] hover:text-primary"
-                >
-                  {t("header.growBusiness")}
-                </Link>
-              </nav>
+          {/* nav items -------------------------------------------- */}
+          <nav className="flex items-center justify-center m-auto w-[60%] gap-4">
+            <Link
+              href="/"
+              className="font-[600] text-[14px] hover:text-primary"
+            >
+              {t("header.sellOnline")}
+            </Link>
+            <Link
+              href="/how-works"
+              className="font-[600] text-[14px] hover:text-primary"
+            >
+              {t("header.howItWorks")}
+            </Link>
+            <Link
+              href="/pricing"
+              className="font-[600] text-[14px] hover:text-primary"
+            >
+              {t("header.pricing")}
+            </Link>
+            <Link
+              href="/shipping"
+              className="font-[600] text-[14px] hover:text-primary"
+            >
+              {t("header.shipping")}
+            </Link>
+            <Link
+              href="/grow-business"
+              className="font-[600] text-[14px] hover:text-primary"
+            >
+              {t("header.growBusiness")}
+            </Link>
+          </nav>
 
-              <div className="list-none relative" style={{ zoom: "80%" }}>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                  <Select
-                    size="small"
-                    value={locale}
-                    onChange={(e) => changeLanguage(e.target.value)}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem value={"en"}>English</MenuItem>
-                    <MenuItem value={"ar"}>العربية</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
+          {/* language switcher ------------------------------------ */}
+          <FormControl sx={{ m: 1, minWidth: 120, zoom: 0.8 }}>
+            <Select
+              size="small"
+              value={locale}
+              onChange={(e) => changeLanguage(e.target.value)}
+            >
+              <MenuItem value="en">English</MenuItem>
+              <MenuItem value="ar">العربية</MenuItem>
+            </Select>
+          </FormControl>
 
-              {context.isLogin === false &&
-              isClient &&
-              clientWindowWidth !== undefined &&
-              clientWindowWidth > 992 ? (
-                <div className="flex items-center gap-2">
-                  <Link href="/login">
-                    {" "}
-                    <Button
-                      className="btn-org btn-border btn-sm h-[36px]"
-                      size="small"
-                    >
-                      {t("header.login")}
-                    </Button>
-                  </Link>
-                  <Link href="/become-vendor">
-                    {" "}
-                    <Button className="btn-org btn-sm  h-[36px]" size="small">
-                      {t("header.startSelling")}
-                    </Button>
-                  </Link>
-                </div>
-              ) : (
-                <>
-                  {isClient &&
-                    clientWindowWidth !== undefined &&
-                    clientWindowWidth > 992 && (
-                      <Link href="/my-account">
-                        {" "}
-                        <Button
-                          className="btn-org btn-sm  h-[36px]"
-                          size="small"
-                        >
-                          {t("header.myAccount")}
-                        </Button>
-                      </Link>
-                    )}
-                </>
-              )}
+          {/* auth buttons / account ------------------------------- */}
+          {showAuthLinks && (
+            <div className="flex items-center gap-2">
+              <Link href="/login">
+                <Button
+                  className="btn-org btn-border btn-sm h-[36px]"
+                  size="small"
+                >
+                  {t("header.login")}
+                </Button>
+              </Link>
+              <Link href="/become-vendor">
+                <Button className="btn-org btn-sm h-[36px]" size="small">
+                  {t("header.startSelling")}
+                </Button>
+              </Link>
             </div>
-          </div>
-        </header>
-      )}
-    </>
+          )}
+
+          {showAccount && (
+            <div className="flex items-center gap-2">
+              <Link href="/my-account">
+                <Button className="btn-org btn-sm h-[36px]" size="small">
+                  {t("header.myAccount")}
+                </Button>
+              </Link>
+              <Button
+                className="btn-org btn-border btn-sm h-[36px]"
+                size="small"
+                onClick={logout}
+              >
+                {t("header.logout")}
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
   );
 };
 

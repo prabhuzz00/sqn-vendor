@@ -161,20 +161,6 @@ const MyAccount = () => {
                       </Typography>
                     </Grid>
 
-                    {/* Payment Details */}
-                    {/* <Grid item xs={12} sm={6}>
-                      <Typography
-                        variant="subtitle1"
-                        color="textSecondary"
-                        className="font-medium"
-                      >
-                        {t("profile.paymentDetails")}
-                      </Typography>
-                      <Typography variant="body1" className="text-gray-800">
-                        {displayData.paymentDetails}
-                      </Typography>
-                    </Grid> */}
-
                     {/* Tax Identification Number */}
                     <Grid item xs={12} sm={6}>
                       <Typography
@@ -212,7 +198,7 @@ const MyAccount = () => {
                           )
                         ) : (
                           <Typography variant="body1" className="text-gray-800">
-                              {t("profile.none")}
+                            {t("profile.none")}
                           </Typography>
                         )}
                       </Box>
@@ -251,7 +237,7 @@ const MyAccount = () => {
                           />
                         ) : (
                           <Typography variant="body1" className="text-gray-800">
-                              {t("profile.none")}
+                            {t("profile.none")}
                           </Typography>
                         )}
                       </Typography>
@@ -276,7 +262,7 @@ const MyAccount = () => {
                           />
                         ) : (
                           <Typography variant="body1" className="text-gray-800">
-                              {t("profile.none")}
+                            {t("profile.none")}
                           </Typography>
                         )}
                       </Typography>

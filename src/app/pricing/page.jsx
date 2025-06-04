@@ -12,8 +12,8 @@ const Pricing = () => {
           Vendor Pricing & Commission
         </h1>
         <p className="text-lg mb-8 text-center text-gray-600">
-          Welcome to Soouqna! Here's how our pricing and commission structure
-          works for our valued vendors.
+          Welcome to Soouqna! Here&apos;s how our pricing and commission
+          structure works for our valued vendors.
         </p>
 
         <div className="bg-white shadow rounded-xl p-6 mb-8">

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useContext, Suspense } from "react";
 import {
   TextField,
@@ -10,145 +11,104 @@ import {
   InputLabel,
   FormControl,
   CircularProgress,
-  FormLabel,
 } from "@mui/material";
 import { MyContext } from "@/context/ThemeProvider";
 import { vendorPostData, deleteImages } from "@/utils/api";
 import { useRouter } from "next/navigation";
 import PasswordField from "../../components/PasswordField";
-import { toast } from "react-toastify";
 import UploadBox from "../../components/UploadBox";
 import { IoMdClose } from "react-icons/io";
 import Link from "next/link";
 import { useTranslation } from "@/utils/useTranslation";
 import { useLanguage } from "@/context/LanguageContext";
+import Image from "next/image"; // ← NEW
 
+/* ------------------------------------------------------------------ */
+/* Helper data                                                        */
+/* ------------------------------------------------------------------ */
+const INITIAL_STATE = {
+  storeName: "",
+  storeDescription: "",
+  ownerName: "",
+  emailAddress: "",
+  password: "",
+  phoneNumber: "",
+  storeAddress: "",
+  images: [],
+  bannerImages: [],
+  productCategories: [],
+  commissionRate: "",
+  taxIdentificationNumber: "",
+  termsAgreement: false,
+  isVerified: false,
+  status: true,
+};
+
+/* ------------------------------------------------------------------ */
+/* Component                                                          */
+/* ------------------------------------------------------------------ */
 const BecomeVendor = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [previews, setPreviews] = useState([]);
   const [bannerPreviews, setBannerPreviews] = useState([]);
   const [productCat, setProductCat] = useState("");
-  const [formFields, setFormFields] = useState({
-    storeName: "",
-    storeDescription: "",
-    ownerName: "",
-    emailAddress: "",
-    password: "",
-    phoneNumber: "",
-    storeAddress: "",
-    images: [],
-    bannerImages: [],
-    // productCategoriesId: [],
-    productCategories: [],
-    commissionRate: "",
-    // paymentDetails: "",
-    taxIdentificationNumber: "",
-    termsAgreement: false,
-    isVerified: false,
-    status: true,
-  });
+  const [formFields, setFormFields] = useState(INITIAL_STATE);
 
   const context = useContext(MyContext);
   const { locale } = useLanguage();
   const { t } = useTranslation();
   const router = useRouter();
 
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
+  /* ------------------------------------------------------------------ */
+  /* Field handlers                                                     */
+  /* ------------------------------------------------------------------ */
+  const onChangeInput = ({ target: { name, value } }) =>
+    setFormFields((prev) => ({ ...prev, [name]: value }));
+
+  const onChangeTerms = ({ target: { checked } }) =>
+    setFormFields((prev) => ({ ...prev, termsAgreement: checked }));
+
+  const handleChangeProductCat = ({ target: { value } }) => {
+    const selectedCat = context?.catData?.find((cat) => cat._id === value);
+    setProductCat(value);
     setFormFields((prev) => ({
       ...prev,
-      [name]: value,
+      productCategories: selectedCat?.name ?? "",
     }));
   };
 
-  const onChangeCategories = (e) => {
-    setFormFields((prev) => ({
-      ...prev,
-      productCategories: e.target.value,
-    }));
+  /* ------------------------------------------------------------------ */
+  /* Image helpers                                                      */
+  /* ------------------------------------------------------------------ */
+  const mergeAndSet = (incoming, prev, setter, key) => {
+    const merged = [...prev, ...incoming];
+    setter(merged);
+    setFormFields((old) => ({ ...old, [key]: merged }));
   };
 
-  const handleChangeProductCat = (e) => {
-    const selectedCat = context?.catData?.find(
-      (cat) => cat._id === e.target.value
-    );
-    setProductCat(e.target.value);
-    setFormFields((prev) => ({
-      ...prev,
-      // productCategoriesId: e.target.value,
-      productCategories: selectedCat?.name || "",
-    }));
-  };
+  const setPreviewsFun = (arr) =>
+    mergeAndSet(arr, previews, setPreviews, "images");
+  const setBannerImagesFun = (arr) =>
+    mergeAndSet(arr, bannerPreviews, setBannerPreviews, "bannerImages");
 
-  const onChangeTerms = (e) => {
-    setFormFields((prev) => ({
-      ...prev,
-      termsAgreement: e.target.checked,
-    }));
-  };
-
-  const setPreviewsFun = (previewsArr) => {
-    const imgArr = [...previews];
-    for (let i = 0; i < previewsArr.length; i++) {
-      imgArr.push(previewsArr[i]);
-    }
-    setPreviews([]);
-    setTimeout(() => {
-      setPreviews(imgArr);
+  const removeImg = (image, index, isBanner = false) => {
+    deleteImages(`/api/category/deleteVendorImage?img=${image}`).then(() => {
+      const list = isBanner ? bannerPreviews : previews;
+      const updateList = [...list];
+      updateList.splice(index, 1);
+      isBanner ? setBannerPreviews(updateList) : setPreviews(updateList);
       setFormFields((prev) => ({
         ...prev,
-        images: imgArr,
+        [isBanner ? "bannerImages" : "images"]: updateList,
       }));
-    }, 10);
-  };
-
-  const setBannerImagesFun = (previewsArr) => {
-    const imgArr = [...bannerPreviews];
-    for (let i = 0; i < previewsArr.length; i++) {
-      imgArr.push(previewsArr[i]);
-    }
-    setBannerPreviews([]);
-    setTimeout(() => {
-      setBannerPreviews(imgArr);
-      setFormFields((prev) => ({
-        ...prev,
-        bannerImages: imgArr, // Fixed: was "bannerimages"
-      }));
-    }, 10);
-  };
-
-  const removeImg = (image, index) => {
-    const imageArr = [...previews];
-    deleteImages(`/api/category/deleteVendorImage?img=${image}`).then((res) => {
-      imageArr.splice(index, 1);
-      setPreviews([]);
-      setTimeout(() => {
-        setPreviews(imageArr);
-        setFormFields((prev) => ({
-          ...prev,
-          images: imageArr,
-        }));
-      }, 100);
     });
   };
 
-  const removeBannerImg = (image, index) => {
-    const imageArr = [...bannerPreviews];
-    deleteImages(`/api/category/deleteVendorImage?img=${image}`).then((res) => {
-      imageArr.splice(index, 1);
-      setBannerPreviews([]);
-      setTimeout(() => {
-        setBannerPreviews(imageArr);
-        setFormFields((prev) => ({
-          ...prev,
-          bannerImages: imageArr,
-        }));
-      }, 100);
-    });
-  };
-
+  /* ------------------------------------------------------------------ */
+  /* Validation & submit                                                */
+  /* ------------------------------------------------------------------ */
   const validateForm = () => {
-    const requiredFields = [
+    const required = [
       "storeName",
       "storeDescription",
       "ownerName",
@@ -156,12 +116,11 @@ const BecomeVendor = () => {
       "password",
       "phoneNumber",
       "storeAddress",
-      // "paymentDetails",
       "termsAgreement",
       "images",
-      // Note: "bannerImages" is intentionally excluded to make it optional
     ];
-    return requiredFields.every((field) => {
+
+    return required.every((field) => {
       if (field === "termsAgreement") return formFields[field] === true;
       if (field === "password") return formFields[field].length >= 6;
       if (field === "images") return formFields[field].length > 0;
@@ -171,84 +130,53 @@ const BecomeVendor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
     if (!validateForm()) {
-      context.alertBox("error", "Please fill all required fields correctly.");
-      setIsLoading(false);
+      context.alertBox("error", t("bvendor.validationError"));
       return;
     }
 
+    setIsLoading(true);
     const formData = new FormData();
-    Object.keys(formFields).forEach((key) => {
-      if (
+    Object.entries(formFields).forEach(([key, val]) => {
+      const asString =
         key === "productCategories" ||
         key === "images" ||
         key === "bannerImages"
-      ) {
-        // Always append bannerImages, even if empty array
-        formData.append(key, JSON.stringify(formFields[key] || []));
-      } else {
-        formData.append(key, formFields[key]);
-      }
+          ? JSON.stringify(val ?? [])
+          : val;
+      formData.append(key, asString);
     });
 
     try {
       const res = await vendorPostData("/api/vendor", formData);
       if (res?.error) {
-        context.alertBox("error", res?.message || "There was an error");
+        context.alertBox("error", res.message ?? "There was an error");
       } else {
-        context.alertBox(
-          "success",
-          "Vendor application submitted successfully."
-        );
-        setFormFields({
-          storeName: "",
-          storeDescription: "",
-          ownerName: "",
-          emailAddress: "",
-          password: "",
-          phoneNumber: "",
-          storeAddress: "",
-          images: [],
-          bannerImages: [],
-          productCategories: [],
-          commissionRate: "",
-          // paymentDetails: "",
-          taxIdentificationNumber: "",
-          termsAgreement: false,
-          isVerified: false,
-          status: true,
-        });
+        context.alertBox("success", t("bvendor.success"));
+        setFormFields(INITIAL_STATE);
         setPreviews([]);
         setBannerPreviews([]);
         // router.push("/vendor-confirmation");
       }
-    } catch (error) {
-      context.alertBox("error", "An error occurred during submission.");
-      console.error("Submission error:", error);
+    } catch (err) {
+      console.error(err);
+      context.alertBox("error", t("bvendor.submissionError"));
     } finally {
       setIsLoading(false);
     }
   };
 
+  /* ------------------------------------------------------------------ */
+  /* Render                                                              */
+  /* ------------------------------------------------------------------ */
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <section className="section py-5 sm:py-10 bg-white">
         <div className="container max-w-[80%]">
-          {/* <div className="flex items-center justify-between">
-            <img className="w-[150px]" src="/logo.jpg" alt="logo" />
-            <div className="flex items-center gap-4">
-              <span className="text-[16px] text-gray-700">
-                {t("bvendor.alreadyUser")}
-              </span>
-              <Link href="/login">
-                <Button className="btn-org">{t("bvendor.login")}</Button>
-              </Link>
-            </div>
-          </div> */}
-
           <div className="flex">
+            {/* ---------------------------------------------------------- */}
+            {/* LEFT – form                                               */}
+            {/* ---------------------------------------------------------- */}
             <div className="card w-[40%]">
               <h3 className="text-[20px] text-black mt-4">
                 {t("bvendor.welcome")}
@@ -258,10 +186,9 @@ const BecomeVendor = () => {
               </p>
 
               <form className="w-full mt-5" onSubmit={handleSubmit}>
+                {/* store name ------------------------------------------------ */}
                 <div className="form-group w-full mb-5">
                   <TextField
-                    type="text"
-                    id="storeName"
                     name="storeName"
                     value={formFields.storeName}
                     disabled={isLoading}
@@ -273,10 +200,9 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* store description --------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <TextField
-                    type="text"
-                    id="storeDescription"
                     name="storeDescription"
                     value={formFields.storeDescription}
                     disabled={isLoading}
@@ -290,10 +216,9 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* owner name ---------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <TextField
-                    type="text"
-                    id="ownerName"
                     name="ownerName"
                     value={formFields.ownerName}
                     disabled={isLoading}
@@ -305,10 +230,10 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* email ---------------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <TextField
                     type="email"
-                    id="emailAddress"
                     name="emailAddress"
                     value={formFields.emailAddress}
                     disabled={isLoading}
@@ -320,9 +245,9 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* password ------------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <PasswordField
-                    id="password"
                     name="password"
                     value={formFields.password}
                     onChange={onChangeInput}
@@ -333,10 +258,10 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* phone number -------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <TextField
                     type="tel"
-                    id="phoneNumber"
                     name="phoneNumber"
                     value={formFields.phoneNumber}
                     disabled={isLoading}
@@ -348,10 +273,9 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* address -------------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <TextField
-                    type="text"
-                    id="storeAddress"
                     name="storeAddress"
                     value={formFields.storeAddress}
                     disabled={isLoading}
@@ -363,27 +287,30 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* store logo upload --------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <p className="text-[17px]">{t("bvendor.storeLogo")}</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {previews?.map((image, index) => (
-                      <div className="uploadBoxWrapper relative" key={index}>
+                    {previews.map((img, idx) => (
+                      <div key={idx} className="uploadBoxWrapper relative">
                         <span
                           className="absolute w-[20px] h-[20px] rounded-full bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer"
-                          onClick={() => removeImg(image, index)}
+                          onClick={() => removeImg(img, idx)}
                         >
                           <IoMdClose className="text-white text-[17px]" />
                         </span>
                         <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
                           <img
-                            src={image}
+                            src={img}
+                            alt={`upload ${idx + 1}`}
                             className="w-full h-full object-cover"
                           />
                         </div>
                       </div>
                     ))}
+
                     <UploadBox
-                      multiple={true}
+                      multiple
                       name="images"
                       url="/api/vendor/uploadImages"
                       setPreviewsFun={setPreviewsFun}
@@ -392,29 +319,35 @@ const BecomeVendor = () => {
                   </div>
                 </div>
 
+                {/* banner images upload ------------------------------------ */}
                 <div className="form-group w-full mb-5">
                   <p className="text-[17px]">
-                    {t("bvendor.storeBannerImages")} <span className="text-gray-500 text-[14px]">(Optional)</span>
+                    {t("bvendor.storeBannerImages")}{" "}
+                    <span className="text-gray-500 text-[14px]">
+                      (Optional)
+                    </span>
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {bannerPreviews?.map((image, index) => (
-                      <div className="uploadBoxWrapper relative" key={index}>
+                    {bannerPreviews.map((img, idx) => (
+                      <div key={idx} className="uploadBoxWrapper relative">
                         <span
                           className="absolute w-[20px] h-[20px] rounded-full bg-red-700 -top-[5px] -right-[5px] flex items-center justify-center z-50 cursor-pointer"
-                          onClick={() => removeBannerImg(image, index)}
+                          onClick={() => removeImg(img, idx, true)}
                         >
                           <IoMdClose className="text-white text-[17px]" />
                         </span>
                         <div className="uploadBox p-0 rounded-md overflow-hidden border border-dashed border-[rgba(0,0,0,0.3)] h-[150px] w-full bg-gray-100">
                           <img
-                            src={image}
+                            src={img}
+                            alt={`banner ${idx + 1}`}
                             className="w-full h-full object-cover"
                           />
                         </div>
                       </div>
                     ))}
+
                     <UploadBox
-                      multiple={true}
+                      multiple
                       name="bannerImages"
                       url="/api/vendor/uploadBannerImages"
                       setPreviewsFun={setBannerImagesFun}
@@ -423,6 +356,7 @@ const BecomeVendor = () => {
                   </div>
                 </div>
 
+                {/* category select ----------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <FormControl fullWidth variant="standard">
                     <InputLabel id="product-categories-label">
@@ -431,14 +365,13 @@ const BecomeVendor = () => {
                     {context?.catData?.length > 0 && (
                       <Select
                         size="small"
-                        className="w-full"
                         value={productCat}
                         onChange={handleChangeProductCat}
                         disabled={isLoading}
                       >
-                        {context?.catData?.map((cat) => (
-                          <MenuItem key={cat?._id} value={cat?._id}>
-                            {cat?.name}
+                        {context.catData.map((cat) => (
+                          <MenuItem key={cat._id} value={cat._id}>
+                            {cat.name}
                           </MenuItem>
                         ))}
                       </Select>
@@ -446,10 +379,9 @@ const BecomeVendor = () => {
                   </FormControl>
                 </div>
 
+                {/* tax ID --------------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <TextField
-                    type="text"
-                    id="taxIdentificationNumber"
                     name="taxIdentificationNumber"
                     value={formFields.taxIdentificationNumber}
                     disabled={isLoading}
@@ -460,13 +392,13 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* terms ---------------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <FormControlLabel
                     control={
                       <Checkbox
                         checked={formFields.termsAgreement}
                         onChange={onChangeTerms}
-                        name="termsAgreement"
                         disabled={isLoading}
                       />
                     }
@@ -474,6 +406,7 @@ const BecomeVendor = () => {
                   />
                 </div>
 
+                {/* submit --------------------------------------------------- */}
                 <div className="flex items-center w-full mt-3 mb-3">
                   <Button
                     type="submit"
@@ -481,7 +414,7 @@ const BecomeVendor = () => {
                     className="btn-org btn-lg w-full flex gap-3"
                   >
                     {isLoading ? (
-                      <CircularProgress color="inherit" />
+                      <CircularProgress color="inherit" size={22} />
                     ) : (
                       t("bvendor.submit")
                     )}
@@ -490,30 +423,37 @@ const BecomeVendor = () => {
               </form>
             </div>
 
+            {/* ---------------------------------------------------------- */}
+            {/* RIGHT – promo stats                                        */}
+            {/* ---------------------------------------------------------- */}
             <div className="pl-44 w-[60%] pt-3">
               <div className="box p-5 bg-gray-200 rounded-md w-full sticky top-10">
                 <h2>{t("bvendor.growFaster")}</h2>
                 <div className="grid grid-cols-1 mt-5 gap-5">
+                  {/* 1 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
-                    <img
+                    <Image
                       src="https://images.meeshosupplyassets.com/supplier_community.svg"
-                      alt="img"
+                      alt="Supplier community"
+                      width={40}
+                      height={40}
                     />
-
                     <div className="info flex flex-col gap-0">
                       <h4>{t("bvendor.sellersCount")}</h4>
                       <p className="mt-0 mb-0 text-[13px]">
-                        {t("bvendor.sellersNote")}{" "}
+                        {t("bvendor.sellersNote")}
                       </p>
                     </div>
                   </div>
 
+                  {/* 2 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
-                    <img
+                    <Image
                       src="https://images.meeshosupplyassets.com/pincode.svg"
-                      alt="img"
+                      alt="Serviceable pincodes"
+                      width={40}
+                      height={40}
                     />
-
                     <div className="info flex flex-col gap-0">
                       <h4>{t("bvendor.pincodes")}</h4>
                       <p className="mt-0 mb-0 text-[13px]">
@@ -522,12 +462,14 @@ const BecomeVendor = () => {
                     </div>
                   </div>
 
+                  {/* 3 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
-                    <img
+                    <Image
                       src="https://images.meeshosupplyassets.com/reach_india.svg"
-                      alt="img"
+                      alt="Reach across India"
+                      width={40}
+                      height={40}
                     />
-
                     <div className="info flex flex-col gap-0">
                       <h4>{t("bvendor.buyersCount")}</h4>
                       <p className="mt-0 mb-0 text-[13px]">
@@ -536,12 +478,14 @@ const BecomeVendor = () => {
                     </div>
                   </div>
 
+                  {/* 4 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
-                    <img
+                    <Image
                       src="https://images.meeshosupplyassets.com/categories.svg"
-                      alt="img"
+                      alt="Product categories"
+                      width={40}
+                      height={40}
                     />
-
                     <div className="info flex flex-col gap-0">
                       <h4>{t("bvendor.categoriesCount")}</h4>
                       <p className="mt-0 mb-0 text-[13px]">
@@ -552,6 +496,7 @@ const BecomeVendor = () => {
                 </div>
               </div>
             </div>
+            {/* ---------------------------------------------------------- */}
           </div>
         </div>
       </section>
