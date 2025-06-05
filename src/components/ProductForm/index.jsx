@@ -191,7 +191,7 @@ const ProductForm = () => {
   }, [formFields.price, formFields.oldPrice]);
 
   /* ------------------------------ memoised category lookups ------ */
-  const catOptions = context.catData;
+  const catOptions = context.catData || [];
   const subCatOptions = useMemo(
     () => catOptions.flatMap((c) => c.children || []),
     [catOptions]

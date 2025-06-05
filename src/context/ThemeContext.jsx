@@ -306,7 +306,7 @@ const ThemeProvider = ({ children }) => {
   /* On mount: fetch categories                                          */
   /* ------------------------------------------------------------------ */
   useEffect(() => {
-    fetchDataFromApi("/api/category").then((res) => {
+    fetchDataFromApi("/api/category/getVendorCategories").then((res) => {
       if (!res?.error) setCatData(res.data);
     });
   }, []);
