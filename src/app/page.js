@@ -20,7 +20,7 @@ export default function Home() {
     <>
       <section className="topBannerSection w-full bg-[#f5f2f2]">
         <div className="container flex items-center  h-auto">
-          <div className="w-[65%] flex flex-col gap-4">
+          <div className="w-[65%] flex flex-col gap-4 part1">
             <p className="text-primary text-[18px] mb-0 mt-0">
               {t("home.welcome")}{" "}
               <span className="uppercase text-gray-800 font-semibold">
@@ -44,7 +44,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="w-[40%] flex flex-col gap-4">
+          <div className="w-[40%] part2 flex flex-col gap-4">
             <img src="/selling.png" className="w-full" />
           </div>
         </div>
@@ -63,7 +63,7 @@ export default function Home() {
           </p>
           <br />
 
-          <div className="flex items-center justify-center gap-8">
+          <div className="flex items-center justify-center gap-8 secton2">
             <div className="card shadow-sm hover:shadow-lg w-[20%] bg-white py-8 px-14 text-center flex items-center justify-center flex-col transition-all !rounded-md">
               <div
                 className="icon mb-3 p-3 rounded-[20px] w-[70px] h-[70px] flex items-center justify-center"
@@ -137,8 +137,8 @@ export default function Home() {
 
       <section className="w-full py-16 vendorSection3">
         <div className="container">
-          <div className="flex items-center ">
-            <div className="w-[50%]">
+          <div className="flex items-center wrap">
+            <div className="w-[50%] part1">
               <h2 className="text-[30px]">
                 {t("home.whyLove")}{" "}
                 <span className="text-primary uppercase">Soouqna</span>
@@ -223,7 +223,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="w-[50%]">
+            <div className="w-[50%] part2">
               <img src="/screen.png" className="relative -right-[5%]" />
             </div>
           </div>
