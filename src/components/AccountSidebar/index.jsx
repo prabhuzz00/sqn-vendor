@@ -166,7 +166,8 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/my-account" activeClassName="active">
             <Button className="w-full !text-left !py-2 !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <FaRegUser className="text-[15px]" />{t("accountSidebar.myProfile")}
+              <FaRegUser className="text-[15px]" />
+              {t("accountSidebar.myProfile")}
             </Button>
           </NavLink>
         </li>
@@ -174,7 +175,8 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/my-account/bank-details" activeClassName="active">
             <Button className="w-full !text-left !py-2 !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <LuBanknote className="text-[18px]" /> {t("accountSidebar.bankDetails")}
+              <LuBanknote className="text-[18px]" />{" "}
+              {t("accountSidebar.bankDetails")}
             </Button>
           </NavLink>
         </li>
@@ -190,7 +192,8 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/my-orders" activeClassName="active">
             <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <IoBagHandle className="text-[17px]" /> {t("accountSidebar.myOrders")}
+              <IoBagHandle className="text-[17px]" />{" "}
+              {t("accountSidebar.myOrders")}
             </Button>
           </NavLink>
         </li>
@@ -207,7 +210,15 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/product-inventory" activeClassName="active">
             <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <IoFileTrayFull className="text-[17px]" /> {t("accountSidebar.productInventory")}
+              <IoFileTrayFull className="text-[17px]" />{" "}
+              {t("accountSidebar.productInventory")}
+            </Button>
+          </NavLink>
+        </li>
+        <li className="w-full">
+          <NavLink href="/rejected-product" activeClassName="active">
+            <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
+              <IoFileTrayFull className="text-[17px]" /> Rejected Product
             </Button>
           </NavLink>
         </li>
@@ -215,7 +226,8 @@ const AccountSidebar = () => {
         <li className="w-full">
           <NavLink href="/withdrawal" activeClassName="active">
             <Button className="w-full  !py-2 !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
-              <IoCashOutline className="text-[17px]" /> {t("accountSidebar.withdrawal")}
+              <IoCashOutline className="text-[17px]" />{" "}
+              {t("accountSidebar.withdrawal")}
             </Button>
           </NavLink>
         </li>

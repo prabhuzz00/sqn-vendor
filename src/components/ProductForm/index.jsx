@@ -379,6 +379,7 @@ const ProductForm = () => {
       ...formFields,
       category: productCat,
       isVerified: false,
+      verifyStatus: "underReview",
       vendorId: localStorage.getItem("vendorId"),
       variation: variations,
     };

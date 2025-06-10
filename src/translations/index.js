@@ -41,6 +41,7 @@ export const translations = {
       login: "Login",
       startSelling: "Start Selling",
       myAccount: "My Account",
+      logout: "Logout",
     },
 
     bvendor: {
