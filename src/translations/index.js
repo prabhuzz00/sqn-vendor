@@ -2,8 +2,8 @@ export const translations = {
   en: {
     home: {
       welcome: "Welcome To",
-      headline: "Sell online to 1 Cr+ customers at",
-      commission: "0% Commission",
+      headline: "From Your Shop to the World",
+      commission: "Start Selling on Soouqna Now!",
       description: "Become a Soouqna seller and grow your business",
       startSelling: "Start Selling",
       sellWith: "Sell Online with",
@@ -20,15 +20,16 @@ export const translations = {
         "All the benefits that come with selling on Soouqna are designed to help you sell more, and make it easier to grow your business.",
       commissionFee: "0% Commission Fee",
       commissionInfo:
-        "Suppliers selling on Soouqna keep 100% of their profit by not paying any commission",
+        "Suppliers selling on Soouqna keep 100% of their profit by not paying any commission.",
       penaltyCharges: "0 Penalty Charges",
       penaltyInfo:
-        "Sell online without the fear of order cancellation charges with 0 Penalty for late dispatch or order cancellations.",
+        "Sell online without the fear of order cancellation charges with 0 penalty for late dispatch or order cancellations.",
       growth: "Growth for Every Supplier",
-      growthInfo: "From small to large and unbranded to branded.",
+      growthInfo:
+        "From small to large and unbranded to branded – we support every stage.",
       ease: "Ease of Doing Business",
       easeInfo:
-        "Suppliers selling on Soouqna keep 100% of their profit by not paying any commission",
+        "Our platform is designed to make your selling journey smooth, efficient, and profitable.",
     },
 
     header: {
@@ -308,12 +309,94 @@ export const translations = {
         trackOrder: "I want to track my order",
       },
     },
+    howItWorks: {
+      title: "How Selling on Soouqna Works",
+      intro:
+        "Joining Soouqna as a vendor is quick and easy. Follow these steps to start your online business and reach customers across the region.",
+      steps: {
+        step1: "Step 1: Register as a Vendor",
+        desc1:
+          "Create a vendor account by providing your business details. It only takes a few minutes to sign up.",
+        step2: "Step 2: Set Up Your Store",
+        desc2:
+          "Add your brand logo, description, and other details to make your store appealing to customers.",
+        step3: "Step 3: Add Products",
+        desc3:
+          "Upload product images, set prices, stock, and variations like size or color to start listing your products.",
+        step4: "Step 4: Start Selling & Shipping",
+        desc4:
+          "Once your products are live, start receiving orders and ship them to customers quickly to build your reputation.",
+      },
+      vendorOptionsTitle: "Important Information for Vendors",
+      vendorOptionsDesc:
+        "Dear vendor, you have two options to sell with us. You may choose the one that suits you best:",
+      option1Title: "Option 1: Sell Through Our Team",
+      option1Desc:
+        "You can deliver your products and items to our headquarters, and our team will handle all sales, customer communication, and shipping.",
+      option1Note: "💰 Payments will be made on a monthly basis.",
+      option2Title: "Option 2: Direct Shipping by You",
+      option2Desc: "You can handle the shipping process yourself completely.",
+      option2Note:
+        "📦 Shipping must be done within 24 hours of receiving the order, or within a maximum of 48 hours.",
+      cta: "Ready to begin? Join hundreds of successful vendors already selling on Soouqna.",
+      registerBtn: "Register as a Vendor",
+    },
+    pricing: {
+      title: "Vendor Pricing & Commission",
+      intro:
+        "Welcome to Soouqna! Here’s how our pricing and commission structure works for our valued vendors.",
+      commissionTitle: "Commission Structure",
+      commissionDesc:
+        "The commission rate varies by product type and will be determined later based on market requirements.",
+      payoutTitle: "Payout Terms",
+      payoutDesc:
+        "Payments are processed monthly for products delivered without any issues at least 14 days prior.",
+      feesTitle: "No Monthly Fees",
+      feesDesc:
+        "We believe in supporting small and growing businesses. That’s why we charge no setup fees or monthly subscription fees. You only pay when you make a sale!",
+      contactNote: "Have questions?",
+      contactLink: "Contact our vendor support",
+    },
+    shippingReturns: {
+      title: "Shipping & Returns Policy",
+      shippingTitle: "Shipping Policy",
+      shippingDesc1:
+        "At Soouqna, vendors are responsible for managing their own product shipping. All vendors must ensure that items are dispatched within 1–2 business days after receiving an order.",
+      shippingDesc2:
+        "Vendors must provide accurate shipping details and tracking information to ensure smooth delivery to customers. Delays or issues must be communicated promptly to both Soouqna and the customer.",
+      returnTitle: "Return Policy",
+      returnDesc1:
+        "Soouqna offers a return window of 7 days from the delivery date. Vendors are required to accept returns for items that are damaged, defective, or significantly different from their description.",
+      returnDesc2:
+        "Upon receiving a return request, vendors must respond within 48 hours. Refunds or replacements should be issued once the returned item is inspected and approved.",
+      responsibilityTitle: "Vendor Responsibilities",
+      responsibilityDesc:
+        "Failure to comply with the shipping and return policies may result in temporary suspension or permanent deactivation of the vendor’s account. For support, please contact our vendor support team at support@soouqna.com.",
+    },
+
+    grow: {
+      title: "Grow Your Business with Soouqna",
+      intro:
+        "At Soouqna, we’re committed to helping vendors succeed. Take advantage of our tools, resources, and marketplace reach to grow your business faster.",
+      section1Title: "Open Your Storefront",
+      section1Desc:
+        "Customize your vendor profile and storefront to stand out. Highlight your best products and tell your brand’s story.",
+      section2Title: "Use Data to Drive Sales",
+      section2Desc:
+        "Access analytics and reporting tools to track your performance, customer behavior, and optimize your product listings.",
+      section3Title: "Offer Fast Shipping",
+      section3Desc:
+        "Improve customer satisfaction and increase your sales by ensuring quick and reliable shipping.",
+      helpText:
+        "Need help or ideas to grow faster? Our support team is here to guide you.",
+      contactBtn: "Contact Vendor Support",
+    },
   },
   ar: {
     home: {
       welcome: "مرحبا بكم في",
-      headline: "بع منتجاتك عبر الإنترنت لأكثر من ١٠ ملايين عميل",
-      commission: "عمولة 0%",
+      headline: "من متجرك إلى العالم",
+      commission: "ابدأ البيع على سوقنا الآن",
       description: "كن بائعاً على سوقنا ووسّع أعمالك",
       startSelling: "ابدأ البيع",
       sellWith: "بع عبر الإنترنت مع",
@@ -328,16 +411,16 @@ export const translations = {
         "جميع المزايا التي تأتي مع البيع على سوقنا مصممة لمساعدتك على البيع أكثر وتسهيل نمو أعمالك.",
       commissionFee: "عمولة 0%",
       commissionInfo:
-        "الموردون الذين يبيعون على سوقنا يحتفظون بـ 100% من أرباحهم دون دفع أي عمولة",
+        "الموردون الذين يبيعون على سوقنا يحتفظون بـ 100٪ من أرباحهم دون دفع أي عمولة.",
       penaltyCharges: "بدون رسوم جزائية",
       penaltyInfo:
         "بع عبر الإنترنت دون القلق من رسوم الإلغاء أو التأخير، مع 0 رسوم جزائية.",
       growth: "النمو لكل مورد",
       growthInfo:
-        "من الصغار إلى الكبار، ومن غير العلامات التجارية إلى العلامات التجارية.",
+        "من الشركات الناشئة إلى العلامات التجارية الكبرى – نحن ندعمك في كل مرحلة.",
       ease: "سهولة ممارسة الأعمال",
       easeInfo:
-        "الموردون الذين يبيعون على سوقنا يحتفظون بـ 100% من أرباحهم دون دفع أي عمولة",
+        "منصتنا مصممة لتسهل عليك البيع، إدارة الطلبات، وتحقيق الأرباح بسهولة.",
     },
 
     header: {
@@ -614,6 +697,88 @@ export const translations = {
         returnsHelp: "أحتاج مساعدة في الإرجاع أو الاستبدال",
         trackOrder: "أرغب في تتبع طلبي",
       },
+    },
+    howItWorks: {
+      title: "كيفة بناء متجرك لبيع منتجاتك على سوقْنا",
+      intro:
+        "الانضمام إلى سوقْنا كبائع أمر سهل وسريع. اتبع هذه الخطوات لبدء نشاطك التجاري عبر الإنترنت في مختلف أنحاء المنطقة.",
+      steps: {
+        step1: "الخطوة 1: التسجيل كبائع",
+        desc1:
+          "أنشئ حساب بائع من خلال إدخال معلومات عملك التجاري. لن يستغرق التسجيل سوى بضع دقائق.",
+        step2: "الخطوة 2: إعداد متجرك",
+        desc2:
+          "أضف شعار علامتك التجارية، ووصفًا، ومعلومات أخرى لجعل متجرك جذابًا للعملاء.",
+        step3: "الخطوة 3: إضافة المنتجات",
+        desc3:
+          "قم بتحميل صور المنتجات، وتحديد الأسعار، والكميات المتوفرة، والخيارات مثل الحجم أو اللون، لبدء عرض منتجاتك.",
+        step4: "الخطوة 4: ابدأ البيع والشحن",
+        desc4:
+          "بمجرد أن تصبح منتجاتك معروضة على المنصة، ابدأ في استقبال الطلبات وشحنها للعملاء بسرعة لبناء سمعة قوية لمتجرك.",
+      },
+      vendorOptionsTitle: "معلومات هامة للبائعين",
+      vendorOptionsDesc:
+        "عزيزي البائع، لديك طريقتان للبيع معنا، ويمكنك اختيار ما يناسبك:",
+      option1Title: "أولاً: البيع من خلال فريقنا",
+      option1Desc:
+        "يمكنك إحضار منتجاتك ومعروضاتك إلى مقرّنا، وسيتولى فريقنا جميع عمليات البيع، والتواصل مع العملاء، والشحن.",
+      option1Note: "💰 الدفع يتم شهريًا.",
+      option2Title: "ثانيًا: البيع المباشر من طرفك",
+      option2Desc: "يمكنك أن تتولى شحن المنتجات بنفسك بشكل كامل،",
+      option2Note:
+        "📦 شرط أن يتم الشحن خلال 24 ساعة من تلقي طلب الشراء، أو 48 ساعة كحد أقصى.",
+      cta: "هل أنت مستعد للبدء؟ انضم إلى مئات البائعين الناجحين الذين يبيعون على سوقْنا.",
+      registerBtn: "سجل كبائع",
+    },
+    pricing: {
+      title: "تسعير وعمولات البائعين",
+      intro:
+        "مرحبًا بكم في سوقنا! إليكم كيفية عمل هيكل التسعير والعمولات لدينا للبائعين الكرام.",
+      commissionTitle: "هيكل العمولات",
+      commissionDesc:
+        "تختلف نسبة العمولة حسب نوع المنتج وسيتم تحديدها لاحقًا بناءً على متطلبات السوق.",
+      payoutTitle: "شروط الدفع",
+      payoutDesc:
+        "تتم الدفعات شهريًا للمنتجات التي تم تسليمها بدون أي مشاكل قبل 14 يومًا على الأقل.",
+      feesTitle: "لا رسوم شهرية",
+      feesDesc:
+        "نؤمن بدعم الأعمال الصغيرة والناشئة، لذلك لا نفرض أي رسوم تأسيس أو اشتراك شهري. تدفع فقط عند تحقيق البيع!",
+      contactNote: "هل لديك أسئلة؟",
+      contactLink: "تواصل مع دعم البائعين",
+    },
+    shippingReturns: {
+      title: "سياسة الشحن والإرجاع",
+      shippingTitle: "سياسة الشحن",
+      shippingDesc1:
+        "في سوقْنا، يكون البائعون مسؤولين عن إدارة شحن منتجاتهم بأنفسهم. يجب على جميع البائعين التأكد من شحن المنتجات خلال 1–2 يوم عمل من استلام الطلب.",
+      shippingDesc2:
+        "يجب على البائعين تقديم معلومات شحن دقيقة ورقم تتبع لضمان تسليم الطلبات بسلاسة للعملاء. في حال وجود أي تأخير أو مشكلة، يجب إبلاغ سوقْنا والعميل فورًا.",
+      returnTitle: "سياسة الإرجاع",
+      returnDesc1:
+        "تقدم سوقْنا نافذة إرجاع لمدة 7 أيام من تاريخ التسليم. يُطلب من البائعين قبول إرجاع المنتجات التي تكون تالفة، أو بها خلل، أو مختلفة بشكل كبير عن وصفها.",
+      returnDesc2:
+        "عند استلام طلب الإرجاع، يجب على البائع الرد خلال 48 ساعة. يتم إصدار المبالغ المستردة أو الاستبدالات بعد فحص المنتج المرتجع والموافقة عليه.",
+      responsibilityTitle: "مسؤوليات البائع",
+      responsibilityDesc:
+        "عدم الالتزام بسياسات الشحن والإرجاع قد يؤدي إلى تعليق مؤقت أو إلغاء دائم لحساب البائع. للدعم، يرجى التواصل مع فريق دعم البائعين عبر البريد الإلكتروني support@soouqna.com.",
+    },
+
+    grow: {
+      title: "نمِّ أعمالك مع سوقنا",
+      intro:
+        "في سوقنا، نحن ملتزمون بمساعدة الموردين على النجاح. استفد من أدواتنا ومواردنا وانتشار السوق لتوسيع نطاق عملك بشكل أسرع.",
+      section1Title: "افتح واجهتك الخاصة",
+      section1Desc:
+        "خصص ملفك الشخصي وواجهة متجرك لتبرز بين الآخرين. أبرز أفضل منتجاتك واحكِ قصة علامتك التجارية.",
+      section2Title: "استخدم البيانات لزيادة المبيعات",
+      section2Desc:
+        "احصل على أدوات التحليل والتقارير لمتابعة أدائك وسلوك العملاء وتحسين قوائم منتجاتك.",
+      section3Title: "قدّم شحنًا سريعًا",
+      section3Desc:
+        "عزّز رضا العملاء وزد من مبيعاتك من خلال توفير شحن سريع وموثوق.",
+      helpText:
+        "هل تحتاج إلى مساعدة أو أفكار لتوسيع عملك بشكل أسرع؟ فريق الدعم لدينا هنا لمساعدتك.",
+      contactBtn: "تواصل مع دعم البائعين",
     },
   },
 };

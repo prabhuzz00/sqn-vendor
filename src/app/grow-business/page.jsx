@@ -1,62 +1,66 @@
+"use client";
 import Head from 'next/head';
 import { Box, Container, Typography, Button, Divider } from '@mui/material';
 import Link from 'next/link';
 import { FaStore, FaChartLine, FaShippingFast } from 'react-icons/fa';
+import { useTranslation } from '@/utils/useTranslation';
+
 
 const GrowBusinessPage = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>Grow Your Business | Vendor Panel | Soouqna</title>
+        <title>{t('grow.title')} | Vendor Panel | Soouqna</title>
       </Head>
 
       <Container maxWidth="md" sx={{ py: 6 }}>
         <Typography variant="h4" color="primary" gutterBottom>
-          Grow Your Business with Soouqna
+          {t('grow.title')}
         </Typography>
 
         <Typography variant="body1" sx={{ mb: 4 }}>
-          At Soouqna, we’re committed to helping vendors succeed. Take advantage of our tools, resources, and marketplace reach to grow your business faster.
+          {t('grow.intro')}
         </Typography>
 
         <Divider sx={{ my: 3 }} />
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FaStore /> Open Your Storefront
+            <FaStore /> {t('grow.section1Title')}
           </Typography>
           <Typography variant="body2" sx={{ pl: 4 }}>
-            Customize your vendor profile and storefront to stand out. Highlight your best products and tell your brand’s story.
+            {t('grow.section1Desc')}
           </Typography>
         </Box>
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FaChartLine /> Use Data to Drive Sales
+            <FaChartLine /> {t('grow.section2Title')}
           </Typography>
           <Typography variant="body2" sx={{ pl: 4 }}>
-            Access analytics and reporting tools to track your performance, customer behavior, and optimize your product listings.
+            {t('grow.section2Desc')}
           </Typography>
         </Box>
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FaShippingFast /> Offer Fast Shipping
+            <FaShippingFast /> {t('grow.section3Title')}
           </Typography>
           <Typography variant="body2" sx={{ pl: 4 }}>
-            Improve customer satisfaction and increase your sales by ensuring quick and reliable shipping.
+            {t('grow.section3Desc')}
           </Typography>
         </Box>
 
         <Divider sx={{ my: 3 }} />
 
         <Typography variant="body1" sx={{ mb: 3 }}>
-          Need help or ideas to grow faster? Our support team is here to guide you.
+          {t('grow.helpText')}
         </Typography>
 
         <Link href="/contact">
           <Button variant="contained" size="large" color="primary">
-            Contact Vendor Support
+            {t('grow.contactBtn')}
           </Button>
         </Link>
       </Container>

@@ -1,50 +1,53 @@
+"use client";
 import Head from 'next/head';
 import { Box, Container, Typography, Divider } from '@mui/material';
+import { useTranslation } from '@/utils/useTranslation';
 
 const ShippingReturnsPage = () => {
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>Shipping & Returns | Vendor Panel | Soouqna</title>
+        <title>{t("shippingReturns.title")} | Vendor Panel | Soouqna</title>
       </Head>
 
       <Container maxWidth="md" sx={{ py: 6 }}>
         <Typography variant="h4" gutterBottom color="primary">
-          Shipping & Returns Policy
+          {t("shippingReturns.title")}
         </Typography>
 
         <Divider sx={{ mb: 3 }} />
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" gutterBottom>
-            Shipping Policy
+            {t("shippingReturns.shippingTitle")}
           </Typography>
           <Typography variant="body1" paragraph>
-            At Soouqna, vendors are responsible for managing their own product shipping. All vendors must ensure that items are dispatched within 2–3 business days after receiving an order.
+            {t("shippingReturns.shippingDesc1")}
           </Typography>
           <Typography variant="body1" paragraph>
-            Vendors must provide accurate shipping details and tracking information to ensure smooth delivery to customers. Delays or issues must be communicated promptly to both Soouqna and the customer.
+            {t("shippingReturns.shippingDesc2")}
           </Typography>
         </Box>
 
         <Box sx={{ mb: 4 }}>
           <Typography variant="h6" gutterBottom>
-            Return Policy
+            {t("shippingReturns.returnTitle")}
           </Typography>
           <Typography variant="body1" paragraph>
-            Soouqna offers a return window of 7 days from the delivery date. Vendors are required to accept returns for items that are damaged, defective, or significantly different from their description.
+            {t("shippingReturns.returnDesc1")}
           </Typography>
           <Typography variant="body1" paragraph>
-            Upon receiving a return request, vendors must respond within 48 hours. Refunds or replacements should be issued once the returned item is inspected and approved.
+            {t("shippingReturns.returnDesc2")}
           </Typography>
         </Box>
 
         <Box>
           <Typography variant="h6" gutterBottom>
-            Vendor Responsibilities
+            {t("shippingReturns.responsibilityTitle")}
           </Typography>
           <Typography variant="body1" paragraph>
-            Failure to comply with the shipping and return policies may result in temporary suspension or permanent deactivation of the vendor’s account. For support, please contact our vendor support team at <strong>support@soouqna.com</strong>.
+            {t("shippingReturns.responsibilityDesc")}
           </Typography>
         </Box>
       </Container>

@@ -1,75 +1,109 @@
+"use client";
 import Head from 'next/head';
 import { Container, Typography, Box, Divider, Button } from '@mui/material';
 import { FaRegUserCircle, FaStoreAlt, FaBoxOpen, FaRocket } from 'react-icons/fa';
 import Link from 'next/link';
+import { useTranslation } from "@/utils/useTranslation";
 
 const HowItWorks = () => {
+
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>How It Works | Vendor Panel | Soouqna</title>
+        <title>{t('howItWorks.title')} | Vendor Panel | Soouqna</title>
       </Head>
 
       <Container maxWidth="md" sx={{ py: 6 }}>
         <Typography variant="h4" color="primary" gutterBottom>
-          How Selling on Soouqna Works
+          {t('howItWorks.title')}
         </Typography>
 
         <Typography variant="body1" sx={{ mb: 4 }}>
-          Joining Soouqna as a vendor is quick and easy. Follow these steps to start your online business and reach customers across the region.
+          {t('howItWorks.intro')}
         </Typography>
 
         <Divider sx={{ my: 3 }} />
 
-        {/* Step 1 */}
         <Box sx={{ mb: 5 }}>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FaRegUserCircle /> Step 1: Register as a Vendor
+            <FaRegUserCircle /> {t('howItWorks.steps.step1')}
           </Typography>
           <Typography variant="body2" sx={{ pl: 4 }}>
-            Create a vendor account by providing your business details. It only takes a few minutes to sign up.
+            {t('howItWorks.steps.desc1')}
           </Typography>
         </Box>
 
-        {/* Step 2 */}
         <Box sx={{ mb: 5 }}>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FaStoreAlt /> Step 2: Set Up Your Store
+            <FaStoreAlt /> {t('howItWorks.steps.step2')}
           </Typography>
           <Typography variant="body2" sx={{ pl: 4 }}>
-            Add your brand logo, description, and other details to make your store appealing to customers.
+            {t('howItWorks.steps.desc2')}
           </Typography>
         </Box>
 
-        {/* Step 3 */}
         <Box sx={{ mb: 5 }}>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FaBoxOpen /> Step 3: Add Products
+            <FaBoxOpen /> {t('howItWorks.steps.step3')}
           </Typography>
           <Typography variant="body2" sx={{ pl: 4 }}>
-            Upload product images, set prices, stock, and variations like size or color to start listing your products.
+            {t('howItWorks.steps.desc3')}
           </Typography>
         </Box>
 
-        {/* Step 4 */}
         <Box sx={{ mb: 5 }}>
           <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FaRocket /> Step 4: Start Selling & Shipping
+            <FaRocket /> {t('howItWorks.steps.step4')}
           </Typography>
           <Typography variant="body2" sx={{ pl: 4 }}>
-            Once your products are live, start receiving orders and ship them to customers quickly to build your reputation.
+            {t('howItWorks.steps.desc4')}
+          </Typography>
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Typography variant="h5" color="primary" gutterBottom>
+          {t('howItWorks.vendorOptionsTitle')}
+        </Typography>
+
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          {t('howItWorks.vendorOptionsDesc')}
+        </Typography>
+
+        <Box sx={{ pl: 2, mb: 2 }}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            {t('howItWorks.option1Title')}
+          </Typography>
+          <Typography variant="body2">
+            {t('howItWorks.option1Desc')}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {t('howItWorks.option1Note')}
+          </Typography>
+        </Box>
+
+        <Box sx={{ pl: 2, mb: 4 }}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            {t('howItWorks.option2Title')}
+          </Typography>
+          <Typography variant="body2">
+            {t('howItWorks.option2Desc')}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            {t('howItWorks.option2Note')}
           </Typography>
         </Box>
 
         <Divider sx={{ my: 3 }} />
 
         <Typography variant="body1" sx={{ mb: 3 }}>
-          Ready to begin? Join hundreds of successful vendors already selling on Soouqna.
+          {t('howItWorks.cta')}
         </Typography>
 
         <Link href="/vendor/register">
           <Button variant="contained" size="large" color="primary">
-            Register as a Vendor
+            {t('howItWorks.registerBtn')}
           </Button>
         </Link>
       </Container>
