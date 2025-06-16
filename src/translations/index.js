@@ -2,8 +2,8 @@ export const translations = {
   en: {
     home: {
       welcome: "Welcome To",
-      headline: "Sell online to 1 Cr+ customers at",
-      commission: "0% Commission",
+      headline: "From Your Shop to the World",
+      commission: "Start Selling on Soouqna Now!",
       description: "Become a Soouqna seller and grow your business",
       startSelling: "Start Selling",
       sellWith: "Sell Online with",
@@ -312,8 +312,8 @@ export const translations = {
   ar: {
     home: {
       welcome: "مرحبا بكم في",
-      headline: "بع منتجاتك عبر الإنترنت لأكثر من ١٠ ملايين عميل",
-      commission: "عمولة 0%",
+      headline: "ابدأ البيع على سوقنا الآن",
+      commission: "من متجرك إلى العالم",
       description: "كن بائعاً على سوقنا ووسّع أعمالك",
       startSelling: "ابدأ البيع",
       sellWith: "بع عبر الإنترنت مع",
