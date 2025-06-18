@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full py-16 vendorSection2">
+      {/* <section className="w-full py-16 vendorSection2">
         <div className="container">
           <h2 className="text-center text-[30px]">
             {t("home.sellWith")}
@@ -133,7 +133,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="w-full py-16 vendorSection3">
         <div className="container">

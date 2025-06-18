@@ -17,19 +17,23 @@ export const translations = {
       categories: "Categories to sell online",
       whyLove: "Why Suppliers Love",
       benefits:
-        "All the benefits that come with selling on Soouqna are designed to help you sell more, and make it easier to grow your business.",
-      commissionFee: "0% Commission Fee",
+        "Selling on Soouqna comes with unique advantages that empower you to grow your business effortlessly and achieve success.",
+
+      commissionFee: "100% Profit Retention",
       commissionInfo:
-        "Suppliers selling on Soouqna keep 100% of their profit by not paying any commission.",
-      penaltyCharges: "0 Penalty Charges",
+        "Sell with confidence, knowing you keep all your earnings to reinvest in your growth and success.",
+
+      penaltyCharges: "No Hidden Fees or Penalties",
       penaltyInfo:
-        "Sell online without the fear of order cancellation charges with 0 penalty for late dispatch or order cancellations.",
-      growth: "Growth for Every Supplier",
+        "Focus on your sales without worrying about surprise charges. No fees for late dispatches or order cancellations.",
+
+      growth: "Tailored Growth Opportunities",
       growthInfo:
-        "From small to large and unbranded to branded – we support every stage.",
-      ease: "Ease of Doing Business",
+        "Whether you're a startup or an established brand, Soouqna is designed to scale with your business at every stage.",
+
+      ease: "Seamless Selling Experience",
       easeInfo:
-        "Our platform is designed to make your selling journey smooth, efficient, and profitable.",
+        "Our platform makes it easy to manage your orders, track sales, and reach more customers – all in one place.",
     },
 
     header: {
@@ -339,7 +343,7 @@ export const translations = {
       option2Note:
         "📦 Shipping must be done within 24 hours of receiving the order, or within a maximum of 48 hours.",
       cta: "Ready to begin? Join hundreds of successful vendors already selling on Soouqna.",
-      registerBtn: "Register as a Vendor",
+      registerBtn: "Register as a Seller",
     },
     pricing: {
       title: "Vendor Pricing & Commission",
@@ -389,7 +393,7 @@ export const translations = {
         "Improve customer satisfaction and increase your sales by ensuring quick and reliable shipping.",
       helpText:
         "Need help or ideas to grow faster? Our support team is here to guide you.",
-      contactBtn: "Contact Vendor Support",
+      contactBtn: "Contact Seller Support",
     },
   },
   ar: {
@@ -408,19 +412,19 @@ export const translations = {
       categories: "أكثر من 700 فئة للبيع عبر الإنترنت",
       whyLove: "لماذا يحب الموردون سوقنا",
       benefits:
-        "جميع المزايا التي تأتي مع البيع على سوقنا مصممة لمساعدتك على البيع أكثر وتسهيل نمو أعمالك.",
-      commissionFee: "عمولة 0%",
+        "البيع على Soouqna يمنحك مزايا فريدة تساعدك على تنمية عملك بسهولة وتحقيق النجاح.",
+      commissionFee: "💰 احتفاظ كامل بالأرباح",
       commissionInfo:
-        "الموردون الذين يبيعون على سوقنا يحتفظون بـ 100٪ من أرباحهم دون دفع أي عمولة.",
-      penaltyCharges: "بدون رسوم جزائية",
+        "بع بثقة، وكن مطمئنًا أنك تحتفظ بكامل أرباحك لتعيد استثمارها في نموك ونجاحك.",
+      penaltyCharges: "❌ بدون رسوم خفية أو عقوبات",
       penaltyInfo:
-        "بع عبر الإنترنت دون القلق من رسوم الإلغاء أو التأخير، مع 0 رسوم جزائية.",
-      growth: "النمو لكل مورد",
+        "ركّز على مبيعاتك دون القلق من أي رسوم مفاجئة. لا توجد رسوم على التأخير في الشحن أو إلغاء الطلبات.",
+      growth: "📈 فرص نمو مخصصة",
       growthInfo:
-        "من الشركات الناشئة إلى العلامات التجارية الكبرى – نحن ندعمك في كل مرحلة.",
-      ease: "سهولة ممارسة الأعمال",
+        "سواء كنت مشروعًا ناشئًا أو علامة تجارية راسخة، Soouqna مصمم ليتماشى مع تطور عملك في كل مرحلة.",
+      ease: "🛒 تجربة بيع سلسة",
       easeInfo:
-        "منصتنا مصممة لتسهل عليك البيع، إدارة الطلبات، وتحقيق الأرباح بسهولة.",
+        "منصتنا تتيح لك إدارة الطلبات، وتتبع المبيعات، والوصول إلى عدد أكبر من العملاء – كل ذلك من مكان واحد .",
     },
 
     header: {
@@ -778,7 +782,7 @@ export const translations = {
         "عزّز رضا العملاء وزد من مبيعاتك من خلال توفير شحن سريع وموثوق.",
       helpText:
         "هل تحتاج إلى مساعدة أو أفكار لتوسيع عملك بشكل أسرع؟ فريق الدعم لدينا هنا لمساعدتك.",
-      contactBtn: "تواصل مع دعم البائعين",
+      contactBtn: "اتصل بدعم البائع",
     },
   },
 };
