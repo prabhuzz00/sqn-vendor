@@ -95,7 +95,7 @@ const Header = ({ logo = "/sooqna.svg" }) => {
         <div className="container">
           <div className="flex items-center justify-between">
             {/* logo -------------------------------------------------- */}
-            <Link href="/" className="w-[140px] block">
+            <Link href="https://soouqna.com/" className="w-[140px] block">
               <Image
                 src={logo}
                 alt="Soouqna Seller"
