@@ -14,7 +14,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const Products = () => {
   const { t } = useTranslation();
-  const { locale, changeLanguage } = useLanguage()
+  const { locale, changeLanguage } = useLanguage();
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [productData, setProductData] = useState([]);
@@ -77,7 +77,9 @@ const Products = () => {
             <div className="shadow-md rounded-md bg-white">
               <div className="py-5 px-5 border-b border-[rgba(0,0,0,0.1)]">
                 <div className="flex items-center pb-3">
-                  <h2 className="pb-0">{t("productInventoryPage.productInventory")}</h2>
+                  <h2 className="pb-0">
+                    {t("productInventoryPage.productInventory")}
+                  </h2>
                   <Button
                     className="!ml-auto !font-bold"
                     onClick={() =>
@@ -140,7 +142,9 @@ const Products = () => {
                             </td>
                             <td className="px-6 py-4 font-[500] whitespace-nowrap">
                               {/* {product?.catName} */}
-                              {locale === 'ar' ? product?.category?.arName : product?.catName}
+                              {locale === "ar"
+                                ? product?.category?.arName
+                                : product?.catName}
                             </td>
                             <td className="px-6 py-4 font-[500] whitespace-nowrap">
                               {product?.subCat || "N/A"}
@@ -148,7 +152,7 @@ const Products = () => {
                             <td className="px-6 py-4 font-[500]">
                               {product?.price?.toLocaleString("en-US", {
                                 style: "currency",
-                                currency: "INR",
+                                currency: "USD",
                               })}
                             </td>
                             <td className="px-6 py-4 font-[500]">

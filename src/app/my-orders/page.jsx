@@ -237,7 +237,7 @@ const Orders = () => {
                                       <td className="px-6 py-4">
                                         {item.price.toLocaleString("en-US", {
                                           style: "currency",
-                                          currency: "INR",
+                                          currency: "USD",
                                         })}
                                       </td>
 
@@ -246,7 +246,7 @@ const Orders = () => {
                                           item.price * item.quantity
                                         ).toLocaleString("en-US", {
                                           style: "currency",
-                                          currency: "INR",
+                                          currency: "USD",
                                         })}
                                       </td>
                                     </tr>

@@ -152,7 +152,7 @@ const ProductsReject = () => {
                             <td className="px-6 py-4 font-[500]">
                               {product?.price?.toLocaleString("en-US", {
                                 style: "currency",
-                                currency: "INR",
+                                currency: "USD",
                               })}
                             </td>
                             <td className="px-6 py-4 font-[500]">
