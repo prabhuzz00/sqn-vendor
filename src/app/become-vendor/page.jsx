@@ -426,11 +426,10 @@ const BecomeVendor = () => {
             {/* ---------------------------------------------------------- */}
             {/* RIGHT – promo stats                                        */}
             {/* ---------------------------------------------------------- */}
-            <div className="pl-44 w-[60%] pt-3">
+            {/* <div className="pl-44 w-[60%] pt-3">
               <div className="box p-5 bg-gray-200 rounded-md w-full sticky top-10">
                 <h2>{t("bvendor.growFaster")}</h2>
                 <div className="grid grid-cols-1 mt-5 gap-5">
-                  {/* 1 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
                     <Image
                       src="https://images.meeshosupplyassets.com/supplier_community.svg"
@@ -446,7 +445,6 @@ const BecomeVendor = () => {
                     </div>
                   </div>
 
-                  {/* 2 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
                     <Image
                       src="https://images.meeshosupplyassets.com/pincode.svg"
@@ -461,8 +459,6 @@ const BecomeVendor = () => {
                       </p>
                     </div>
                   </div>
-
-                  {/* 3 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
                     <Image
                       src="https://images.meeshosupplyassets.com/reach_india.svg"
@@ -478,7 +474,6 @@ const BecomeVendor = () => {
                     </div>
                   </div>
 
-                  {/* 4 ---------------------------------------------------- */}
                   <div className="box flex items-center gap-3">
                     <Image
                       src="https://images.meeshosupplyassets.com/categories.svg"
@@ -495,7 +490,7 @@ const BecomeVendor = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* ---------------------------------------------------------- */}
           </div>
         </div>
