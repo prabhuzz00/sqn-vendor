@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext, Suspense } from "react";
+import React, { useState, useContext, Suspense, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -13,7 +13,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { MyContext } from "@/context/ThemeProvider";
-import { vendorPostData, deleteImages } from "@/utils/api";
+import { vendorPostData, deleteImages, fetchDataFromApi } from "@/utils/api";
 import { useRouter } from "next/navigation";
 import PasswordField from "../../components/PasswordField";
 import UploadBox from "../../components/UploadBox";
@@ -42,6 +42,7 @@ const INITIAL_STATE = {
   termsAgreement: false,
   isVerified: false,
   status: true,
+  serviceZone : ""
 };
 
 /* ------------------------------------------------------------------ */
@@ -53,11 +54,31 @@ const BecomeVendor = () => {
   const [bannerPreviews, setBannerPreviews] = useState([]);
   const [productCat, setProductCat] = useState("");
   const [formFields, setFormFields] = useState(INITIAL_STATE);
+  const [serviceZone, setServiceZone] = useState([]);
 
   const context = useContext(MyContext);
   const { locale } = useLanguage();
   const { t } = useTranslation();
   const router = useRouter();
+
+  useEffect(()=>{
+    fetchDataFromApi("/api/service-zones")
+    .then((res) => {
+      if (res?.error) {
+        context.alertBox("error", res.message ?? "Failed to fetch service zones");
+      } else if (res.success && res.data) {
+        const zones = Object.keys(res.data).map((cityKey) => ({
+          name: cityKey, 
+          ...res.data[cityKey], 
+
+        }));
+        setServiceZone(zones);
+      }
+    }).catch((err) => {
+      context.alertBox("error", "Failed to fetch service zones");
+    })
+
+  },[])
 
   /* ------------------------------------------------------------------ */
   /* Field handlers                                                     */
@@ -118,6 +139,7 @@ const BecomeVendor = () => {
       "storeAddress",
       "termsAgreement",
       "images",
+      "serviceZone"
     ];
 
     return required.every((field) => {
@@ -355,6 +377,27 @@ const BecomeVendor = () => {
                     />
                   </div>
                 </div>
+
+                {/* service zone select -------------------------------------------- */}
+                <div className="form-group w-full mb-5">
+                  <FormControl fullWidth variant="standard">
+                    <InputLabel id="service-zone-label">Service Zone</InputLabel>
+                    <Select
+                      labelId="service-zone-label"
+                      name="serviceZone"
+                      value={formFields.serviceZone}
+                      onChange={onChangeInput}
+                      disabled={isLoading}
+                    >
+                      {serviceZone.map((zone, index) => (
+                        <MenuItem key={index} value={zone.name}>
+                          {zone.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+
 
                 {/* category select ----------------------------------------- */}
                 <div className="form-group w-full mb-5">

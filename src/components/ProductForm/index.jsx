@@ -73,6 +73,7 @@ const ProductForm = () => {
   const [checkedSwitch, setCheckedSwitch] = useState(false);
   const [productRamsData, setProductRamsData] = useState([]);
   const [productSizeData, setProductSizeData] = useState([]);
+  const [serviceZone, setServiceZone] = useState("");
 
   const context = useContext(MyContext);
 
@@ -99,6 +100,7 @@ const ProductForm = () => {
     bannerimages: [],
     barcode: "",
     tags: [],
+    serviceZone: ""
   });
 
   /* ------------------------------ fetch helpers ------------------ */
@@ -158,6 +160,7 @@ const ProductForm = () => {
         bannerimages: p.bannerimages ?? [],
         barcode: p.barcode ?? "",
         tags: p.tags ?? [],
+        serviceZone: p.serviceZone ?? "",
       });
 
       setProductCat(p.catId || "");
