@@ -66,6 +66,7 @@ const MyAccount = () => {
         : "None",
     storeName: context.userData.storeName || "N/A",
     taxIdentificationNumber: context.userData.taxIdentificationNumber || "N/A",
+    servicezone: context.userData.serviceZone || "N/A",
   };
 
   return (
@@ -172,6 +173,20 @@ const MyAccount = () => {
                       </Typography>
                       <Typography variant="body1" className="text-gray-800">
                         {displayData.taxIdentificationNumber}
+                      </Typography>
+                    </Grid>
+
+                    {/* Service Area */}
+                    <Grid item xs={12} sm={6}>
+                      <Typography
+                        variant="subtitle1"
+                        color="textSecondary"
+                        className="font-medium"
+                      >
+                        Service Area:
+                      </Typography>
+                      <Typography variant="body1" className="text-gray-800">
+                        {displayData.servicezone}
                       </Typography>
                     </Grid>
 

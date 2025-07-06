@@ -60,10 +60,25 @@ const ProductForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [previews, setPreviews] = useState([]);
   const [bannerPreviews, setBannerPreviews] = useState([]);
+
+  const generateRandomBarcode = () => {
+    const timestamp = Date.now().toString();
+    const randomPart = Math.floor(
+      100000000 + Math.random() * 900000000
+    ).toString();
+    return (timestamp + randomPart).slice(0, 20);
+  };
   const [variations, setVariations] = useState([
     {
       color: { label: "", images: [] },
-      sizes: [{ label: "", price: "", countInStock: "" }],
+      sizes: [
+        {
+          label: "",
+          price: "",
+          countInStock: "",
+          vbarcode: generateRandomBarcode(),
+        },
+      ],
     },
   ]);
   const [productCat, setProductCat] = useState("");
@@ -100,7 +115,7 @@ const ProductForm = () => {
     bannerimages: [],
     barcode: "",
     tags: [],
-    serviceZone: ""
+    serviceZone: "",
   });
 
   /* ------------------------------ fetch helpers ------------------ */
@@ -170,13 +185,37 @@ const ProductForm = () => {
       setCheckedSwitch(p.isDisplayOnHomeBanner || false);
       setPreviews(p.images || []);
       setBannerPreviews(p.bannerimages || []);
+      // setVariations(
+      //   p.variation?.length
+      //     ? p.variation
+      //     : [
+      //         {
+      //           color: { label: "", images: [] },
+      //           sizes: [{ label: "", price: "", countInStock: "",  }],
+      //         },
+      //       ]
+      // );
+
       setVariations(
         p.variation?.length
-          ? p.variation
+          ? p.variation.map((variation) => ({
+              ...variation,
+              sizes: variation.sizes.map((size) => ({
+                ...size,
+                vbarcode: size.vbarcode || generateRandomBarcode(),
+              })),
+            }))
           : [
               {
                 color: { label: "", images: [] },
-                sizes: [{ label: "", price: "", countInStock: "" }],
+                sizes: [
+                  {
+                    label: "",
+                    price: "",
+                    countInStock: "",
+                    vbarcode: generateRandomBarcode(),
+                  },
+                ],
               },
             ]
       );
@@ -192,6 +231,23 @@ const ProductForm = () => {
       discount: calcDiscount(prev.price, prev.oldPrice),
     }));
   }, [formFields.price, formFields.oldPrice]);
+
+  useEffect(() => {
+    const totalStock = variations.reduce((total, variation) => {
+      return (
+        total +
+        variation.sizes.reduce((sum, size) => {
+          const stock = parseInt(size.countInStock);
+          return sum + (isNaN(stock) ? 0 : stock);
+        }, 0)
+      );
+    }, 0);
+
+    setFormFields((prev) => ({
+      ...prev,
+      countInStock: totalStock,
+    }));
+  }, [variations]);
 
   /* ------------------------------ memoised category lookups ------ */
   const catOptions = context.catData || [];
@@ -239,10 +295,10 @@ const ProductForm = () => {
     }));
   };
 
-  const handleChangeProductFeatured = ({ target: { value } }) => {
-    setProductFeatured(value);
-    setFormFields((p) => ({ ...p, isFeatured: value }));
-  };
+  // const handleChangeProductFeatured = ({ target: { value } }) => {
+  //   setProductFeatured(value);
+  //   setFormFields((p) => ({ ...p, isFeatured: value }));
+  // };
 
   const handleChangeSwitch = ({ target: { checked } }) => {
     setCheckedSwitch(checked);
@@ -318,7 +374,15 @@ const ProductForm = () => {
         i === vIdx
           ? {
               ...vr,
-              sizes: [...vr.sizes, { label: "", price: "", countInStock: "" }],
+              sizes: [
+                ...vr.sizes,
+                {
+                  label: "",
+                  price: "",
+                  countInStock: "",
+                  vbarcode: generateRandomBarcode(),
+                },
+              ],
             }
           : vr
       )
@@ -768,7 +832,7 @@ const ProductForm = () => {
                         </Select>
                       </Grid>
                       {/* featured */}
-                      <Grid item xs={12} md={6}>
+                      {/* <Grid item xs={12} md={6}>
                         <FormLabel
                           sx={{ display: "block", mb: 1, fontWeight: 500 }}
                         >
@@ -784,7 +848,7 @@ const ProductForm = () => {
                           <MenuItem value={true}>Yes</MenuItem>
                           <MenuItem value={false}>No</MenuItem>
                         </Select>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </CardContent>
                 </Card>

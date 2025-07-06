@@ -85,9 +85,6 @@ const Orders = () => {
                       {t("ordersPage.tableHeaders.address")}
                     </th>
                     <th className="px-6 py-3 whitespace-nowrap">
-                      {t("ordersPage.tableHeaders.pincode")}
-                    </th>
-                    <th className="px-6 py-3 whitespace-nowrap">
                       {t("ordersPage.tableHeaders.totalAmount")}
                     </th>
                     <th className="px-6 py-3 whitespace-nowrap">
@@ -144,17 +141,12 @@ const Orders = () => {
                             {[
                               order.delivery_address?.address_line1,
                               order.delivery_address?.city,
+                              order.delivery_address?.area,
                               order.delivery_address?.landmark,
-                              order.delivery_address?.state,
-                              order.delivery_address?.country,
                             ]
                               .filter(Boolean)
                               .join(" ")}
                           </span>
-                        </td>
-
-                        <td className="px-6 py-4 font-[500]">
-                          {order.delivery_address?.pincode}
                         </td>
 
                         <td className="px-6 py-4 font-[500]">
