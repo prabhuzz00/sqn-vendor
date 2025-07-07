@@ -1186,7 +1186,7 @@ const ProductForm = () => {
                 {/* === BANNER ========================================= */}
                 <Card sx={{ mb: 3, border: "1px solid #e0e0e0" }}>
                   <CardContent>
-                    <Box
+                    {/* <Box
                       display="flex"
                       alignItems="center"
                       justifyContent="space-between"
@@ -1208,7 +1208,7 @@ const ProductForm = () => {
                           disabled={isLoading}
                         />
                       </Box>
-                    </Box>
+                    </Box> */}
 
                     <Grid container spacing={2}>
                       <Grid item xs={12}>

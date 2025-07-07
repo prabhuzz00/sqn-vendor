@@ -42,7 +42,7 @@ const INITIAL_STATE = {
   termsAgreement: false,
   isVerified: false,
   status: true,
-  serviceZone : ""
+  serviceZone: [],
 };
 
 /* ------------------------------------------------------------------ */
@@ -61,24 +61,26 @@ const BecomeVendor = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchDataFromApi("/api/service-zones")
-    .then((res) => {
-      if (res?.error) {
-        context.alertBox("error", res.message ?? "Failed to fetch service zones");
-      } else if (res.success && res.data) {
-        const zones = Object.keys(res.data).map((cityKey) => ({
-          name: cityKey, 
-          ...res.data[cityKey], 
-
-        }));
-        setServiceZone(zones);
-      }
-    }).catch((err) => {
-      context.alertBox("error", "Failed to fetch service zones");
-    })
-
-  },[])
+      .then((res) => {
+        if (res?.error) {
+          context.alertBox(
+            "error",
+            res.message ?? "Failed to fetch service zones"
+          );
+        } else if (res.success && res.data) {
+          const zones = Object.keys(res.data).map((cityKey) => ({
+            name: cityKey,
+            ...res.data[cityKey],
+          }));
+          setServiceZone(zones);
+        }
+      })
+      .catch((err) => {
+        context.alertBox("error", "Failed to fetch service zones");
+      });
+  }, []);
 
   /* ------------------------------------------------------------------ */
   /* Field handlers                                                     */
@@ -139,7 +141,7 @@ const BecomeVendor = () => {
       "storeAddress",
       "termsAgreement",
       "images",
-      "serviceZone"
+      "serviceZone",
     ];
 
     return required.every((field) => {
@@ -381,8 +383,10 @@ const BecomeVendor = () => {
                 {/* service zone select -------------------------------------------- */}
                 <div className="form-group w-full mb-5">
                   <FormControl fullWidth variant="standard">
-                    <InputLabel id="service-zone-label">Service Zone</InputLabel>
-                    <Select
+                    <InputLabel id="service-zone-label">
+                      Service Zone
+                    </InputLabel>
+                    {/* <Select
                       labelId="service-zone-label"
                       name="serviceZone"
                       value={formFields.serviceZone}
@@ -394,10 +398,35 @@ const BecomeVendor = () => {
                           {zone.name}
                         </MenuItem>
                       ))}
+                    </Select> */}
+
+                    <Select
+                      labelId="service-zone-label"
+                      name="serviceZone"
+                      multiple
+                      value={formFields.serviceZone}
+                      onChange={(e) =>
+                        setFormFields((prev) => ({
+                          ...prev,
+                          serviceZone: e.target.value,
+                        }))
+                      }
+                      disabled={isLoading}
+                      renderValue={(selected) => selected.join(", ")}
+                    >
+                      {serviceZone.map((zone, index) => (
+                        <MenuItem key={index} value={zone.name}>
+                          <Checkbox
+                            checked={
+                              formFields.serviceZone.indexOf(zone.name) > -1
+                            }
+                          />
+                          {zone.name}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 </div>
-
 
                 {/* category select ----------------------------------------- */}
                 <div className="form-group w-full mb-5">
