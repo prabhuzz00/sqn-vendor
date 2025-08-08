@@ -1,9 +1,5 @@
 "use client";
 import { Button } from "@mui/material";
-import { MdOutlineSell } from "react-icons/md";
-import { PiUsersThree } from "react-icons/pi";
-import { TbTruckDelivery } from "react-icons/tb";
-import { BiCategory } from "react-icons/bi";
 import { GiReceiveMoney } from "react-icons/gi";
 import { FaWpforms } from "react-icons/fa";
 import { GiGrowth } from "react-icons/gi";
@@ -49,91 +45,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* <section className="w-full py-16 vendorSection2">
-        <div className="container">
-          <h2 className="text-center text-[30px]">
-            {t("home.sellWith")}
-            <span className="text-primary uppercase pl-3">Soouqna</span>
-          </h2>
-          <p className="text-center text-[15px]">
-            {t("home.lorem")}
-            <br />
-            {t("home.lorem2")}
-          </p>
-          <br />
-
-          <div className="flex items-center justify-center gap-8 secton2">
-            <div className="card shadow-sm hover:shadow-lg w-[20%] bg-white py-8 px-14 text-center flex items-center justify-center flex-col transition-all !rounded-md">
-              <div
-                className="icon mb-3 p-3 rounded-[20px] w-[70px] h-[70px] flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgb(132, 188, 250) 0%, rgb(43, 112, 250) 100%)",
-                  boxShadow: "0px 6px 10px 0px rgba(16, 73, 189, 0.3)",
-                }}
-              >
-                <MdOutlineSell size={30} className="text-white" />
-              </div>
-              <h3 className="text-[22px]  text-gray-800">11 Lakh+</h3>
-              <p className=" font-[400] text-[16px] mt-0 mb-0">
-                {t("home.trustSellers")}
-              </p>
-            </div>
-
-            <div className="card shadow-sm hover:shadow-lg w-[20%] bg-white py-8 px-14 text-center flex items-center justify-center flex-col transition-all !rounded-md">
-              <div
-                className="icon mb-3 p-3  rounded-[20px] w-[70px] h-[70px] flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgb(247, 184, 175) 0%, rgb(248, 69, 45) 100%)",
-                  boxShadow: "0px 6px 10px 0px rgba(16, 73, 189, 0.3)",
-                }}
-              >
-                <PiUsersThree size={35} className="text-white" />
-              </div>
-              <h3 className="text-[22px]  text-gray-800">4 Crore+</h3>
-              <p className=" font-[400] text-[16px] mt-0 mb-0">
-                {t("home.customers")}
-              </p>
-            </div>
-
-            <div className="card shadow-sm hover:shadow-lg w-[20%] bg-white py-8 px-14 text-center flex items-center justify-center flex-col transition-all !rounded-md">
-              <div
-                className="icon mb-3 p-3  rounded-[20px] w-[70px] h-[70px] flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgb(160, 234, 194) 0%, rgb(49, 195, 105) 100%)",
-                  boxShadow: "0px 6px 10px 0px rgba(16, 73, 189, 0.3)",
-                }}
-              >
-                <TbTruckDelivery size={40} className="text-white" />
-              </div>
-              <h3 className="text-[22px]  text-gray-800">19000+</h3>
-              <p className=" font-[400] text-[16px] mt-0 mb-0">
-                {t("home.pincodeSupport")}
-              </p>
-            </div>
-
-            <div className="card shadow-sm hover:shadow-lg w-[20%] bg-white py-8 px-14 text-center flex items-center justify-center flex-col transition-all !rounded-md">
-              <div
-                className="icon mb-3 p-3  rounded-[20px] w-[70px] h-[70px] flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgb(216, 170, 255) 0%, rgb(155, 44, 250) 100%)",
-                  boxShadow: "0px 6px 10px 0px rgba(16, 73, 189, 0.3)",
-                }}
-              >
-                <BiCategory size={40} className="text-white" />
-              </div>
-              <h3 className="text-[22px] text-gray-800">700+</h3>
-              <p className=" font-[400] text-[16px] mt-0 mb-0">
-                {t("home.categories")}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       <section className="w-full py-16 vendorSection3">
         <div className="container">
