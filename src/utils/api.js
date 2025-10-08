@@ -121,6 +121,30 @@ export const deleteImages = async (url, image) => {
   return res;
 };
 
+export const putData = async (url, data) => {
+  try {
+    const response = await fetch(apiUrl + url, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${Cookies.get("accessToken")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    } else {
+      const errorData = await response.json();
+      return errorData;
+    }
+  } catch (error) {
+    console.error("putData error:", error);
+    return { success: false, message: "Network error occurred" };
+  }
+};
+
 export const uploadImages = async (url, formData) => {
   const params = {
     headers: {

@@ -181,6 +181,15 @@ const AccountSidebar = () => {
           </NavLink>
         </li>
 
+        <li className="w-full">
+          <NavLink href="/zone-management" activeClassName="active">
+            <Button className="w-full !text-left !py-2 !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
+              <LuMapPin className="text-[18px]" />{" "}
+              Zone Management
+            </Button>
+          </NavLink>
+        </li>
+
         {/* <li className="w-full">
           <NavLink href="/my-list" activeClassName="active">
             <Button className="w-full !py-2  !text-left !px-5 !justify-start !capitalize !text-[rgba(0,0,0,0.8)] !rounded-none flex items-center gap-2">
