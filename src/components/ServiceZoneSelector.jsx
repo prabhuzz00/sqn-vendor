@@ -53,7 +53,10 @@ const ServiceZoneSelector = ({ vendor, onUpdate }) => {
   const loadVendorServiceZones = () => {
     // Parse vendor's current service zones (assuming it's stored as comma-separated string)
     if (vendor?.serviceZone) {
-      const zones = vendor.serviceZone.split(",").map(zone => zone.trim()).filter(Boolean);
+      const zones = vendor.serviceZone
+        .split(",")
+        .map((zone) => zone.trim())
+        .filter(Boolean);
       setSelectedZones(zones);
       setOriginalZones(zones);
     }
@@ -61,9 +64,9 @@ const ServiceZoneSelector = ({ vendor, onUpdate }) => {
   };
 
   const handleZoneToggle = (cityName) => {
-    setSelectedZones(prev => {
+    setSelectedZones((prev) => {
       if (prev.includes(cityName)) {
-        return prev.filter(zone => zone !== cityName);
+        return prev.filter((zone) => zone !== cityName);
       } else {
         return [...prev, cityName];
       }
@@ -92,12 +95,17 @@ const ServiceZoneSelector = ({ vendor, onUpdate }) => {
 
     try {
       const serviceZoneString = selectedZones.join(", ");
-      const response = await putData(`/api/vendor/update-service-zones/${vendor._id}`, {
-        serviceZone: serviceZoneString
-      });
+      const response = await putData(
+        `/api/vendor/update-service-zones/${vendor._id}`,
+        {
+          serviceZone: serviceZoneString,
+        }
+      );
 
       if (response?.success) {
-        setSuccess("Service zones updated successfully. Your vendor status has been set to unverified pending admin review.");
+        setSuccess(
+          "Service zones updated successfully. Your vendor status has been set to unverified pending admin review."
+        );
         setOriginalZones([...selectedZones]);
         // Call parent update function to refresh vendor data
         if (onUpdate) {
@@ -137,13 +145,13 @@ const ServiceZoneSelector = ({ vendor, onUpdate }) => {
           <Typography variant="h5" className="font-bold mb-4">
             Service Zone Management
           </Typography>
-          
+
           {error && (
             <Alert severity="error" className="mb-4">
               {error}
             </Alert>
           )}
-          
+
           {success && (
             <Alert severity="success" className="mb-4">
               {success}
@@ -151,7 +159,9 @@ const ServiceZoneSelector = ({ vendor, onUpdate }) => {
           )}
 
           <Typography variant="body2" className="mb-4 text-gray-600">
-            Select the cities where you want to provide your services. Note: Updating service zones will require admin verification before becoming active.
+            Select the cities where you want to provide your services. Note:
+            Updating service zones will require admin verification before
+            becoming active.
           </Typography>
 
           <FormControl component="fieldset">
@@ -172,10 +182,16 @@ const ServiceZoneSelector = ({ vendor, onUpdate }) => {
                       }
                       label={
                         <Box>
-                          <Typography variant="subtitle2" className="font-medium">
+                          <Typography
+                            variant="subtitle2"
+                            className="font-medium"
+                          >
                             {zone.city}
                           </Typography>
-                          <Typography variant="caption" className="text-gray-500">
+                          <Typography
+                            variant="caption"
+                            className="text-gray-500"
+                          >
                             {zone.areas?.length || 0} areas available
                           </Typography>
                         </Box>
@@ -234,8 +250,9 @@ const ServiceZoneSelector = ({ vendor, onUpdate }) => {
         <DialogTitle>Confirm Service Zone Update</DialogTitle>
         <DialogContent>
           <Typography>
-            Updating your service zones will set your vendor status to "unverified" 
-            and require admin approval before the changes become active. Are you sure you want to proceed?
+            Updating your service zones will set your vendor status to
+            &quot;unverified&quot; and require admin approval before the changes
+            become active. Are you sure you want to proceed?
           </Typography>
           <Box className="mt-3">
             <Typography variant="subtitle2" className="mb-1">

@@ -3,12 +3,7 @@ import React, { Suspense, useContext } from "react";
 import { MyContext } from "@/context/ThemeProvider";
 import AccountSidebar from "../../components/AccountSidebar";
 import ServiceZoneSelector from "../../components/ServiceZoneSelector";
-import {
-  Typography,
-  Card,
-  CardContent,
-  Box,
-} from "@mui/material";
+import { Typography, Card, CardContent, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -56,22 +51,24 @@ const ZoneManagement = () => {
 
                 <Box className="mt-6">
                   <Typography variant="body1" className="text-gray-600 mb-4">
-                    Manage the service zones where you want to provide your services. 
-                    Select the cities and areas where you can deliver your products effectively.
+                    Manage the service zones where you want to provide your
+                    services. Select the cities and areas where you can deliver
+                    your products effectively.
                   </Typography>
-                  
+
                   <Typography variant="body2" className="text-amber-600 mb-4">
-                    <strong>Note:</strong> Any changes to your service zones will require admin verification 
-                    before they become active. Your vendor status will be temporarily set to "unverified" 
-                    during the review process.
+                    <strong>Note:</strong> Any changes to your service zones
+                    will require admin verification before they become active.
+                    Your vendor status will be temporarily set to
+                    &quot;unverified&quot; during the review process.
                   </Typography>
                 </Box>
               </CardContent>
             </StyledCard>
-            
+
             {/* Service Zone Management */}
-            <ServiceZoneSelector 
-              vendor={context.userData} 
+            <ServiceZoneSelector
+              vendor={context.userData}
               onUpdate={handleVendorUpdate}
             />
           </div>
